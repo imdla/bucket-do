@@ -1,6 +1,6 @@
 import api from "./axios";
 
-const ENDPOINT = "/api/buckets";
+const ENDPOINT = '/buckets';
 const bucketApi = {
   // 버킷 전체 조회
   getBuckets: async () => {

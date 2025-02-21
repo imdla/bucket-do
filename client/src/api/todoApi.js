@@ -1,6 +1,6 @@
 import api from "./axios";
 
-const ENDPOINT = "/api/buckets";
+const ENDPOINT = '/buckets';
 const todoApi = {
   // 투두 전체 조회
   getTodos: async (bucketId) => {

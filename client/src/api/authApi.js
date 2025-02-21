@@ -1,6 +1,6 @@
 import api from "./axios"
 
-const ENDPOINT = "/api/auth";
+const ENDPOINT = '/auth';
 const authApi = {
   // 회원가입
   signup: async (formData) => {
