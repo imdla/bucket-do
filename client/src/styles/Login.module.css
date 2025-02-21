@@ -1,0 +1,63 @@
+.login {
+  color: var(--accent-200);
+}
+.loginBackGround {
+  width: 50vw;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.loginIntro {
+  width: 50vw;
+  margin: 0 auto;
+  text-align: center;
+  background-color: var(--bg-200);
+  padding: var(--round-large-button);
+  border-radius: var(--border-radius-20);
+}
+.emailInput {
+  width: 50vw;
+  margin: 4% 0 2% 0;
+  background-color: var(--bg-200);
+  border-radius: var(--border-radius-20);
+  border: 0px;
+  text-align: center;
+  padding: var(--round-large-button);
+}
+.passwordInput {
+  width: 50vw;
+  background-color: var(--bg-200);
+  border-radius: var(--border-radius-20);
+  border: 0px;
+  text-align: center;
+  padding: var(--round-large-button);
+}
+
+.buttonBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3%;
+}
+.loginButton {
+  width: 45%;
+  border: 0px;
+  background-color: var(--primary-100);
+  border-radius: var(--border-radius-20);
+  padding: var(--round-small-button);
+}
+.signupButton {
+  width: 45%;
+  border: 0px;
+  background-color: var(--primary-100);
+  border-radius: var(--border-radius-20);
+  padding: var(--round-small-button);
+}
