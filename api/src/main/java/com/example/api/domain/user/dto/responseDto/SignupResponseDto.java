@@ -23,7 +23,7 @@ public class SignupResponseDto {
     public static SignupResponseDto from(User entity) {
         return SignupResponseDto.builder()
             .id(entity.getId())
-            .username(entity.getUsername())
+            .username(entity.getNickname())
             .email(entity.getEmail())
             .phoneNumber(entity.getPhoneNumber())
             .createdAt(entity.getCreatedAt())

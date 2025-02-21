@@ -32,9 +32,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 
     @Column(unique = true)
     private String email;
-
     private String password;
-
     private String phoneNumber;
 
     @Builder
@@ -45,6 +43,14 @@ public class User extends BaseTimeEntity implements UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getNickname() {
+        return username;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 
     // roll을 통한 권한을 설정하지 않았기 때문에 empty
     @Override

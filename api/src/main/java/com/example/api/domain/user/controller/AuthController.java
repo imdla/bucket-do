@@ -1,13 +1,16 @@
 package com.example.api.domain.user.controller;
 
+import com.example.api.domain.user.dto.requestDto.LoginRequestDto;
 import com.example.api.domain.user.dto.requestDto.SignupRequestDto;
 import com.example.api.domain.user.dto.responseDto.SignupResponseDto;
+import com.example.api.domain.user.dto.responseDto.TokenResponseDto;
 import com.example.api.domain.user.service.AuthService;
 import com.example.api.global.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +33,14 @@ public class AuthController {
                 "CREATED",
                 authService.signup(requestDto)
             ));
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<ApiResponse<TokenResponseDto>> login(
+        @Valid @RequestBody LoginRequestDto requestDto
+    ) {
+        return ResponseEntity.ok(ApiResponse.ok(
+            authService.login(requestDto)
+        ));
     }
 }
