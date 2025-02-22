@@ -26,16 +26,22 @@
   padding: var(--round-large-button);
   box-sizing: border-box;
 }
-
+.DuplicateCheckBox {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 .emailCheckButton {
   position: absolute;
+  left: 100%;
+  width: 120px;
   margin-left: 1rem;
-  font-size: var(--font-size-18);
+  font-size: var(--font-size-16);
   cursor: pointer;
   border: 0px;
-  background-color: var(--primary-100);
+  background-color: var(--primary-200);
   border-radius: var(--border-radius-20);
-  padding: var(--round-large-button);
+  padding: var(--round-small-button);
   box-sizing: border-box;
 }
 .passwordConfirmed {
@@ -56,12 +62,11 @@
 
 .signupButton {
   font-size: var(--font-size-18);
-  width: 30vw;
   cursor: pointer;
   border: 0px;
   text-align: center;
   background-color: var(--primary-100);
-  border-radius: var(--border-radius-20);
-  padding: var(--round-large-button);
+  border-radius: var(--border-radius-30);
+  padding: var(--round-medium-button);
   box-sizing: border-box;
 }
