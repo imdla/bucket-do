@@ -2,8 +2,8 @@ package com.example.api.domain.user.service;
 
 import com.example.api.domain.user.dto.requestDto.LoginRequestDto;
 import com.example.api.domain.user.dto.requestDto.SignupRequestDto;
+import com.example.api.domain.user.dto.responseDto.LoginResponseDto;
 import com.example.api.domain.user.dto.responseDto.SignupResponseDto;
-import com.example.api.domain.user.dto.responseDto.TokenResponseDto;
 import com.example.api.domain.user.entity.User;
 import com.example.api.domain.user.repository.UserRepository;
 import com.example.api.global.security.jwt.JwtTokenProvider;
@@ -43,7 +43,7 @@ public class AuthService {
     }
 
 
-    public TokenResponseDto login(LoginRequestDto requestDto) {
+    public LoginResponseDto login(LoginRequestDto requestDto) {
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 requestDto.getUsername(),
@@ -53,6 +53,10 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtTokenProvider.createToken(authentication);
 
-        return new TokenResponseDto(jwt);
+        User user = userRepository.findByUsername(requestDto.getUsername())
+            .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        return LoginResponseDto.from(user, jwt);
+//        return new TokenResponseDto.from(jwt);
     }
 }
