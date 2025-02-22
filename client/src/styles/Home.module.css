@@ -37,6 +37,10 @@ section {
   box-shadow: var(--box-shadow-basic);
 }
 
+.active {
+  background-color: var(--primary-100);
+}
+
 .container .bucketList {
   width: 100%;
   height: calc(60vh - 45px);
