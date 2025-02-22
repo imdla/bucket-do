@@ -19,7 +19,7 @@ header {
   border: none;
   font-size: var(--font-size-18);
   background-color: var(--bg-200);
-  padding: 14px 28px;
+  padding: var(--round-medium-button);
   border-radius: var(--border-radius-30);
   transition: all 0.3s ease-in-out;
 }
