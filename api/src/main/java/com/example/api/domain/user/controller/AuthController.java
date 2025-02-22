@@ -40,6 +40,8 @@ public class AuthController {
         @Valid @RequestBody LoginRequestDto requestDto
     ) {
         return ResponseEntity.ok(ApiResponse.ok(
+            "로그인 정상 성공",
+            "OK",
             authService.login(requestDto)
         ));
     }
