@@ -43,4 +43,9 @@ public class AuthController {
             authService.login(requestDto)
         ));
     }
+
+    // 단순히 JWT 검증을 위한 endpoint
+    @GetMapping("/verify")
+    public void verify() {
+    }
 }
