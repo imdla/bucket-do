@@ -12,6 +12,7 @@
   --bg-300: #020202;
 
   /* font-size */
+  --font-size-14: 14px;
   --font-size-16: 16px;
   --font-size-18: 18px;
   --font-size-24: 24px;
@@ -27,6 +28,12 @@
   /* border-radius */
   --border-radius-20: 20px;
   --border-radius-30: 30px;
+
+  /* transition */
+  --transition-3: all 0.3s ease-in-out;
+
+  /* box-shadow */
+  --box-shadow-basic: 0 0 3px #3b3c3d;
 }
 
 body {

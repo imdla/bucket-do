@@ -1,9 +1,12 @@
 import React from 'react';
+import styles from '../styles/Footer.module.css';
 
 function Footer() {
   return (
     <footer>
-      <p>© 2025. BucketDo. All Rights Reserved.</p>
+      <div className={styles.container}>
+        <p>© 2025. BucketDo. All Rights Reserved.</p>
+      </div>
     </footer>
   );
 }

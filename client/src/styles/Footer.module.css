@@ -1,0 +1,16 @@
+footer {
+  width: 100vw;
+}
+
+.container {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container p {
+  font-size: var(--font-size-14);
+  color: var(--primary-300);
+}
