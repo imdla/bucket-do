@@ -2,8 +2,8 @@ package com.example.api.domain.user.controller;
 
 import com.example.api.domain.user.dto.requestDto.LoginRequestDto;
 import com.example.api.domain.user.dto.requestDto.SignupRequestDto;
+import com.example.api.domain.user.dto.responseDto.LoginResponseDto;
 import com.example.api.domain.user.dto.responseDto.SignupResponseDto;
-import com.example.api.domain.user.dto.responseDto.TokenResponseDto;
 import com.example.api.domain.user.service.AuthService;
 import com.example.api.global.response.ApiResponse;
 import jakarta.validation.Valid;
@@ -36,10 +36,12 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<ApiResponse<TokenResponseDto>> login(
+    public ResponseEntity<ApiResponse<LoginResponseDto>> login(
         @Valid @RequestBody LoginRequestDto requestDto
     ) {
         return ResponseEntity.ok(ApiResponse.ok(
+            "로그인 정상 성공",
+            "OK",
             authService.login(requestDto)
         ));
     }
