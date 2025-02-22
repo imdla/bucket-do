@@ -1,17 +1,18 @@
 import React from 'react';
+import styles from '../styles/Header.module.css';
 
 function Header() {
   return (
     <header>
-      <div>
+      <div className={styles.container}>
         <>
-          <h1>
+          <h1 className={styles.logo}>
             <img src="../public/images/BD-logo.png" alt="logo" />
           </h1>
         </>
 
         <>
-          <button>로그아웃</button>
+          <button className={styles.logoutButton}>로그아웃</button>
         </>
       </div>
     </header>
