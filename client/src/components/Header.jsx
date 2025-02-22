@@ -1,7 +1,14 @@
 import React from 'react';
 import styles from '../styles/Header.module.css';
+import { logout } from '../store/slices/authSlice';
+import { useDispatch } from 'react-redux';
 
 function Header() {
+  const dispatch = useDispatch();
+  function handleClick() {
+    dispatch(logout());
+  }
+
   return (
     <header>
       <div className={styles.container}>
@@ -12,7 +19,9 @@ function Header() {
         </>
 
         <>
-          <button className={styles.logoutButton}>로그아웃</button>
+          <button className={styles.logoutButton} onClick={handleClick}>
+            로그아웃
+          </button>
         </>
       </div>
     </header>
