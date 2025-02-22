@@ -5,13 +5,13 @@ const authApi = {
   // 회원가입
   signup: async (formData) => {
     const response = await api.post(`${ENDPOINT}/signup`, formData);
-    return response;
+    return response.data;
   },
 
   // 로그인
   login: async (formData) => {
     const response = await api.post(`${ENDPOINT}/login`, formData);
-    return response;
+    return response.data;
   },
 
   // 인증
