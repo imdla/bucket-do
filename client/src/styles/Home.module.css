@@ -1,0 +1,46 @@
+section {
+  width: var(--width-basic);
+  min-height: var(--height-min);
+}
+
+.container {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  padding: var(--padding-small) 0;
+}
+
+.container .filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container .filter li {
+  margin-right: var(--margin-small);
+}
+
+.container .filter button {
+  border: none;
+  background-color: var(--bg-200);
+  padding: var(--round-small-button);
+  border-radius: var(--border-radius-20);
+  font-size: var(--font-size-16);
+  transition: var(--transition-3);
+}
+
+.container .filter button:hover {
+  background-color: var(--primary-100);
+  box-shadow: var(--box-shadow-basic);
+}
+
+.container .bucketList {
+  width: 100%;
+  height: calc(60vh - 45px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
