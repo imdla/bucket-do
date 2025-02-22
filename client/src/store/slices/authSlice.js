@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 // 초기값 (localStorage에서 해당 정보 받아옴)
 const initialState = {
@@ -20,5 +20,16 @@ const authSlice = createSlice({
       localStorage.setItem('token', action.payload.token);
       localStorage.setItem('userName', action.payload.username);
     },
+
+    logout: (state, action) => {
+      state.token = null;
+      state.isLoggedIn = false;
+      state.user.name = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('userName');
+    },
   },
 });
+
+export const { login, logout } = authSlice.reducer;
+export default authSlice.reducer;
