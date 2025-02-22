@@ -7,7 +7,9 @@ function Home() {
   return (
     <div>
       <Header></Header>
-      <BucketList></BucketList>
+      <div>
+        <BucketList></BucketList>
+      </div>
       <Footer></Footer>
     </div>
   );
