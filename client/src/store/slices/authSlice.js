@@ -8,3 +8,17 @@ const initialState = {
     name: localStorage.getItem('userName'),
   },
 };
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    login: (state, action) => {
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+      state.user.name = action.payload.username;
+      localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('userName', action.payload.username);
+    },
+  },
+});
