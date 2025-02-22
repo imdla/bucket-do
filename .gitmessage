@@ -1,9 +1,9 @@
 # type: Subject
 
-# body[option]
+# - 본문 내용
 
-# 예시
-# feat: 로그인 기능 추가
+# 공동 작업자 설정
+# Co-authored-by: [GitHub 사용자명] <GitHub 이메일>
 
 # 타입(type)
 # - feat: 새로운 기능 추가
