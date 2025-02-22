@@ -25,8 +25,8 @@ public class JwtTokenProvider {
     }
 
     public String createToken(Authentication authentication) {
-        String email = authentication.getName();
-        Claims claims = Jwts.claims().setSubject(email);
+        String username = authentication.getName();
+        Claims claims = Jwts.claims().setSubject(username);
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + tokenValidityInMilliseconds);
@@ -51,7 +51,7 @@ public class JwtTokenProvider {
         }
     }
 
-    public String getEmail(String token) {
+    public String getUsername(String token) {
         return Jwts.parserBuilder()
             .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
             .build()

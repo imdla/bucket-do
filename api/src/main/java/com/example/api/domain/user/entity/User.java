@@ -24,13 +24,11 @@ public class User extends BaseTimeEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    // 닉네임
     @Column(unique = true)
     private String username;
-
-    @Column(unique = true)
     private String email;
     private String password;
     private String phoneNumber;
@@ -43,14 +41,6 @@ public class User extends BaseTimeEntity implements UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getNickname() {
-        return username;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
 
     // roll을 통한 권한을 설정하지 않았기 때문에 empty
     @Override

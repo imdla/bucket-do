@@ -28,11 +28,11 @@ public class AuthService {
 
     @Transactional
     public SignupResponseDto signup(SignupRequestDto requestDto) {
-        if (userRepository.existsByEmail(requestDto.getEmail())) {
+        if (userRepository.existsByUsername(requestDto.getUsername())) {
             throw new IllegalArgumentException("이미 사용중인 아이디입니다.");
         }
-        if (userRepository.existsByUsername(requestDto.getUsername())) {
-            throw new IllegalArgumentException("이미 사용중인 닉네임입니다.");
+        if (userRepository.existsByEmail(requestDto.getEmail())) {
+            throw new IllegalArgumentException("이미 사용중인 이메일입니다.");
         }
 
         String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
@@ -46,7 +46,7 @@ public class AuthService {
     public TokenResponseDto login(LoginRequestDto requestDto) {
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-                requestDto.getEmail(),
+                requestDto.getUsername(),
                 requestDto.getPassword()
             )
         );
