@@ -1,44 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+
 import Header from '../components/Header';
 import BucketList from '../components/BucketList';
 import Footer from '../components/Footer';
 import styles from '../styles/Home.module.css';
 
-function Home() {
-  const [currentFilter, setCurrentFilter] = useState('모두');
+import useFetch from '../hook/useFetch';
+import bucketApi from '../api/bucketApi';
 
-  function handleClick(e) {
-    const filterValue = e.target.innerHTML;
-    setCurrentFilter(filterValue);
+function Home() {
+  const [activeIndex, setActiveIndex] = useState(null);
+  const { data: bucketList, loading, error } = useFetch(bucketApi.getBuckets);
+
+  if (loading) {
+    return <div>Loading</div>;
   }
+
+  if (error) {
+    return <div>Error</div>;
+  }
+
+  const bucketValue = bucketList.length > 0 ? <BucketList /> : <div>버킷리스트를 추가해주세요</div>;
+
+  function handleClick(index) {
+    setActiveIndex(index);
+  }
+
+  const filterList = ['모두', '진행중', '완료'];
+  const filterButtons = filterList.map((label, index) => (
+    <li key={index}>
+      <button
+        className={activeIndex === index ? `${styles.active}` : ''}
+        onClick={() => handleClick(index)}
+      >
+        {label}
+      </button>
+    </li>
+  ));
 
   return (
     <div>
-      <Header></Header>
+      <Header />
 
       <section>
         <div className={styles.container}>
           <>
-            <ul className={styles.filter}>
-              <li>
-                <button onClick={handleClick}>모두</button>
-              </li>
-              <li>
-                <button onClick={handleClick}>진행중</button>
-              </li>
-              <li>
-                <button onClick={handleClick}>완료</button>
-              </li>
-            </ul>
+            <ul className={styles.filter}>{filterButtons}</ul>
           </>
 
-          <div className={styles.bucketList}>
-            <BucketList></BucketList>
-          </div>
+          {/* todo : activeIndex 값으로 BucketList 필터링 */}
+          <div className={styles.bucketList}>{bucketValue}</div>
         </div>
       </section>
 
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 }

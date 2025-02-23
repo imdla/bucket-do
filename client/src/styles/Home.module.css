@@ -37,7 +37,7 @@ section {
   box-shadow: var(--box-shadow-basic);
 }
 
-.active {
+.container .filter button.active {
   background-color: var(--primary-100);
 }
 
