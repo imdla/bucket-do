@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
 :root {
   /* color */
   --primary-100: #d4eaf7;
@@ -57,10 +59,12 @@ body {
   background-color: #fff;
   color: var(--text-100);
   box-sizing: border-box;
+  font-family: Pretendard, 'Pretendard Variable', 'Noto Sans KR', sans-serif;
 }
 
 a {
   display: block;
+  font-family: Pretendard, 'Pretendard Variable', 'Noto Sans KR', sans-serif;
 }
 
 img {
@@ -69,4 +73,9 @@ img {
 
 button {
   color: var(--text-100);
+  font-family: Pretendard, 'Pretendard Variable', 'Noto Sans KR', sans-serif;
+}
+
+form input {
+  font-family: Pretendard, 'Pretendard Variable', 'Noto Sans KR', sans-serif;
 }
