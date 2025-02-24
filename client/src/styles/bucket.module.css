@@ -1,0 +1,10 @@
+.bucketItem {
+  font-size: var(--font-size-18);
+  width: 50vw;
+  border: none;
+  text-align: center;
+  background-color: var(--bg-200);
+  border-radius: var(--border-radius-20);
+  padding: var(--padding-large);
+  box-sizing: border-box;
+}
