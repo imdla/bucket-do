@@ -9,7 +9,7 @@
   --text-200: #313d44;
   --bg-100: #fffefb;
   --bg-200: #f5f4f1;
-  --bg-300: #020202;
+  --bg-300: #cccbc8;
 
   /* font-size */
   --font-size-14: 14px;
@@ -26,6 +26,7 @@
   --round-small-button: 12px 16px;
 
   /* border-radius */
+  --border-radius-15: 15px;
   --border-radius-20: 20px;
   --border-radius-30: 30px;
 
@@ -34,6 +35,22 @@
 
   /* box-shadow */
   --box-shadow-basic: 0 0 3px #3b3c3d;
+
+  /* margin */
+  --margin-small: 1rem;
+  --margin-medium: 1.5rem;
+  --margin-large: 2rem;
+
+  /* padding */
+  --padding-small: 1rem;
+  --padding-medium: 1.5rem;
+  --padding-large: 2rem;
+
+  /* width */
+  --width-basic: 100vw;
+
+  /* height */
+  --height-min: 60vh;
 }
 
 body {
@@ -48,4 +65,8 @@ a {
 
 img {
   object-fit: cover;
+}
+
+button {
+  color: var(--text-100);
 }
