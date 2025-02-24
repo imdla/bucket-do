@@ -19,39 +19,30 @@ export default function TodoList({ bucketId }) {
     fetchTodos();
   }, []);
 
-  // const todoList = todos.map((todo) => {
-  //   const { id, content, is_completed } = todo;
+  const handleCreate = async () => {
+    try {
+      await todoApi.createTodo(bucketId);
+      fetchTodos();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  //   return (
-  //     <li key={id}>
-  //       <Todo
-  //         bucketId={bucketId}
-  //         todoId={id}
-  //         todoContent={content}
-  //         todoCompleted={is_completed}
-  //         fetchTodo={fetchTodos}
-  //       />
-  //     </li>
-  //   );
-  // });
+  const todoList = todos.map((todo) => {
+    return (
+      <li key={todo.id}>
+        <Todo bucketId={bucketId} todo={todo} fetchTodo={fetchTodos} />
+      </li>
+    );
+  });
 
   return (
     <div className={styles.todoListContainer}>
-      {/* <ul>{todoList}</ul> */}
+      <ul className={styles.todoList}>{todoList}</ul>
 
-      <ul className={styles.todoList}>
-        <li>
-          <Todo></Todo>
-        </li>
-        <li>
-          <Todo></Todo>
-        </li>
-        <li>
-          <Todo></Todo>
-        </li>
-      </ul>
-
-      <button className={styles.createButton}>+</button>
+      <button className={styles.createButton} onClick={handleCreate}>
+        +
+      </button>
     </div>
   );
 }
