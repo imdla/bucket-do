@@ -5,6 +5,73 @@
   text-align: center;
   background-color: var(--bg-200);
   border-radius: var(--border-radius-20);
-  padding: var(--padding-large);
+  padding: var(--padding-small);
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.bucketItem:hover {
+  box-shadow: var(--box-shadow-basic);
+  transition: var(--transition-3);
+}
+
+.bucketItem .bucketForm {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.bucketItem .bucketForm input {
+  min-width: 240px;
+  height: 2.5rem;
+  padding: 0 1rem;
+  border: none;
+  background-color: var(--bg-100);
+  border-radius: var(--border-radius-15);
+  box-sizing: border-box;
+}
+.bucketItem .bucketForm .fileInput {
+  line-height: 2.8rem;
+}
+
+.bucketItem .buttonBox {
+  display: flex;
+  gap: 1rem;
+}
+.bucketItem .buttonBox .toogleButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background-color: var(--primary-100);
+  font-size: var(--font-size-18);
+  border-radius: var(--border-radius-20);
+  transition: var(--transition-3);
+}
+
+.bucketItem .toogleButton:hover {
+  box-shadow: var(--box-shadow-basic);
+}
+
+.bucketItem .buttonBox .deleteButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background-color: var(--primary-200);
+  font-size: var(--font-size-18);
+  border-radius: var(--border-radius-20);
+  transition: var(--transition-3);
+}
+
+.deleteButton:hover {
+  box-shadow: var(--box-shadow-basic);
+}
+
+.bucketItem .bucketImageBox {
+  width: 100px;
+}
+.bucketItem .bucketImage {
+  width: 100px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
