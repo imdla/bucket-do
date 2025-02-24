@@ -34,9 +34,8 @@ export default function Login({ setIsLogin }) {
 
     try {
       const response = await authApi.login(formData);
-
       const username = formData.username;
-      const { token } = response.token;
+      const { token } = response.data;
       dispatch(login({ token, username }));
       navigate('/');
 
@@ -59,7 +58,7 @@ export default function Login({ setIsLogin }) {
 
           <div className={styles.introText}>
             <p>버킷두(BucketDo)는 작심삼일러를 위한</p>
-            <p>작은 실천으로 큰 목표를 이루는 계획 서비스 입니다.</p>
+            <p>작은 실천으로 큰 목표를 이루는 기록 서비스 입니다</p>
           </div>
         </div>
       </>
