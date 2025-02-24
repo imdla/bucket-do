@@ -1,16 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/Signup.module.css';
+import authApi from '../api/authApi';
 function Signup() {
-  const [id, setId] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
-  const [tel, setTel] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [passwordConfirmed, setPasswordConfirmed] = useState(false);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // 기본 제출 동작 방지
+
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('email', email);
+    formData.append('phoneNumber', phoneNumber);
+
+    console.log(formData);
+
+    try {
+      const response = await authApi.signup(formData);
+      console.log('회원가입 성공:', response.data);
+      console.log(formData);
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+    }
+  };
   // id 유효성 검사
-  const idCheck = () => {
+  const handleCheckId = () => {
     // if(emailValue === DB에 있는 email 데이터){
     //   alert("이미 존재하는 이메일입니다")
     // }else{
@@ -19,7 +38,7 @@ function Signup() {
   };
 
   // email 유효성 검사
-  const emailCheck = () => {
+  const handleCheckEmail = () => {
     // if(emailValue === DB에 있는 email 데이터){
     //   alert("이미 존재하는 이메일입니다")
     // }else{
@@ -33,14 +52,6 @@ function Signup() {
     passwordMessage =
       password === passwordCheck ? '비밀번호가 일치합니다!' : '비밀번호가 일치하지 않습니다!';
   }
-
-  const confirm = (e) => {
-    e.priventDefault;
-    if (password != passwordCheck) {
-      alert('비밀번호가 일치하지 않습니다');
-      return;
-    }
-  };
   return (
     <div className={styles.container}>
       <div className={styles.signupContainer}>
@@ -49,13 +60,13 @@ function Signup() {
             <input
               className={styles.signupInput}
               type="text"
-              name="id"
-              value={id}
+              name="username"
+              value={username}
               placeholder="아이디"
               required
-              onChange={(e) => setId(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
-            <button className={styles.emailCheckButton} onClick={emailCheck}>
+            <button className={styles.emailCheckButton} onClick={handleCheckId}>
               중복 확인
             </button>
           </div>
@@ -70,7 +81,7 @@ function Signup() {
               onChange={(e) => setEmail(e.target.value)}
             />
             {/* DB 에 존재하는지 정보 받기 */}
-            <button className={styles.emailCheckButton} onClick={emailCheck}>
+            <button className={styles.emailCheckButton} onClick={handleCheckEmail}>
               중복 확인
             </button>
           </div>
@@ -78,10 +89,11 @@ function Signup() {
           <input
             className={styles.signupInput}
             type="tel"
-            name="tel"
+            name="phoneNumber"
             pattern="[0-9]{2,3}[0-9]{3,4}[0-9]{4}"
             placeholder="연락처 예:01012345678"
             required
+            onChange={(e) => setPhoneNumber(e.target.value)}
           />
           <input
             className={styles.signupInput}
@@ -109,7 +121,7 @@ function Signup() {
             value={passwordMessage}
             disabled
           />
-          <button className={styles.signupButton} onClick={(e) => confirm(e)} type="submit">
+          <button className={styles.signupButton} onClick={(e) => handleSubmit(e)} type="submit">
             회원가입
           </button>
         </form>
