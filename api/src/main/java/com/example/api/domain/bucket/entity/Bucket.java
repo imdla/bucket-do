@@ -1,5 +1,6 @@
 package com.example.api.domain.bucket.entity;
 
+import com.example.api.domain.bucket.dto.requestDto.BucketRequestDto;
 import com.example.api.domain.user.entity.User;
 import com.example.api.global.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
@@ -57,5 +58,10 @@ public class Bucket extends BaseTimeEntity {
         this.title = title;
         this.image_path = image_path;
         this.user = user;
+    }
+
+    public Bucket update(BucketRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        return this;
     }
 }

@@ -1,6 +1,8 @@
 package com.example.api.domain.bucket.service;
 
+import com.example.api.domain.bucket.dto.requestDto.BucketRequestDto;
 import com.example.api.domain.bucket.dto.responseDto.BucketResponseDto;
+import com.example.api.domain.bucket.dto.responseDto.BucketUpdateResponseDto;
 import com.example.api.domain.bucket.entity.Bucket;
 import com.example.api.domain.bucket.repository.BucketRepository;
 import com.example.api.domain.user.entity.User;
@@ -28,5 +30,15 @@ public class BucketService {
         Bucket emptyBucket = bucketRepository.save(new Bucket(null, null, user));
 
         return BucketResponseDto.from(emptyBucket);
+    }
+
+    // 버킷 수정
+    @Transactional
+    public BucketUpdateResponseDto updateBucket(Long id, BucketRequestDto requestDto, User user) {
+        Bucket bucket = bucketRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("해당 버킷을 찾을 수 없습니다."));
+        bucket.update(requestDto);
+
+        return BucketUpdateResponseDto.from(bucket);
     }
 }
