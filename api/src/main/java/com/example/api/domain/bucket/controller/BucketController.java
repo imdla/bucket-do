@@ -25,7 +25,7 @@ public class BucketController {
     public ResponseEntity<ApiResponse<List<BucketResponseDto>>> getBuckets(
         @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(ApiResponse.ok(
-            "버킷리스트 전체 조회 성공",
+            "전체 버킷이 조회되었습니다.",
             "OK",
             bucketService.getBuckets(user)
         ));
