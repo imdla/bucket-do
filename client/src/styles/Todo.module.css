@@ -40,12 +40,13 @@
 
 /* content */
 .todo input[type='text'] {
-  min-width: 200px;
+  min-width: 240px;
   height: 2.5rem;
   padding: 0 1rem;
   border: none;
   background-color: var(--bg-100);
   border-radius: var(--border-radius-15);
+  box-sizing: border-box;
 }
 
 .todo input[type='text']:focus {

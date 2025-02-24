@@ -70,7 +70,7 @@ export default function Todo({ bucketId, todoId, todoContent, todoCompleted, fet
       />
 
       <button className={styles.deleteButton} onClick={handleDelete}>
-        X
+        x
       </button>
     </div>
   );

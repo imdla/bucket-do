@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import todoApi from '../api/todoApi';
 import Todo from './Todo';
+import styles from '../styles/TodoList.module.css';
 
 export default function TodoList({ bucketId }) {
   const [todos, setTodos] = useState([]);
@@ -35,10 +36,10 @@ export default function TodoList({ bucketId }) {
   // });
 
   return (
-    <div>
+    <div className={styles.todoListContainer}>
       {/* <ul>{todoList}</ul> */}
 
-      <ul>
+      <ul className={styles.todoList}>
         <li>
           <Todo></Todo>
         </li>
@@ -50,7 +51,7 @@ export default function TodoList({ bucketId }) {
         </li>
       </ul>
 
-      <button>+</button>
+      <button className={styles.createButton}>+</button>
     </div>
   );
 }
