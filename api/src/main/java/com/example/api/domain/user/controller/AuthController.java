@@ -35,7 +35,7 @@ public class AuthController {
             ));
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponseDto>> login(
         @Valid @RequestBody LoginRequestDto requestDto
     ) {

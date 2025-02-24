@@ -43,6 +43,7 @@ public class AuthService {
     }
 
 
+    @Transactional
     public LoginResponseDto login(LoginRequestDto requestDto) {
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
