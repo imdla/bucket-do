@@ -30,6 +30,7 @@ public class Bucket extends BaseTimeEntity {
     private String title;
     private LocalDateTime deadline;
     private String image_path;
+    @Column(nullable = false)
     private boolean is_completed;
 
     @Column(nullable = false)
