@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import styles from '../styles/Todo.module.css';
 
 export default function Todo() {
   const [content, setContent] = useState('');
   const handleTodoInput = () => {};
 
   return (
-    <div>
-      <button>체크 박스</button>
-
+    <div className={styles.todo}>
+      <input type="checkbox" />
       <input
         id="todo"
         name="todo"
