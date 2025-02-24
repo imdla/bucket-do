@@ -4,19 +4,19 @@ import { useNavigate } from 'react-router-dom';
 
 function Login({ setIsLogin }) {
   const navigate = useNavigate();
-  const onSignupPage = () => {
+  const handleSignupPage = () => {
     navigate('/signup'); // '/signup' 페이지로 리다이렉션
   };
-  const onLogin = () => {
+  const handleLogin = () => {
     setIsLogin(true); // 로그인 버튼을 클릭하면 isLogin을 true로 설정
   };
 
   return (
-    <div className={styles.loginBackGround}>
+    <div className={styles.container}>
       <div className={styles.loginContainer}>
         <div className={styles.loginIntro}>
           <div>
-            <img className={styles.logoImage} src="/images/BD-logo.png" alt="logo" />
+            <img className={styles.logoImage} src="/public/images/BD-logo.png" alt="logo" />
           </div>
           <div>
             <p className={styles.introText}>버킷두(BucketDo)는 작심삼일러를 위한</p>
@@ -24,23 +24,30 @@ function Login({ setIsLogin }) {
           </div>
         </div>
         <div>
-          <form>
-            <input className={styles.emailInput} type="email" name="email" placeholder="이메일" />
+          <form className={styles.loginForm}>
+            <input
+              className={styles.emailInput}
+              type="email"
+              name="email"
+              placeholder="이메일"
+              required
+            />
             <input
               className={styles.passwordInput}
-              type="text"
+              type="password"
               name="password"
               placeholder="비밀번호"
+              required
             />
+            <div className={styles.buttonBox}>
+              <button className={styles.loginButton} onClick={handleLogin}>
+                로그인
+              </button>
+              <button className={styles.signupButton} onClick={handleSignupPage}>
+                회원가입
+              </button>
+            </div>
           </form>
-        </div>
-        <div className={styles.buttonBox}>
-          <button className={styles.loginButton} onClick={onLogin}>
-            로그인
-          </button>
-          <button className={styles.signupButton} onClick={onSignupPage}>
-            회원가입
-          </button>
         </div>
       </div>
     </div>

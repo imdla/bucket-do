@@ -1,9 +1,5 @@
-.login {
-  color: var(--accent-200);
-}
-.loginBackGround {
-  width: 50vw;
-  margin: 0 auto;
+.container {
+  width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -13,9 +9,8 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  gap: 1rem;
 }
-
 .loginIntro {
   width: 50vw;
   margin: 0 auto;
@@ -23,40 +18,48 @@
   background-color: var(--bg-200);
   padding: var(--round-large-button);
   border-radius: var(--border-radius-20);
+  box-sizing: border-box;
 }
 .logoImage {
-  width: 15%;
-  margin: 0 0 3% 0;
+  width: 72px;
+  margin: var(--margin-small);
 }
 .introText {
-  padding-top: 1%;
+  line-height: 1.5rem;
+}
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 .emailInput {
-  width: 50vw;
-  margin: 4% 0 2% 0;
+  font-size: var(--font-size-18);
   background-color: var(--bg-200);
   border-radius: var(--border-radius-20);
-  border: 0px;
+  border: none;
   text-align: center;
   padding: var(--round-large-button);
+  box-sizing: border-box;
 }
+
 .passwordInput {
-  width: 50vw;
+  font-size: var(--font-size-18);
   background-color: var(--bg-200);
   border-radius: var(--border-radius-20);
-  border: 0px;
+  border: none;
   text-align: center;
   padding: var(--round-large-button);
+  box-sizing: border-box;
 }
 
 .buttonBox {
+  margin-top: 0.5rem;
   display: flex;
   justify-content: space-between;
-  margin-top: 3%;
 }
 .loginButton {
   width: 45%;
-  border: 0px;
+  border: none;
   cursor: pointer;
 
   background-color: var(--primary-100);
@@ -65,7 +68,7 @@
 }
 .signupButton {
   width: 45%;
-  border: 0px;
+  border: none;
   cursor: pointer;
 
   background-color: var(--primary-100);
