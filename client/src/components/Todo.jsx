@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Todo() {
+  const [content, setContent] = useState('');
+  const handleTodoInput = () => {};
+
   return (
     <div>
       <button>체크 박스</button>
