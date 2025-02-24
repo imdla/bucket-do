@@ -6,6 +6,7 @@ import com.example.api.domain.bucket.dto.responseDto.BucketUpdateResponseDto;
 import com.example.api.domain.bucket.service.BucketService;
 import com.example.api.domain.user.entity.User;
 import com.example.api.global.response.ApiResponse;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,7 @@ public class BucketController {
     // 버킷 수정
     @PatchMapping("/{id}")
     public ResponseEntity<ApiResponse<BucketUpdateResponseDto>> updateBucket(@PathVariable Long id,
-        @RequestBody BucketRequestDto requestDto,
+        @Valid @RequestBody BucketRequestDto requestDto,
         @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(ApiResponse.ok(
             "버킷이 수정되었습니다.",
