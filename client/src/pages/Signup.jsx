@@ -42,7 +42,7 @@ function Signup() {
     }
   };
   return (
-    <div className={styles.signupBackGround}>
+    <div className={styles.container}>
       <div className={styles.signupContainer}>
         <form className={styles.signupForm}>
           <div className={styles.DuplicateCheckBox}>
