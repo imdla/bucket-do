@@ -8,9 +8,10 @@ export default function Todo() {
   return (
     <div className={styles.todo}>
       <input type="checkbox" />
+
       <input
-        id="todo"
-        name="todo"
+        id="content"
+        name="content"
         type="text"
         placeholder="투두 리스트 내용을 입력해주세요"
         required
@@ -18,7 +19,7 @@ export default function Todo() {
         onChange={handleTodoInput}
       />
 
-      <button>X</button>
+      <button className={styles.deleteButton}>X</button>
     </div>
   );
 }
