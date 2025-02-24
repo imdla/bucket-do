@@ -26,11 +26,15 @@
   border-radius: var(--border-radius-20);
   padding: var(--round-large-button);
   box-sizing: border-box;
-  color: var(--bg-300);
 }
 
 .signupInput::placeholder {
   opacity: 0.5;
+}
+
+.signupInput:focus {
+  outline: 2px solid var(--bg-300);
+  font-size: var(--font-size-16);
 }
 
 /* duplicateCheckBox */
@@ -49,7 +53,7 @@
   cursor: pointer;
   border: none;
   background-color: var(--primary-200);
-  border-radius: var(--border-radius-20);
+  border-radius: var(--border-radius-30);
   padding: var(--round-small-button);
   box-sizing: border-box;
   transition: var(--transition-3);

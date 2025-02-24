@@ -1,39 +1,44 @@
 .container {
-  width: 100vw;
-  height: 100vh;
+  padding-top: 20vh;
+  width: 50vw;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.loginContainer {
-  text-align: center;
-  display: flex;
   flex-direction: column;
-  gap: 1rem;
 }
-.loginIntro {
+
+/* loginIntro */
+.container .loginIntro {
   width: 50vw;
   margin: 0 auto;
   text-align: center;
   background-color: var(--bg-200);
-  padding: var(--round-large-button);
+  padding: 2rem 3rem;
   border-radius: var(--border-radius-20);
   box-sizing: border-box;
 }
-.logoImage {
+
+.container .loginIntro .logoImage {
   width: 72px;
   margin: var(--margin-small);
 }
-.introText {
+
+.container .loginIntro .introText > p {
   line-height: 1.5rem;
 }
-.loginForm {
+
+/* loginForm */
+.container .loginForm {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  margin-top: var(--margin-small);
+  gap: 1rem;
 }
-.emailInput {
-  font-size: var(--font-size-18);
+
+.container .loginForm input {
+  font-size: var(--font-size-16);
   background-color: var(--bg-200);
   border-radius: var(--border-radius-20);
   border: none;
@@ -42,36 +47,32 @@
   box-sizing: border-box;
 }
 
-.passwordInput {
-  font-size: var(--font-size-18);
-  background-color: var(--bg-200);
-  border-radius: var(--border-radius-20);
-  border: none;
-  text-align: center;
-  padding: var(--round-large-button);
-  box-sizing: border-box;
+.container .loginForm input::placeholder {
+  opacity: 0.5;
 }
 
-.buttonBox {
-  margin-top: 0.5rem;
+.container .loginForm input:focus {
+  outline: 2px solid var(--bg-300);
+  font-size: var(--font-size-16);
+}
+
+.container .loginForm .buttonBox {
+  margin-top: var(--margin-small);
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
-.loginButton {
+
+.container .loginForm button {
   width: 45%;
   border: none;
   cursor: pointer;
-
+  font-size: var(--font-size-16);
   background-color: var(--primary-100);
-  border-radius: var(--border-radius-20);
-  padding: var(--round-small-button);
+  border-radius: var(--border-radius-30);
+  padding: var(--round-medium-button);
+  transition: var(--transition-3);
 }
-.signupButton {
-  width: 45%;
-  border: none;
-  cursor: pointer;
-
-  background-color: var(--primary-100);
-  border-radius: var(--border-radius-20);
-  padding: var(--round-small-button);
+.container .loginForm button:hover {
+  box-shadow: var(--box-shadow-basic);
 }
