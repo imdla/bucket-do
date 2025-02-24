@@ -4,12 +4,15 @@ import router from './router';
 
 import { Provider } from 'react-redux';
 import store from './store/store';
+import AuthProvider from './provider/AuthProvider';
 
 export default function App() {
   return (
     <>
       <Provider store={store}>
-        <RouterProvider router={router}></RouterProvider>
+        <RouterProvider router={router}>
+          <AuthProvider />
+        </RouterProvider>
       </Provider>
     </>
   );

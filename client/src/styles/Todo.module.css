@@ -1,0 +1,65 @@
+.todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* checkbox */
+.todo input[type='checkbox'] {
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+  background: none;
+  border: none;
+  outline: none;
+  flex-grow: 0;
+  cursor: pointer;
+  accent-color: var(--primary-100);
+}
+
+.todo input[type='checkbox']::before {
+  content: '';
+  color: transparent;
+  display: block;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  border: none;
+  background-color: transparent;
+  background-size: contain;
+  box-shadow: inset 0 0 0 1px var(--bg-300);
+}
+
+.todo input[type='checkbox']:checked {
+  background-color: currentcolor;
+}
+
+.todo input[type='checkbox']:checked::before {
+  box-shadow: none;
+}
+
+/* content */
+.todo input[type='text'] {
+  min-width: 240px;
+  height: 2.5rem;
+  padding: 0 1rem;
+  border: none;
+  background-color: var(--bg-100);
+  border-radius: var(--border-radius-15);
+  box-sizing: border-box;
+}
+
+.todo input[type='text']:focus {
+  background-color: var(--bg-100);
+  outline: 1px solid var(--bg-300);
+}
+
+/* deleteButton */
+.todo .deleteButton {
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: var(--border-radius-20);
+  background-color: var(--primary-100);
+}
