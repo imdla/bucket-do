@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +28,17 @@ public class BucketController {
             "버킷리스트 전체 조회 성공",
             "OK",
             bucketService.getBuckets(user)
+        ));
+    }
+
+    // 버킷 생성
+    @PostMapping("/buckets")
+    public ResponseEntity<ApiResponse<BucketResponseDto>> createBucket(
+        @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(ApiResponse.ok(
+            "버킷이 생성되었습니다.",
+            "CREATED",
+            bucketService.createBucket(user)
         ));
     }
 }
