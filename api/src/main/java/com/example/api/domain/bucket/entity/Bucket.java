@@ -33,21 +33,28 @@ public class Bucket extends BaseTimeEntity {
     private boolean is_completed;
 
     @Column(nullable = false)
-    private Integer todo_all;
+    private int todo_all;
     @Column(nullable = false)
-    private Integer todo_completed;
+    private int todo_completed;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+//    @Builder
+//    public Bucket(String title, String image_path, boolean is_completed, Integer todo_all,
+//        Integer todo_completed) {
+//        this.title = title;
+//        this.image_path = image_path;
+//        this.is_completed = is_completed;
+//        this.todo_all = todo_all;
+//        this.todo_completed = todo_completed;
+//    }
+
     @Builder
-    public Bucket(String title, String image_path, boolean is_completed, Integer todo_all,
-        Integer todo_completed) {
+    public Bucket(String title, String image_path, User user) {
         this.title = title;
         this.image_path = image_path;
-        this.is_completed = is_completed;
-        this.todo_all = todo_all;
-        this.todo_completed = todo_completed;
+        this.user = user;
     }
 }

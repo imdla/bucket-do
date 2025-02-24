@@ -15,8 +15,8 @@ public class BucketResponseDto {
     private final boolean is_completed;
     private final LocalDateTime created_at;
     private final LocalDateTime updated_at;
-    private final Integer todo_all;
-    private final Integer todo_completed;
+    private final int todo_all;
+    private final int todo_completed;
 
     public static BucketResponseDto from(Bucket entity) {
         return BucketResponseDto.builder()
