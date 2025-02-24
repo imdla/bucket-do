@@ -1,9 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/Todo.module.css';
+import todoApi from '../api/todoApi';
 
-export default function Todo() {
+export default function Todo({ bucketId, todoId, fetchTodo }) {
   const [content, setContent] = useState('');
-  const handleTodoInput = () => {};
+
+  useEffect(() => {
+    async function updateContent() {
+      try {
+        const response = await todoApi.updateTodo(bucketId, todoId, content);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    updateContent();
+  }, [content]);
+
+  function handleChange(e) {
+    setContent(e.target.value);
+  }
+
+  const handleDelete = async () => {
+    try {
+      await todoApi.deleteTodo(bucketId, todoId);
+      fetchTodo();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={styles.todo}>
@@ -16,10 +41,12 @@ export default function Todo() {
         placeholder="투두 리스트 내용을 입력해주세요"
         required
         value={content}
-        onChange={handleTodoInput}
+        onChange={handleChange}
       />
 
-      <button className={styles.deleteButton}>X</button>
+      <button className={styles.deleteButton} onClick={handleDelete}>
+        X
+      </button>
     </div>
   );
 }

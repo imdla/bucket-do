@@ -6,8 +6,8 @@
 
 /* checkbox */
 .todo input[type='checkbox'] {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   vertical-align: middle;
   background: none;
   border: none;
@@ -41,9 +41,9 @@
 /* content */
 .todo input[type='text'] {
   min-width: 200px;
-  height: 2rem;
+  height: 2.5rem;
   padding: 0 1rem;
-  border: 1px solid var(--bg-300);
+  border: none;
   background-color: var(--bg-100);
   border-radius: var(--border-radius-15);
 }
