@@ -41,4 +41,13 @@ public class BucketService {
 
         return BucketUpdateResponseDto.from(bucket);
     }
+
+    // 버킷 삭제
+    @Transactional
+    public void deleteBucket(Long id, User user) {
+        Bucket bucket = bucketRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("해당 버킷을 찾을 수 없습니다."));
+
+        bucketRepository.delete(bucket);
+    }
 }
