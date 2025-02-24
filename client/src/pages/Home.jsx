@@ -1,28 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Header from '../components/Header';
 import BucketList from '../components/BucketList';
 import Footer from '../components/Footer';
 import styles from '../styles/Home.module.css';
 
-import useFetch from '../hook/useFetch';
 import bucketApi from '../api/bucketApi';
 
-function Home() {
+export default function Home() {
   const [activeIndex, setActiveIndex] = useState(null);
-  const { data: bucketList, loading, error } = useFetch(bucketApi.getBuckets);
+  const [bucketList, setBucketList] = useState([]);
+  const [bucket, setBucket] = useState(null);
 
-  if (loading) {
-    return <div>Loading</div>;
-  }
+  useEffect(() => {
+    const fetchBuckets = async () => {
+      try {
+        const response = await bucketApi.getBuckets();
+        setBucketList(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  if (error) {
-    return <div>Error</div>;
-  }
+    fetchBuckets();
+  }, [activeIndex, bucket]);
 
+  const handleCreateBucket = async () => {
+    try {
+      const response = await bucketApi.createBucket();
+      setBucket(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // todo : activeIndex 값으로 BucketList 필터링 위해 BucketList에 전달
+  // todo : 버킷 생성 시 새로 생성된 버킷을 BucketList에 전달
+  // const bucketValue = bucketList.length > 0 ? <BucketList activeIndex={activeIndex} bucket={bucket} /> : <div>버킷리스트를 추가해주세요</div>;
   const bucketValue = bucketList.length > 0 ? <BucketList /> : <div>버킷리스트를 추가해주세요</div>;
 
-  function handleClick(index) {
+  function handleActiveFilter(index) {
     setActiveIndex(index);
   }
 
@@ -31,7 +48,7 @@ function Home() {
     <li key={index}>
       <button
         className={activeIndex === index ? `${styles.active}` : ''}
-        onClick={() => handleClick(index)}
+        onClick={() => handleActiveFilter(index)}
       >
         {label}
       </button>
@@ -53,9 +70,11 @@ function Home() {
         </div>
       </section>
 
+      <button className={styles.createButton} onClick={handleCreateBucket}>
+        생성
+      </button>
+
       <Footer />
     </div>
   );
 }
-
-export default Home;

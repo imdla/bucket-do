@@ -13,6 +13,7 @@ section {
   padding: var(--padding-small) 0;
 }
 
+/* filter */
 .container .filter {
   display: flex;
   align-items: center;
@@ -41,10 +42,32 @@ section {
   background-color: var(--primary-100);
 }
 
+/* bucketList */
 .container .bucketList {
   width: 100%;
   height: calc(60vh - 45px);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* createButton */
+:root {
+  position: relative;
+}
+
+.createButton {
+  position: sticky;
+  bottom: 10vh;
+  left: 70vw;
+  border: none;
+  background-color: var(--primary-100);
+  padding: var(--round-medium-button);
+  font-size: var(--font-size-18);
+  border-radius: var(--border-radius-30);
+  transition: var(--transition-3);
+}
+
+.createButton:hover {
+  box-shadow: var(--box-shadow-basic);
 }
