@@ -1,5 +1,7 @@
 package com.example.api.domain.todo.dto.response;
 
+import com.example.api.domain.todo.entity.Todo;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -7,7 +9,20 @@ import lombok.Getter;
 @Builder
 public class TodoResponseDto {
 
-    private Long id;
-    private String content;
+    private final Long id;
+    private final String content;
+    private final boolean isCompleted;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
+
+    public static TodoResponseDto from(Todo entity) {
+        return TodoResponseDto.builder()
+            .id(entity.getId())
+            .content(entity.getContent())
+            .isCompleted(entity.isCompleted())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
+            .build();
+    }
 
 }

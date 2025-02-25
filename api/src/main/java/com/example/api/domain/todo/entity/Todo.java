@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,8 +29,10 @@ public class Todo extends BaseTimeEntity {
 
     private String content;
 
-    public Todo(Long id, Bucket bucket, String content) {
-        this.id = id;
+    private boolean isCompleted;
+
+    @Builder
+    public Todo(String content, Bucket bucket) {
         this.bucket = bucket;
         this.content = content;
     }
