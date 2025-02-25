@@ -8,11 +8,14 @@ import Modal from '../components/Modal';
 
 function Signup() {
   const navigate = useNavigate();
+  const [checkedUsername, setCheckedUsername] = useState(false);
+
   const [passwordCheck, setPasswordCheck] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     username: '',
     password: '',
+    phoneNumber: '',
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,12 +29,25 @@ function Signup() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // 로그인
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // 비밀번호 일치 여부
     if (formData.password !== passwordCheck) {
       setModalData({
         ...modalData,
         content: '비밀번호가 일치하지 않습니다.',
+      });
+      setIsModalOpen(true);
+      return;
+    }
+
+    // username 중복 확인 여부
+    if (!checkedUsername) {
+      setModalData({
+        ...modalData,
+        content: '아이디 중복 검사가 필요합니다.',
       });
       setIsModalOpen(true);
       return;
@@ -56,20 +72,26 @@ function Signup() {
     }
   };
 
+  // username 중복 검사
   const handleCheckId = async (e) => {
     e.preventDefault();
     const userName = formData.username;
+
     try {
       const response = await authApi.checkUsername(userName);
       const isPossible = response.available;
 
       if (isPossible) {
+        setCheckedUsername(true);
+
         setModalData({
           ...modalData,
           content: '사용 가능한 아이디입니다.',
         });
         setIsModalOpen(true);
       } else {
+        setCheckedUsername(false);
+
         setModalData({
           ...modalData,
           content: '이미 사용 중인 아이디입니다.',
