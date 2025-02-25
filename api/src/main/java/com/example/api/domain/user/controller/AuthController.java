@@ -1,5 +1,6 @@
 package com.example.api.domain.user.controller;
 
+import com.example.api.domain.bucket.dto.responseDto.UsernameCheckResponse;
 import com.example.api.domain.user.dto.requestDto.LoginRequestDto;
 import com.example.api.domain.user.dto.requestDto.SignupRequestDto;
 import com.example.api.domain.user.dto.responseDto.LoginResponseDto;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -49,5 +51,14 @@ public class AuthController {
     // 단순히 JWT 검증을 위한 endpoint
     @GetMapping("/auth/verify")
     public void verify() {
+    }
+
+    // 아이디 중복 체크 ( 중복이면 true)
+    @GetMapping("/auth/users")
+    public ResponseEntity<UsernameCheckResponse> checkUsername(@RequestParam String username) {
+        boolean isAvailable = !authService.checkUsername(username);
+        String message = isAvailable ? "사용 가능한 아이디입니다." : "이미 사용 중인 아이디입니다.";
+
+        return ResponseEntity.ok(new UsernameCheckResponse(message, isAvailable));
     }
 }

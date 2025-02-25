@@ -60,4 +60,9 @@ public class AuthService {
         return LoginResponseDto.from(user, jwt);
 //        return new TokenResponseDto.from(jwt);
     }
+
+
+    public boolean checkUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
 }
