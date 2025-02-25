@@ -14,7 +14,7 @@ function Signup() {
   });
   const [passwordCheck, setPasswordCheck] = useState('');
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const [modalData, setModalData] = useState({
     content: '비밀번호가 일치하지 않습니다.',
     cancleText: '확인',

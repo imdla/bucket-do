@@ -1,0 +1,51 @@
+.backGround {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--text-100);
+  opacity: 0.5;
+  z-index: 998;
+}
+
+.container {
+  padding: 3rem 6rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--text-200);
+  border-radius: var(--border-radius-20);
+  /* border: 1px solid var(--bg-200); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 999;
+}
+
+.container p {
+  color: var(--bg-100);
+}
+
+.container .buttonBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--margin-medium);
+}
+
+.container .buttonBox button {
+  border: none;
+  padding: var(--bg-100);
+  padding: var(--round-small-button);
+  border-radius: var(--border-radius-30);
+  transition: var(--transition-3);
+  z-index: 1000;
+}
+
+.container .buttonBox button:hover {
+  box-shadow: 0 0 5px var(--bg-300);
+  background-color: var(--bg-300);
+}
