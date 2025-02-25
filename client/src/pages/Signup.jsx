@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from '../styles/Signup.module.css';
 import authApi from '../api/authApi';
 import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal';
 
 function Signup() {
   const navigate = useNavigate();
@@ -13,6 +14,13 @@ function Signup() {
   });
   const [passwordCheck, setPasswordCheck] = useState('');
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({
+    content: '비밀번호가 일치하지 않습니다.',
+    cancleText: '확인',
+    onConfirm: false,
+  });
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -20,7 +28,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== passwordCheck) {
-      alert('비밀번호가 일치하지 않습니다!');
+      setIsModalOpen(true);
       return;
     }
 
@@ -52,6 +60,7 @@ function Signup() {
 
   return (
     <div className={styles.container}>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalData} />
       <form className={styles.signupForm} onSubmit={handleSubmit}>
         <div className={styles.usernameBox}>
           <input
