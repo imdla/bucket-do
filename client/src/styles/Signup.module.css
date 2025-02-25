@@ -26,18 +26,29 @@
   border-radius: var(--border-radius-20);
   padding: var(--round-large-button);
   box-sizing: border-box;
+  box-shadow: var(--box-shadow-basic);
 }
 
-input::placeholder {
+.container input::placeholder {
   opacity: 0.5;
 }
 
-input:focus {
+.container input:focus {
   outline: 2px solid var(--bg-300);
   font-size: var(--font-size-16);
 }
 
 /* duplicateCheckBox */
+.container button {
+  font-size: var(--font-size-16);
+  border: none;
+  box-sizing: border-box;
+  border-radius: var(--border-radius-30);
+  box-shadow: var(--box-shadow-basic);
+  transition: var(--transition-3);
+  cursor: pointer;
+}
+
 .container form .usernameBox {
   display: flex;
   align-items: center;
@@ -49,18 +60,23 @@ input:focus {
   left: 100%;
   width: 120px;
   margin-left: 1rem;
-  font-size: var(--font-size-16);
-  cursor: pointer;
-  border: none;
-  background-color: var(--primary-200);
-  border-radius: var(--border-radius-30);
   padding: var(--round-small-button);
-  box-sizing: border-box;
-  transition: var(--transition-3);
+  background-color: var(--primary-200);
 }
 
 .container form .usernameBox .usernameCheckButton:hover {
-  box-shadow: var(--box-shadow-basic);
+  box-shadow: var(--box-shadow-hover);
+}
+
+/* signupButton */
+.container form .signupButton {
+  text-align: center;
+  padding: var(--round-medium-button);
+  background-color: var(--primary-100);
+}
+
+.container form .signupButton:hover {
+  box-shadow: var(--box-shadow-hover);
 }
 
 /* passwordConfirmed */
@@ -76,21 +92,5 @@ input:focus {
 
 .container form .passwordConfirmed:disabled {
   background-color: #fff;
-}
-
-/* signupButton */
-.container form .signupButton {
-  font-size: var(--font-size-16);
-  cursor: pointer;
-  border: none;
-  text-align: center;
-  background-color: var(--primary-100);
-  border-radius: var(--border-radius-30);
-  padding: var(--round-medium-button);
-  box-sizing: border-box;
-  transition: var(--transition-3);
-}
-
-.container form .signupButton:hover {
-  box-shadow: var(--box-shadow-basic);
+  box-shadow: none;
 }

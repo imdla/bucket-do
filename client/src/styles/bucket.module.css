@@ -12,7 +12,7 @@
   justify-content: space-evenly;
 }
 .bucketItem:hover {
-  box-shadow: var(--box-shadow-basic);
+  box-shadow: var(--box-shadow-hover);
   transition: var(--transition-3);
 }
 
@@ -50,7 +50,7 @@
 }
 
 .bucketItem .toogleButton:hover {
-  box-shadow: var(--box-shadow-basic);
+  box-shadow: var(--box-shadow-hover);
 }
 
 .bucketItem .buttonBox .deleteButton {
@@ -64,7 +64,7 @@
 }
 
 .deleteButton:hover {
-  box-shadow: var(--box-shadow-basic);
+  box-shadow: var(--box-shadow-hover);
 }
 
 .bucketItem .bucketImageBox {

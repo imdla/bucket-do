@@ -36,7 +36,8 @@
   --transition-3: all 0.3s ease-in-out;
 
   /* box-shadow */
-  --box-shadow-basic: 0 0 3px #3b3c3d;
+  --box-shadow-basic: inset 0px 0px 2px #cccbc8;
+  --box-shadow-hover: 0 0 3px #3b3c3d;
 
   /* margin */
   --margin-small: 1rem;

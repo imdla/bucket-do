@@ -9,6 +9,11 @@
 }
 
 /* intro */
+.container .intro,
+.container form input {
+  box-shadow: var(--box-shadow-basic);
+}
+
 .container .intro {
   width: 50vw;
   margin: 0 auto;
@@ -74,5 +79,5 @@
   transition: var(--transition-3);
 }
 .container form button:hover {
-  box-shadow: var(--box-shadow-basic);
+  box-shadow: var(--box-shadow-hover);
 }

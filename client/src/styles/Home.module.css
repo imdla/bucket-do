@@ -35,7 +35,7 @@ section {
 
 .container .filter button:hover {
   background-color: var(--primary-100);
-  box-shadow: var(--box-shadow-basic);
+  box-shadow: var(--box-shadow-hover);
 }
 
 .container .filter button.active {
@@ -69,5 +69,5 @@ section {
 }
 
 .createButton:hover {
-  box-shadow: var(--box-shadow-basic);
+  box-shadow: var(--box-shadow-hover);
 }
