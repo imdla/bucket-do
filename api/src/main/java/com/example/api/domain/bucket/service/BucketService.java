@@ -6,6 +6,7 @@ import com.example.api.domain.bucket.dto.responseDto.BucketUpdateResponseDto;
 import com.example.api.domain.bucket.entity.Bucket;
 import com.example.api.domain.bucket.repository.BucketRepository;
 import com.example.api.domain.user.entity.User;
+import com.example.api.global.exception.ResourceNotFoundException;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class BucketService {
     public BucketUpdateResponseDto updateBucket(Long id, BucketRequestDto requestDto, User user) {
         // 수정할 버킷 조회
         Bucket bucket = bucketRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("해당 버킷을 찾을 수 없습니다."));
+            .orElseThrow(() -> new ResourceNotFoundException("일치하는 버킷을 찾을 수 없습니다."));
 
         // 기존 이미지 삭제
         if (bucket.getS3Key() != null) {
@@ -63,7 +64,7 @@ public class BucketService {
     @Transactional
     public void deleteBucket(Long id, User user) {
         Bucket bucket = bucketRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("해당 버킷을 찾을 수 없습니다."));
+            .orElseThrow(() -> new ResourceNotFoundException("일치하는 버킷을 찾을 수 없습니다."));
 
         bucketRepository.delete(bucket);
     }
