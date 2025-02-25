@@ -9,8 +9,8 @@ import { login } from '../store/slices/authSlice';
 export default function Login({ setIsLogin }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isloading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -30,7 +30,7 @@ export default function Login({ setIsLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
 
     try {
       const response = await authApi.login(formData);
@@ -44,7 +44,7 @@ export default function Login({ setIsLogin }) {
       console.log(error);
       setError(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
