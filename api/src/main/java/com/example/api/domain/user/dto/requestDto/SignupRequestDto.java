@@ -25,6 +25,7 @@ public class SignupRequestDto {
 
     @NotBlank(message = "이메일은 필수 입력값입니다.")
     @Email(message = "이메일 형식이 올바르지 않습니다.")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", message = "메일 도메인에는 . 을 포함해야 합니다.")
     private String email;
 
     private String phoneNumber;

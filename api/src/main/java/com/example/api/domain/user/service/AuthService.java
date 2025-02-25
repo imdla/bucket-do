@@ -6,6 +6,7 @@ import com.example.api.domain.user.dto.responseDto.LoginResponseDto;
 import com.example.api.domain.user.dto.responseDto.SignupResponseDto;
 import com.example.api.domain.user.entity.User;
 import com.example.api.domain.user.repository.UserRepository;
+import com.example.api.global.exception.ResourceNotFoundException;
 import com.example.api.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,6 +46,10 @@ public class AuthService {
 
     @Transactional
     public LoginResponseDto login(LoginRequestDto requestDto) {
+        if (!userRepository.existsByUsername(requestDto.getUsername())) {
+            throw new ResourceNotFoundException("일치하는 아이디를 찾을 수 없습니다.");
+        }
+
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 requestDto.getUsername(),
@@ -55,7 +60,7 @@ public class AuthService {
         String jwt = jwtTokenProvider.createToken(authentication);
 
         User user = userRepository.findByUsername(requestDto.getUsername())
-            .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+            .orElseThrow(() -> new ResourceNotFoundException("일치하는 사용자를 찾을 수 없습니다."));
 
         return LoginResponseDto.from(user, jwt);
 //        return new TokenResponseDto.from(jwt);
