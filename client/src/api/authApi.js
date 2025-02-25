@@ -19,6 +19,12 @@ const authApi = {
     const response = await api.get(`${ENDPOINT}/verify`);
     return response;
   },
+
+  // username 유효성 검사
+  checkUsername: async (userName) => {
+    const response = await api.get(`${ENDPOINT}/users?username=${userName}`);
+    return response.data;
+  },
 };
 
 export default authApi;

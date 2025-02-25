@@ -56,13 +56,29 @@ function Signup() {
     }
   };
 
-  // todo: username 유효성 검사
-  const handleCheckId = () => {
-    // if(emailValue === DB에 있는 email 데이터){
-    //   alert("이미 존재하는 이메일입니다")
-    // }else{
-    //   alert("이메일 중복확인 완료!")
-    // }
+  const handleCheckId = async (e) => {
+    e.preventDefault();
+    const userName = formData.username;
+    try {
+      const response = await authApi.checkUsername(userName);
+      const isPossible = response.available;
+
+      if (isPossible) {
+        setModalData({
+          ...modalData,
+          content: '사용 가능한 아이디입니다.',
+        });
+        setIsModalOpen(true);
+      } else {
+        setModalData({
+          ...modalData,
+          content: '이미 사용 중인 아이디입니다.',
+        });
+        setIsModalOpen(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   let passwordMessage = '';
