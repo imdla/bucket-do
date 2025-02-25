@@ -10,7 +10,7 @@ import bucketApi from '../api/bucketApi';
 export default function Home() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [bucketList, setBucketList] = useState([]);
-  const [bucket, setBucket] = useState(null);
+  const [newBucket, setNewBucket] = useState(null);
 
   useEffect(() => {
     const fetchBuckets = async () => {
@@ -23,12 +23,12 @@ export default function Home() {
     };
 
     fetchBuckets();
-  }, [activeIndex, bucket]);
+  }, [activeIndex, newBucket]);
 
   const handleCreateBucket = async () => {
     try {
       const response = await bucketApi.createBucket();
-      setBucket(response);
+      setNewBucket(response);
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +36,7 @@ export default function Home() {
 
   const bucketValue =
     bucketList.length > 0 ? (
-      <BucketList activeIndex={activeIndex} bucketList={bucketList} bucket={bucket} />
+      <BucketList activeIndex={activeIndex} bucketList={bucketList} />
     ) : (
       <div>버킷리스트를 추가해주세요</div>
     );

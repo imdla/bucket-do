@@ -17,8 +17,8 @@ const bucketApi = {
   // 버킷 수정
   updateBucket: async (bucketId, formData) => {
     const response = await api.patch(`${ENDPOINT}/${bucketId}`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
     return response.data;
   },
 
