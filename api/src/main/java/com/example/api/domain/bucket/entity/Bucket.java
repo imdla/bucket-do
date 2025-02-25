@@ -75,9 +75,10 @@ public class Bucket extends BaseTimeEntity {
         this.user = user;
     }
 
-    public Bucket update(BucketRequestDto requestDto, String image_path) {
+    public Bucket update(BucketRequestDto requestDto, String image_path, String s3Key) {
         this.title = requestDto.getTitle();
         this.image_path = image_path;
+        this.s3Key = s3Key;
         this.originalFileName = requestDto.getFile().getOriginalFilename();
         return this;
     }
