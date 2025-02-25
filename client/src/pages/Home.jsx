@@ -16,7 +16,7 @@ export default function Home() {
     const fetchBuckets = async () => {
       try {
         const response = await bucketApi.getBuckets();
-        setBucketList(response);
+        setBucketList(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -34,10 +34,12 @@ export default function Home() {
     }
   };
 
-  // todo : activeIndex 값으로 BucketList 필터링 위해 BucketList에 전달
-  // todo : 버킷 생성 시 새로 생성된 버킷을 BucketList에 전달
-  // const bucketValue = bucketList.length > 0 ? <BucketList activeIndex={activeIndex} bucket={bucket} /> : <div>버킷리스트를 추가해주세요</div>;
-  const bucketValue = bucketList.length > 0 ? <BucketList /> : <div>버킷리스트를 추가해주세요</div>;
+  const bucketValue =
+    bucketList.length > 0 ? (
+      <BucketList activeIndex={activeIndex} bucketList={bucketList} bucket={bucket} />
+    ) : (
+      <div>버킷리스트를 추가해주세요</div>
+    );
 
   function handleActiveFilter(index) {
     setActiveIndex(index);
@@ -65,7 +67,6 @@ export default function Home() {
             <ul className={styles.filter}>{filterButtons}</ul>
           </>
 
-          {/* todo : activeIndex 값으로 BucketList 필터링 */}
           <div className={styles.bucketList}>{bucketValue}</div>
         </div>
       </section>

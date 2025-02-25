@@ -56,12 +56,11 @@ export default function Login({ setIsLogin }) {
       setIsLoading(false);
     }
   };
-
   return (
     <div className={styles.container}>
       <div>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalData} />
-        
+
         <>
           <div className={styles.intro}>
             <Link to={'/'}>
