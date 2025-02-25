@@ -7,7 +7,7 @@ import authApi from '../api/authApi';
 import { login } from '../store/slices/authSlice';
 import Modal from '../components/Modal';
 
-export default function Login({ setIsLogin }) {
+export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState('');
@@ -17,7 +17,7 @@ export default function Login({ setIsLogin }) {
     password: '',
   });
 
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({
     content: '아이디나 비밀번호가 일치하지 않습니다.',
     cancleText: '확인',
@@ -46,8 +46,6 @@ export default function Login({ setIsLogin }) {
       const { token } = response.data;
       dispatch(login({ token, username }));
       navigate('/');
-
-      setIsLogin(true);
     } catch (error) {
       setIsModalOpen(true);
       console.log(error);
@@ -61,7 +59,7 @@ export default function Login({ setIsLogin }) {
     <div className={styles.container}>
       <div>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalData} />
-        
+
         <>
           <div className={styles.intro}>
             <Link to={'/'}>
