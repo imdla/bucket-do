@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Login from './Login';
 import Home from './Home';
-import BucketList from '../components/BucketList';
-import Todo from '../components/Todo';
 
 function Main() {
-  const [isLogin, setIsLogin] = useState(false);
-  // isLogin 은 나중에 redux 로 받은 isLogin값을 받아 화면을 보여줄 예정
-  // return <div>{isLogin ? <Home /> : <Login setIsLogin={setIsLogin} />}</div>;
-  return (
-    <div>
-      <BucketList />
-    </div>
-  );
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  return <div>{isLoggedIn ? <Home /> : <Login />}</div>;
 }
 
 export default Main;
