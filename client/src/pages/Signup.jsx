@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
-import styles from '../styles/Signup.module.css';
-import authApi from '../api/authApi';
 import { useNavigate } from 'react-router-dom';
+
+import authApi from '../api/authApi';
+import styles from '../styles/Signup.module.css';
+
 import Modal from '../components/Modal';
 
 function Signup() {
   const navigate = useNavigate();
+  const [passwordCheck, setPasswordCheck] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     username: '',
-    phoneNumber: '',
     password: '',
   });
-  const [passwordCheck, setPasswordCheck] = useState('');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({
-    content: '비밀번호가 일치하지 않습니다.',
+    content: '',
     cancleText: '확인',
     onConfirm: false,
   });
@@ -28,18 +29,29 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== passwordCheck) {
+      setModalData({
+        ...modalData,
+        content: '비밀번호가 일치하지 않습니다.',
+      });
       setIsModalOpen(true);
       return;
     }
 
     try {
       await authApi.signup(formData);
-      setIsModalOpen(true);
       setModalData({
+        ...modalData,
         content: '회원가입이 성공적으로 완료되었습니다.',
       });
+      setIsModalOpen(true);
       navigate('/login');
     } catch (error) {
+      setModalData({
+        ...modalData,
+        content: '회원가입이 실패되었습니다.',
+      });
+      setIsModalOpen(true);
+
       console.error('회원가입 실패:', error);
     }
   };
@@ -87,16 +99,6 @@ function Signup() {
           required
           onChange={handleChange}
         />
-
-        <input
-          type="tel"
-          name="phoneNumber"
-          value={formData.phoneNumber}
-          pattern="[0-9]{2,3}[0-9]{3,4}[0-9]{4}"
-          placeholder="연락처 : 01012345678"
-          required
-          onChange={handleChange}
-        />
         <input
           type="password"
           name="password"
@@ -117,7 +119,7 @@ function Signup() {
           className={styles.passwordConfirmed}
           type="text"
           name="passwordConfirmed"
-          placeholder={passwordMessage} // 상태에 따라 메시지 변경
+          placeholder={passwordMessage}
           value={passwordMessage}
           disabled
         />
