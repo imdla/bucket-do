@@ -11,23 +11,23 @@ public class BucketResponseDto {
 
     private final Long id;
     private final String title;
-    private final String image_path;
-    private final boolean is_completed;
-    private final LocalDateTime created_at;
-    private final LocalDateTime updated_at;
-    private final int todo_all;
-    private final int todo_completed;
+    private final String imageUrl;
+    private final boolean isCompleted;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
+    private final int todoAll;
+    private final int todoCompleted;
 
     public static BucketResponseDto from(Bucket entity) {
         return BucketResponseDto.builder()
             .id(entity.getId())
             .title(entity.getTitle())
-            .image_path(entity.getImage_path())
-            .is_completed(entity.is_completed())
-            .created_at(entity.getCreatedAt())
-            .updated_at(entity.getUpdatedAt())
-            .todo_all(entity.getTodo_all())
-            .todo_completed(entity.getTodo_completed())
+            .imageUrl(entity.getImageUrl())
+            .isCompleted(entity.isCompleted())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
+            .todoAll(entity.getTodoAll())
+            .todoCompleted(entity.getTodoCompleted())
             .build();
     }
 }

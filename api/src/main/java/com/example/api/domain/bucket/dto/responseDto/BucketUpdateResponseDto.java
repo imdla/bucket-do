@@ -11,19 +11,19 @@ public class BucketUpdateResponseDto {
 
     private final Long id;
     private final String title;
-    private final String image_path;
+    private final String imageUrl;
     private final String originalFileName;
-    private final LocalDateTime created_at;
-    private final LocalDateTime updated_at;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
     public static BucketUpdateResponseDto from(Bucket entity) {
         return BucketUpdateResponseDto.builder()
             .id(entity.getId())
             .title(entity.getTitle())
-            .image_path(entity.getImage_path())
+            .imageUrl(entity.getImageUrl())
             .originalFileName(entity.getOriginalFileName())
-            .created_at(entity.getCreatedAt())
-            .updated_at(entity.getUpdatedAt())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
             .build();
     }
 }

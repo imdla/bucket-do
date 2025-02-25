@@ -31,12 +31,12 @@ public class Bucket extends BaseTimeEntity {
     private String title;
     private LocalDateTime deadline;
     @Column(nullable = false)
-    private boolean is_completed;
+    private boolean isCompleted;
 
     // S3 객체의 접근 URL
     // AWS S3 버킷 객체의 URL
     @Column(nullable = true)
-    private String image_path;
+    private String imageUrl;
 
     // S3 객체의 키(식별자)
     // 버킷 내 객체를 구분하기 위해 필요하다.
@@ -50,34 +50,34 @@ public class Bucket extends BaseTimeEntity {
     private String originalFileName;
 
     @Column(nullable = false)
-    private int todo_all;
+    private int todoAll;
     @Column(nullable = false)
-    private int todo_completed;
+    private int todoCompleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Builder
-    public Bucket(String title, String image_path, User user) {
+    public Bucket(String title, String imageUrl, User user) {
         this.title = title;
-        this.image_path = image_path;
+        this.imageUrl = imageUrl;
         this.user = user;
     }
 
     @Builder
-    public Bucket(String title, String image_path, String s3Key, String originalFileName,
+    public Bucket(String title, String imageUrl, String s3Key, String originalFileName,
         User user) {
         this.title = title;
-        this.image_path = image_path;
+        this.imageUrl = imageUrl;
         this.s3Key = s3Key;
         this.originalFileName = originalFileName;
         this.user = user;
     }
 
-    public Bucket update(BucketRequestDto requestDto, String image_path, String s3Key) {
+    public Bucket update(BucketRequestDto requestDto, String imageUrl, String s3Key) {
         this.title = requestDto.getTitle();
-        this.image_path = image_path;
+        this.imageUrl = imageUrl;
         this.s3Key = s3Key;
         this.originalFileName = requestDto.getFile().getOriginalFilename();
         return this;
