@@ -1,13 +1,7 @@
 import React from 'react';
+import styles from '../styles/Modal.module.css';
 
-export default Modal = ({
-  isOpen,
-  onClose,
-  content,
-  confirmText,
-  cancleText,
-  onConfirm,
-}) => {
+export default Modal = ({ isOpen, onClose, content, confirmText, cancleText, onConfirm }) => {
   if (!isOpen) return null;
   return (
     <div>
