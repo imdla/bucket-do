@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/signup")
+    @PostMapping("/auth/signup")
     public ResponseEntity<ApiResponse<SignupResponseDto>> signup(
         @Valid @RequestBody SignupRequestDto requestDto) {
         return ResponseEntity
@@ -35,7 +35,7 @@ public class AuthController {
             ));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<ApiResponse<LoginResponseDto>> login(
         @Valid @RequestBody LoginRequestDto requestDto
     ) {
@@ -47,7 +47,7 @@ public class AuthController {
     }
 
     // 단순히 JWT 검증을 위한 endpoint
-    @GetMapping("/verify")
+    @GetMapping("/auth/verify")
     public void verify() {
     }
 }

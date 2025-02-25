@@ -21,9 +21,11 @@ header {
   background-color: var(--bg-200);
   padding: var(--round-medium-button);
   border-radius: var(--border-radius-30);
+  box-shadow: var(--box-shadow-basic);
   transition: all 0.3s ease-in-out;
 }
 
 .container .logoutButton:hover {
+  background-color: var(--primary-200);
   box-shadow: 0 0 3px var(--primary-300);
 }

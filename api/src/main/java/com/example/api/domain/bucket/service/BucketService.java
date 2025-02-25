@@ -50,11 +50,11 @@ public class BucketService {
         // S3Service uploadFile() 호출
         Map<String, String> uploadResult = s3Service.uploadFile(requestDto.getFile());
 
-        String image_path = uploadResult.get("image_path");
+        String imageUrl = uploadResult.get("imageUrl");
         String s3Key = uploadResult.get("s3Key");
 
         // 수정된 제목, 이미지 파일을 보내서 버킷 업데이트
-        bucket.update(requestDto, image_path, s3Key);
+        bucket.update(requestDto, imageUrl, s3Key);
 
         return BucketUpdateResponseDto.from(bucket);
     }

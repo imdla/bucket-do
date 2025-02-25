@@ -22,13 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/buckets")
+@RequestMapping("/api")
 public class BucketController {
 
     private final BucketService bucketService;
 
     // 해당 유저가 작성한 버킷 전체 조회
-    @GetMapping
+    @GetMapping("/buckets")
     public ResponseEntity<ApiResponse<List<BucketResponseDto>>> getBuckets(
         @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(ApiResponse.ok(
@@ -39,7 +39,7 @@ public class BucketController {
     }
 
     // 버킷 생성
-    @PostMapping
+    @PostMapping("/buckets")
     public ResponseEntity<ApiResponse<BucketResponseDto>> createBucket(
         @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(ApiResponse.ok(
@@ -49,20 +49,8 @@ public class BucketController {
         ));
     }
 
-//    // 버킷 수정
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<ApiResponse<BucketUpdateResponseDto>> updateBucket(@PathVariable Long id,
-//        @Valid @RequestBody BucketRequestDto requestDto,
-//        @AuthenticationPrincipal User user) {
-//        return ResponseEntity.ok(ApiResponse.ok(
-//            "버킷이 수정되었습니다.",
-//            "OK",
-//            bucketService.updateBucket(id, requestDto, user)
-//        ));
-//    }
-
     // 버킷 수정
-    @PatchMapping("/{id}")
+    @PatchMapping("/buckets/{id}")
     public ResponseEntity<ApiResponse<BucketUpdateResponseDto>> updateBucket(@PathVariable Long id,
         @RequestPart("title") String title, @RequestPart("file") MultipartFile file,
         @AuthenticationPrincipal User user) {
@@ -80,7 +68,7 @@ public class BucketController {
     }
 
     // 버킷 삭제
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/buckets/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteBucket(@PathVariable Long id,
         @AuthenticationPrincipal User user) {
         bucketService.deleteBucket(id, user);

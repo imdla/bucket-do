@@ -49,6 +49,11 @@
   cursor: pointer;
 }
 
+.container button:hover {
+  box-shadow: var(--box-shadow-hover);
+  transform: translateY(-1px);
+}
+
 .container form .usernameBox {
   display: flex;
   align-items: center;
@@ -64,19 +69,11 @@
   background-color: var(--primary-200);
 }
 
-.container form .usernameBox .usernameCheckButton:hover {
-  box-shadow: var(--box-shadow-hover);
-}
-
 /* signupButton */
 .container form .signupButton {
   text-align: center;
   padding: var(--round-medium-button);
   background-color: var(--primary-100);
-}
-
-.container form .signupButton:hover {
-  box-shadow: var(--box-shadow-hover);
 }
 
 /* passwordConfirmed */

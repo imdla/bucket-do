@@ -35,11 +35,11 @@ public class S3Service {
         uploadFileToS3(s3Key, file);
 
         String IMAGE_URL_FORMAT = "https://%s.s3.%s.amazonaws.com/%s";
-        String image_path = String.format(IMAGE_URL_FORMAT, bucketName, region, s3Key);
+        String imageUrl = String.format(IMAGE_URL_FORMAT, bucketName, region, s3Key);
         // String imageUrl = "https://" + bucketName + ".s3." + region + ".amazonaws.com/" + s3Key; 는 위의 코드와 동일
 
         return Map.of(
-            "image_path", image_path,
+            "imageUrl", imageUrl,
             "s3Key", s3Key
         );
     }

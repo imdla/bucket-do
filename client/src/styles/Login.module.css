@@ -76,8 +76,10 @@
   background-color: var(--primary-100);
   border-radius: var(--border-radius-30);
   padding: var(--round-medium-button);
-  transition: var(--transition-3);
+  box-shadow: var(--box-shadow-basic);
+  transition: all 0.3s ease-in-out;
 }
 .container form button:hover {
   box-shadow: var(--box-shadow-hover);
+  transform: translateY(-1px);
 }
