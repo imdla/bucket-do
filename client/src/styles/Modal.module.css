@@ -17,7 +17,6 @@
   transform: translate(-50%, -50%);
   background-color: var(--text-200);
   border-radius: var(--border-radius-20);
-  /* border: 1px solid var(--bg-200); */
   display: flex;
   align-items: center;
   justify-content: center;

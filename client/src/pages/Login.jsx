@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import styles from '../styles/Login.module.css';
 import authApi from '../api/authApi';
 import { login } from '../store/slices/authSlice';
+import Modal from '../components/Modal';
 
 export default function Login({ setIsLogin }) {
   const navigate = useNavigate();
@@ -14,6 +15,13 @@ export default function Login({ setIsLogin }) {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
+  });
+
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [modalData, setModalData] = useState({
+    content: '아이디나 비밀번호가 일치하지 않습니다.',
+    cancleText: '확인',
+    onConfirm: false,
   });
 
   const handleFormInput = (e) => {
@@ -41,6 +49,7 @@ export default function Login({ setIsLogin }) {
 
       setIsLogin(true);
     } catch (error) {
+      setIsModalOpen(true);
       console.log(error);
       setError(error);
     } finally {
@@ -50,42 +59,46 @@ export default function Login({ setIsLogin }) {
 
   return (
     <div className={styles.container}>
-      <>
-        <div className={styles.loginIntro}>
-          <Link to={'/'}>
-            <img className={styles.logoImage} src="../public/images/BD-logo.png" alt="logo" />
-          </Link>
+      <div>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalData} />
+        
+        <>
+          <div className={styles.intro}>
+            <Link to={'/'}>
+              <img className={styles.logo} src="../public/images/BD-logo.png" alt="logo" />
+            </Link>
 
-          <div className={styles.introText}>
-            <p>버킷두(BucketDo)는 작심삼일러를 위한</p>
-            <p>작은 실천으로 큰 목표를 이루는 기록 서비스 입니다</p>
+            <div className={styles.introText}>
+              <p>버킷두(BucketDo)는 작심삼일러를 위한</p>
+              <p>작은 실천으로 큰 목표를 이루는 기록 서비스 입니다</p>
+            </div>
           </div>
-        </div>
-      </>
+        </>
 
-      <>
-        <form className={styles.loginForm} onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="username"
-            placeholder="아이디"
-            required
-            onChange={handleFormInput}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="비밀번호"
-            required
-            onChange={handleFormInput}
-          />
+        <>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="username"
+              placeholder="아이디"
+              required
+              onChange={handleFormInput}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="비밀번호"
+              required
+              onChange={handleFormInput}
+            />
 
-          <div className={styles.buttonBox}>
-            <button type="submit">로그인</button>
-            <button onClick={handleSignup}>회원가입</button>
-          </div>
-        </form>
-      </>
+            <div className={styles.buttonBox}>
+              <button type="submit">로그인</button>
+              <button onClick={handleSignup}>회원가입</button>
+            </div>
+          </form>
+        </>
+      </div>
     </div>
   );
 }
