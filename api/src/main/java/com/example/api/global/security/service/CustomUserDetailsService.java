@@ -1,4 +1,4 @@
-npm run package com.example.api.global.security.service;
+package com.example.api.global.security.service;
 
 import com.example.api.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
