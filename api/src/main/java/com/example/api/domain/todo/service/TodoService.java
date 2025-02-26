@@ -20,17 +20,20 @@ public class TodoService {
     private final BucketRepository bucketRepository;
     private final TodoRepository todoRepository;
 
-
-    //빈 버킷 생성
+    // 투두 생성 시 todoAll 증가
     @Transactional
-    public TodoResponseDto createTodo(Long id) {
-        Bucket bucket = bucketRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("투두를 생성할 수 없습니다"));
+    public TodoResponseDto createTodo(Long bucketId) {
 
-        Todo emptyTodo = todoRepository.save(new Todo(null, bucket));
-        return TodoResponseDto.from(emptyTodo);
+        Bucket bucket = bucketRepository.findById(bucketId)
+            .orElseThrow(() -> new ResourceNotFoundException("버킷을 찾을 수 없습니다"));
+
+        Todo newTodo = todoRepository.save(new Todo("", bucket));
+
+        bucket.incrementTodoAll();
+        bucketRepository.save(bucket);
+
+        return TodoResponseDto.from(newTodo);
     }
-
 
     public List<TodoResponseDto> findTodosByBucketId(Long id) {
         List<Todo> todos = todoRepository.findByBucketId(id);
@@ -40,12 +43,27 @@ public class TodoService {
 
     @Transactional
     public TodoResponseDto updateTodo(Long bucketId, Long todoId, TodoRequestDto requestDto) {
+
         Todo todo = todoRepository.findById(todoId)
-            .orElseThrow(() -> new ResourceNotFoundException("일치하는 투두를 찾을 수 없습니다."));
+            .orElseThrow(() -> new ResourceNotFoundException("투두를 찾을 수 없습니다."));
+
+        // 기존 완료 상태 저장 (변경 전 값 확인용)
+        boolean wasCompleted = todo.isCompleted();
 
         todo.update(requestDto.getContent(), requestDto.isCompleted());
-
         todoRepository.save(todo);
+
+        Bucket bucket = todo.getBucket();
+
+        // 완료 상태가 변경되었을 경우에만 업데이트
+        if (wasCompleted != requestDto.isCompleted()) {
+            if (requestDto.isCompleted()) {
+                bucket.incrementTodoCompleted();
+            } else {
+                bucket.decrementTodoCompleted();
+            }
+            bucketRepository.save(bucket);
+        }
 
         return TodoResponseDto.from(todo);
     }
@@ -55,6 +73,17 @@ public class TodoService {
         Todo todo = todoRepository.findById(todoId)
             .orElseThrow(() -> new ResourceNotFoundException("투두를 찾을 수 없습니다"));
 
+        Bucket bucket = todo.getBucket();
+
+        bucket.decrementTodoAll();
+
+        // 만약 삭제하려는 투두가 완료된 상태였다면 todoCompleted도 감소
+        if (todo.isCompleted()) {
+            bucket.decrementTodoCompleted();
+        }
+
+        // 투두 삭제 후 버킷 업데이트
         todoRepository.delete(todo);
+        bucketRepository.save(bucket);
     }
 }

@@ -24,7 +24,7 @@ public class TodoController {
 
     private final TodoService todoService;
 
-    //     빈버킷 생성
+    // 빈 투두 생성
     @PostMapping("/{id}/todos")
     public ResponseEntity<ApiResponse<TodoResponseDto>> createTodo(@PathVariable Long id) {
         return ResponseEntity
@@ -37,7 +37,7 @@ public class TodoController {
                 )
             );
     }
-    
+
     @GetMapping("/{bucketId}/todos")
     public ResponseEntity<ApiResponse<List<TodoResponseDto>>> getTodosByBucket(
         @PathVariable Long bucketId) {

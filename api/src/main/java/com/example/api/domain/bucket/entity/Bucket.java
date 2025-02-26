@@ -81,4 +81,30 @@ public class Bucket extends BaseTimeEntity {
         this.originalFileName = originalFileName;
         return this;
     }
+
+    // 투두 개수 증가
+    public void incrementTodoAll() {
+        this.todoAll++;
+    }
+
+    // 투두 개수 감소
+    public void decrementTodoAll() {
+        if (this.todoAll > 0) {
+            this.todoAll--;
+        }
+    }
+
+    // 완료된 투두 개수 증가
+    public void incrementTodoCompleted() {
+        if (this.todoCompleted < this.todoAll) {
+            this.todoCompleted++;
+        }
+    }
+
+    // 완료된 투두 개수 감소
+    public void decrementTodoCompleted() {
+        if (this.todoCompleted > 0) {
+            this.todoCompleted--;
+        }
+    }
 }
