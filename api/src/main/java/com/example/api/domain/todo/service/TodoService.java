@@ -6,6 +6,7 @@ import com.example.api.domain.todo.dto.response.TodoResponseDto;
 import com.example.api.domain.todo.entity.Todo;
 import com.example.api.domain.todo.repository.TodoRepository;
 import com.example.api.global.exception.ResourceNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,8 @@ public class TodoService {
     private final BucketRepository bucketRepository;
     private final TodoRepository todoRepository;
 
+
+    //빈 버킷 생성
     @Transactional
     public TodoResponseDto createTodo(Long id) {
         Bucket bucket = bucketRepository.findById(id)
@@ -26,4 +29,10 @@ public class TodoService {
         return TodoResponseDto.from(emptyTodo);
     }
 
+
+    public List<TodoResponseDto> findTodosByBucketId(Long id) {
+        List<Todo> todos = todoRepository.findByBucketId(id);
+
+        return todos.stream().map(TodoResponseDto::from).toList();
+    }
 }
