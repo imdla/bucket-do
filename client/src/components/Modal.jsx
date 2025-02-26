@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/Modal.module.css';
 
-const Modal = ({ isOpen, onClose, content, confirmText, cancleText, onConfirm }) => {
+const Modal = ({ isOpen, onClose, content, confirmText, cancelText, onConfirm }) => {
   if (!isOpen) return null;
   return (
     <>
@@ -11,7 +11,7 @@ const Modal = ({ isOpen, onClose, content, confirmText, cancleText, onConfirm })
           <p>{content}</p>
 
           <div className={styles.buttonBox}>
-            <button onClick={onClose}>{cancleText || '취소'}</button>
+            <button onClick={onClose}>{cancelText || '취소'}</button>
             {onConfirm && <button onClick={onConfirm}>{confirmText || '확인'}</button>}
           </div>
         </div>

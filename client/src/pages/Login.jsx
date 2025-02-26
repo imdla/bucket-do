@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import authApi from '../api/authApi';
 import { login } from '../store/slices/authSlice';
 import styles from '../styles/Login.module.css';
-import errorMessages from '../cofig/errorMessages';
+import errorMessages from '../config/errorMessages';
 
 import Modal from '../components/Modal';
 
@@ -21,7 +21,7 @@ export default function Login() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({
     content: '',
-    cancleText: '확인',
+    cancelText: '확인',
     onConfirm: false,
   });
 
@@ -52,10 +52,6 @@ export default function Login() {
       dispatch(login({ token, username }));
       navigate('/');
     } catch (error) {
-      // todo : 잘못된 비밀번호 입력 시 500 에러 대응 필요
-      console.log(error);
-      console.log(error.code);
-
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
 

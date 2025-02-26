@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import authApi from '../api/authApi';
 import styles from '../styles/Signup.module.css';
-import errorMessages from '../cofig/errorMessages';
+import errorMessages from '../config/errorMessages';
 
 import Modal from '../components/Modal';
 
