@@ -35,25 +35,25 @@ function Signup() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 로그인
+  // 회원가입
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // 비밀번호 일치 여부
-    if (formData.password !== passwordCheck) {
-      setModalData({
-        ...modalData,
-        content: '비밀번호가 일치하지 않습니다.',
-      });
-      setIsModalOpen(true);
-      return;
-    }
 
     // username 중복 확인 여부
     if (!checkedUsername) {
       setModalData({
         ...modalData,
         content: '아이디 중복 검사가 필요합니다.',
+      });
+      setIsModalOpen(true);
+      return;
+    }
+
+    // 비밀번호 일치 여부
+    if (formData.password !== passwordCheck) {
+      setModalData({
+        ...modalData,
+        content: '비밀번호가 일치하지 않습니다.',
       });
       setIsModalOpen(true);
       return;
@@ -128,56 +128,61 @@ function Signup() {
 
   return (
     <div className={styles.container}>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalData} />
-      <form onSubmit={handleSubmit}>
-        <div className={styles.usernameBox}>
+      <>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalData} />
+      </>
+
+      <>
+        <form onSubmit={handleSubmit}>
+          <div className={styles.usernameBox}>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              placeholder="아이디"
+              required
+              onChange={handleChange}
+            />
+            <button className={styles.usernameCheckButton} onClick={handleCheckId}>
+              중복 확인
+            </button>
+          </div>
+
           <input
-            type="text"
-            name="username"
-            value={formData.username}
-            placeholder="아이디"
+            type="email"
+            name="email"
+            value={formData.email}
+            placeholder="이메일"
             required
             onChange={handleChange}
           />
-          <button className={styles.usernameCheckButton} onClick={handleCheckId}>
-            중복 확인
-          </button>
-        </div>
-
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          placeholder="이메일"
-          required
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="비밀번호 : 8자 이상, 영문, 숫자, 특수문자 포함"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="passwordCheck"
-          placeholder="비밀번호 확인"
-          value={passwordCheck}
-          onChange={(e) => setPasswordCheck(e.target.value)}
-          required
-        />
-        <input
-          className={styles.passwordConfirmed}
-          type="text"
-          name="passwordConfirmed"
-          placeholder={passwordMessage}
-          value={passwordMessage}
-          disabled
-        />
-        <button className={styles.signupButton}>회원가입</button>
-      </form>
+          <input
+            type="password"
+            name="password"
+            placeholder="비밀번호 : 8자 이상, 영문, 숫자, 특수문자 포함"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="passwordCheck"
+            placeholder="비밀번호 확인"
+            value={passwordCheck}
+            onChange={(e) => setPasswordCheck(e.target.value)}
+            required
+          />
+          <input
+            className={styles.passwordConfirmed}
+            type="text"
+            name="passwordConfirmed"
+            placeholder={passwordMessage}
+            value={passwordMessage}
+            disabled
+          />
+          <button className={styles.signupButton}>회원가입</button>
+        </form>
+      </>
     </div>
   );
 }
