@@ -8,6 +8,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,5 +53,12 @@ public class TodoController {
         TodoResponseDto updatedTodo = todoService.updateTodo(bucketId, todoId, requestDto);
         return ResponseEntity.ok(ApiResponse.ok("투두가 수정되었습니다.", "OK", updatedTodo));
 
+    }
+
+    @DeleteMapping("/{bucketId}/todos/{todoId}")
+    public ResponseEntity<ApiResponse<Void>> deleteTodo(@PathVariable Long bucketId,
+        @PathVariable Long todoId) {
+        todoService.deleteTodo(todoId);
+        return ResponseEntity.ok(ApiResponse.ok("투두가 삭제되었습니다.", "DELETED", null));
     }
 }

@@ -49,4 +49,12 @@ public class TodoService {
 
         return TodoResponseDto.from(todo);
     }
+
+    @Transactional
+    public void deleteTodo(Long todoId) {
+        Todo todo = todoRepository.findById(todoId)
+            .orElseThrow(() -> new ResourceNotFoundException("투두를 찾을 수 없습니다"));
+
+        todoRepository.delete(todo);
+    }
 }
