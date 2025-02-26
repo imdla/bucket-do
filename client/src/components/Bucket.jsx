@@ -16,8 +16,8 @@ function Bucket({ activeIndex, bucket }) {
   useEffect(() => {
     if (bucket) {
       setInputData({
-        title: bucket.title || 'GGGGGG',
-        file: bucket.imageUrl || 'HHHHHHH', // 파일 초기화 (필요에 따라 수정)
+        title: bucket.title || '',
+        file: bucket.imageUrl || '', // 파일 초기화 (필요에 따라 수정)
       });
     }
   }, [bucket]);
@@ -56,6 +56,7 @@ function Bucket({ activeIndex, bucket }) {
   const handleToggleTodoList = () => {
     setShowTodoList((prev) => !prev); // ✅ 버튼 클릭 시 상태 변경
   };
+
   return (
     <section className={styles.section}>
       <article className={styles.bucketItem}>
