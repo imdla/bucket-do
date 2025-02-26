@@ -26,16 +26,18 @@ section {
 
 .container .filter button {
   border: none;
+  font-size: var(--font-size-16);
   background-color: var(--bg-200);
   padding: var(--round-small-button);
   border-radius: var(--border-radius-20);
-  font-size: var(--font-size-16);
+  box-shadow: var(--box-shadow-basic);
   transition: var(--transition-3);
 }
 
 .container .filter button:hover {
   background-color: var(--primary-100);
   box-shadow: var(--box-shadow-hover);
+  transform: translateY(-1px);
 }
 
 .container .filter button.active {
@@ -61,13 +63,15 @@ section {
   bottom: 10vh;
   left: 70vw;
   border: none;
+  font-size: var(--font-size-18);
   background-color: var(--primary-100);
   padding: var(--round-medium-button);
-  font-size: var(--font-size-18);
   border-radius: var(--border-radius-30);
+  box-shadow: var(--box-shadow-basic);
   transition: var(--transition-3);
 }
 
 .createButton:hover {
   box-shadow: var(--box-shadow-hover);
+  transform: translateY(-1px);
 }
