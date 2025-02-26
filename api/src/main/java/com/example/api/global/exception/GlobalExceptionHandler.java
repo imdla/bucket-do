@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -62,6 +63,15 @@ public class GlobalExceptionHandler {
             ));
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiResponse<Void>> handleBadCredentialsException(
+        BadCredentialsException ex) {
+
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(ApiResponse.error(ex.getMessage(), "UNAUTHORIZED"));
+    }
+
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ApiResponse<Void>> handleMethodNotAllowed(
         HttpRequestMethodNotSupportedException ex) {
@@ -72,10 +82,10 @@ public class GlobalExceptionHandler {
 
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<Void>> handleGeneralException(Exception ex) {
-        return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ApiResponse.error("서버 내부 오류가 발생했습니다.", "INTERNAL_SERVER_ERROR"));
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ApiResponse<Void>> handleGeneralException(Exception ex) {
+//        return ResponseEntity
+//            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//            .body(ApiResponse.error("서버 내부 오류가 발생했습니다.", "INTERNAL_SERVER_ERROR"));
+//    }
 }

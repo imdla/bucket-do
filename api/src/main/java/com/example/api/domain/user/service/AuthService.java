@@ -10,9 +10,12 @@ import com.example.api.global.exception.ResourceNotFoundException;
 import com.example.api.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
 
     @Transactional
     public SignupResponseDto signup(SignupRequestDto requestDto) {
@@ -45,6 +49,13 @@ public class AuthService {
     public LoginResponseDto login(LoginRequestDto requestDto) {
         if (!userRepository.existsByUsername(requestDto.getUsername())) {
             throw new ResourceNotFoundException("일치하는 아이디를 찾을 수 없습니다.");
+        }
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(requestDto.getUsername());
+        String storedPassword = userDetails.getPassword();
+
+        if (!passwordEncoder.matches(requestDto.getPassword(), storedPassword)) {
+            throw new BadCredentialsException("입력한 아이디에 대한 비밀번호가 일치하지 않습니다.");
         }
 
         Authentication authentication = authenticationManager.authenticate(
