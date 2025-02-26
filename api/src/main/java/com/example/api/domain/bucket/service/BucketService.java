@@ -100,6 +100,11 @@ public class BucketService {
             todoRepository.deleteAll(todos);
         }
 
+        // S3에서 기존 이미지 삭제
+        if (bucket.getS3Key() != null) {
+            s3Service.deleteFile(bucket.getS3Key());
+        }
+
         bucketRepository.delete(bucket);
     }
 }
