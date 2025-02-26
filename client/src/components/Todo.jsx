@@ -4,7 +4,7 @@ import todoApi from '../api/todoApi';
 
 export default function Todo({ bucketId, todo, fetchTodo }) {
   const { id, content, is_completed } = todo;
-  
+
   const [inputContent, setInputContent] = useState(content);
   const [isCompleted, setCompleted] = useState(is_completed);
 
@@ -14,7 +14,8 @@ export default function Todo({ bucketId, todo, fetchTodo }) {
         const formData = new FormData();
         formData.append('is_completed', isCompleted);
         const response = await todoApi.updateTodo(bucketId, id, formData);
-      } catch (error) {1
+      } catch (error) {
+        1;
         console.log(error);
       }
     }

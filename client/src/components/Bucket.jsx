@@ -4,7 +4,8 @@ import bucketApi from '../api/bucketApi';
 import { useRef } from 'react';
 import TodoList from '../components/TodoList';
 function Bucket({ activeIndex, bucket }) {
-  const [title, setTitle] = useState('');
+  const [showTodoList, setShowTodoList] = useState(false);
+
   const [inputData, setInputData] = useState({
     title: '',
     file: '',
@@ -52,39 +53,43 @@ function Bucket({ activeIndex, bucket }) {
     handleAutoSubmit();
   }, [inputData]);
 
-  const handleToggleTotoList = () => {
-    <TodoList bucketId={bucket.id} />;
+  const handleToggleTodoList = () => {
+    setShowTodoList((prev) => !prev); // ✅ 버튼 클릭 시 상태 변경
   };
   return (
-    <article className={styles.bucketItem}>
-      <div className={styles.bucketImageBox}>
-        <img className={styles.bucketImage} src={bucket.imageUrl} alt="미리보기" />
-      </div>
+    <section className={styles.section}>
+      <article className={styles.bucketItem}>
+        <div className={styles.bucketImageBox}>
+          <img className={styles.bucketImage} src={bucket.imageUrl} alt="미리보기" />
+        </div>
 
-      <form className={styles.bucketForm}>
-        <input
-          className={styles.fileInput}
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          name="image_path"
-          onChange={handleFileChange}
-        />
-        <input
-          type="text"
-          name="title"
-          value={inputData.title}
-          placeholder="버킷 리스트 내용을 입력해주세요."
-          onChange={handleFormChange}
-        />
-      </form>
-      <div className={styles.buttonBox}>
-        <button className={styles.toggleButton} onClick={handleToggleTotoList}>
-          V
-        </button>
-        <button className={styles.deleteButton}>X</button>
-      </div>
-    </article>
+        <form className={styles.bucketForm}>
+          <input
+            className={styles.fileInput}
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            name="image_path"
+            onChange={handleFileChange}
+          />
+          <input
+            type="text"
+            name="title"
+            value={inputData.title}
+            placeholder="버킷 리스트 내용을 입력해주세요."
+            onChange={handleFormChange}
+          />
+        </form>
+        <div className={styles.buttonBox}>
+          <button className={styles.toggleButton} onClick={handleToggleTodoList}>
+            V
+          </button>
+          <button className={styles.deleteButton}>X</button>
+        </div>
+        {/* ✅ showTodoList 상태가 true일 때만 TodoList 표시 */}
+      </article>
+      {showTodoList && <TodoList bucketId={bucket.id} />}
+    </section>
   );
 }
 

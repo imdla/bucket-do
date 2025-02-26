@@ -6,11 +6,12 @@ import Footer from '../components/Footer';
 import styles from '../styles/Home.module.css';
 
 import bucketApi from '../api/bucketApi';
-
+import todoApi from '../api/todoApi';
 export default function Home() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [bucketList, setBucketList] = useState([]);
   const [newBucket, setNewBucket] = useState(null);
+  const [newTodo, setNewTodo] = useState(null);
 
   useEffect(() => {
     const fetchBuckets = async () => {
@@ -23,12 +24,14 @@ export default function Home() {
     };
 
     fetchBuckets();
-  }, [activeIndex, newBucket]);
+  }, [activeIndex, newBucket, newTodo]);
 
   const handleCreateBucket = async () => {
     try {
-      const response = await bucketApi.createBucket();
-      setNewBucket(response);
+      const bucketResponse = await bucketApi.createBucket();
+      const todoResponse = await todoApi.createTodo();
+      setNewBucket(bucketResponse);
+      setNewTodo(todoResponse);
     } catch (error) {
       console.log(error);
     }

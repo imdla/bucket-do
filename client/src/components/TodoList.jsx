@@ -28,13 +28,15 @@ export default function TodoList({ bucketId }) {
     }
   };
 
-  const todoList = todos.map((todo) => {
-    return (
-      <li key={todo.id}>
-        <Todo bucketId={bucketId} todo={todo} fetchTodo={fetchTodos} />
-      </li>
-    );
-  });
+  const todoList = Array.isArray(todos)
+    ? todos.map((todo) => {
+        return (
+          <li key={todo.id}>
+            <Todo bucketId={bucketId} todo={todo} fetchTodo={fetchTodos} />
+          </li>
+        );
+      })
+    : null;
 
   return (
     <div className={styles.todoListContainer}>

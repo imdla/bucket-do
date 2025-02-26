@@ -1,4 +1,4 @@
-section {
+.section {
   width: var(--width-basic);
   min-height: var(--height-min);
 }

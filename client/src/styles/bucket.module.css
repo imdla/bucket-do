@@ -1,3 +1,9 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .bucketItem {
   font-size: var(--font-size-18);
   width: 50vw;
