@@ -5,7 +5,7 @@ function BucketList({ activeIndex, bucketList, newBucket, onDelete }) {
   const [buckets, setBuckets] = useState();
 
   return (
-    <div className={styles.BucketListcontainer}>
+    <div className={styles.container}>
       {bucketList &&
         bucketList.map((bucket) => (
           <li key={bucket.id}>

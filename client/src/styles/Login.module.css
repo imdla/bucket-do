@@ -25,7 +25,7 @@
 }
 
 .container .intro .logo {
-  width: 72px;
+  width: 60px;
   margin: var(--margin-small);
 }
 
@@ -82,4 +82,9 @@
 .container form button:hover {
   box-shadow: var(--box-shadow-hover);
   transform: translateY(-1px);
+}
+
+/* Skeleton */
+.skeletonMargin {
+  margin-top: 1rem;
 }

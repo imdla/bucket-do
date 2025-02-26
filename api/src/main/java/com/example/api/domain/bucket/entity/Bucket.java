@@ -74,6 +74,13 @@ public class Bucket extends BaseTimeEntity {
         this.user = user;
     }
 
+    public Bucket update(String imageUrl, String s3Key, String originalFileName) {
+        this.imageUrl = imageUrl;
+        this.s3Key = s3Key;
+        this.originalFileName = originalFileName;
+        return this;
+    }
+
     public Bucket update(String title, String imageUrl, String s3Key, String originalFileName) {
         this.title = title;
         this.imageUrl = imageUrl;

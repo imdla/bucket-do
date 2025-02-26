@@ -80,3 +80,7 @@ button {
 form input {
   font-family: Pretendard, 'Pretendard Variable', 'Noto Sans KR', sans-serif;
 }
+
+li {
+  list-style: none;
+}

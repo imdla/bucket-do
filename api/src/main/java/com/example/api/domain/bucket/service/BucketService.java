@@ -72,6 +72,20 @@ public class BucketService {
         return BucketUpdateResponseDto.from(bucket);
     }
 
+    // 버킷 이미지 삭제
+    @Transactional
+    public void deleteBucketImage(Long id) {
+        // 이미지를 삭제할 버킷 조회
+        Bucket bucket = bucketRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("일치하는 버킷을 찾을 수 없습니다."));
+
+        // S3에서 기존 이미지 삭제
+        s3Service.deleteFile(bucket.getS3Key());
+
+        // DB에서 이미지 삭제
+        bucket.update(null, null, null);
+    }
+
     // 버킷 삭제
     @Transactional
     public void deleteBucket(Long id, User user) {

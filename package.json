@@ -2,5 +2,8 @@
   "devDependencies": {
     "husky": "^9.1.7"
   },
-  "scripts": {}
+  "scripts": {},
+  "dependencies": {
+    "react-loading-skeleton": "^3.5.0"
+  }
 }

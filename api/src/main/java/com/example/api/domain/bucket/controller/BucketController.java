@@ -8,6 +8,7 @@ import com.example.api.domain.user.entity.User;
 import com.example.api.global.response.ApiResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,7 +43,7 @@ public class BucketController {
     @PostMapping("/buckets")
     public ResponseEntity<ApiResponse<BucketResponseDto>> createBucket(
         @AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(ApiResponse.ok(
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok(
             "버킷이 생성되었습니다.",
             "CREATED",
             bucketService.createBucket(user)
@@ -68,13 +69,22 @@ public class BucketController {
         ));
     }
 
+    // 버킷 이미지 삭제
+    @DeleteMapping("/buckets/{id}/image")
+    public ResponseEntity<ApiResponse<Void>> deleteBucketImage(@PathVariable Long id) {
+        bucketService.deleteBucketImage(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+            .body(ApiResponse.ok("버킷 이미지가 삭제되었습니다.", "NO_CONTENT", null));
+    }
+
     // 버킷 삭제
     @DeleteMapping("/buckets/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteBucket(@PathVariable Long id,
         @AuthenticationPrincipal User user) {
         bucketService.deleteBucket(id, user);
 
-        return ResponseEntity.ok(ApiResponse.ok(
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ApiResponse.ok(
             "버킷이 삭제되었습니다.",
             "NO CONTENT",
             null

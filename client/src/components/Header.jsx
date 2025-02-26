@@ -1,7 +1,9 @@
 import React from 'react';
-import styles from '../styles/Header.module.css';
-import { logout } from '../store/slices/authSlice';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
+import { logout } from '../store/slices/authSlice';
+import styles from '../styles/Header.module.css';
 
 function Header() {
   const dispatch = useDispatch();
@@ -14,7 +16,9 @@ function Header() {
       <div className={styles.container}>
         <>
           <h1 className={styles.logo}>
-            <img src="../public/images/BD-logo.png" alt="logo" />
+            <Link to={'/'}>
+              <img src="../public/images/BD-logo.png" alt="logo" />
+            </Link>
           </h1>
         </>
 

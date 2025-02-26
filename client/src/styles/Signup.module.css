@@ -5,6 +5,41 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+/* nav */
+.container nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--margin-large);
+}
+
+.container nav .logo img {
+  width: 60px;
+}
+
+.container nav .breadcrumb {
+  display: flex;
+}
+
+.container nav .breadcrumb a {
+  color: var(--bg-300);
+  text-decoration: none;
+  transition: var(--transition-3);
+}
+
+.container nav .breadcrumb p {
+  color: var(--bg-300);
+  margin: 0 0.5rem;
+  transition: var(--transition-3);
+}
+
+.container nav .breadcrumb a:hover,
+.container nav .breadcrumb p:hover {
+  color: var(--primary-300);
 }
 
 /* form */
@@ -90,4 +125,9 @@
 .container form .passwordConfirmed:disabled {
   background-color: #fff;
   box-shadow: none;
+}
+
+/* Skeleton */
+.skeletonMargin {
+  margin-top: 1rem;
 }
