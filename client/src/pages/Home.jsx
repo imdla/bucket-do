@@ -7,11 +7,13 @@ import styles from '../styles/Home.module.css';
 
 import bucketApi from '../api/bucketApi';
 import todoApi from '../api/todoApi';
+
 export default function Home() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [bucketList, setBucketList] = useState([]);
   const [newBucket, setNewBucket] = useState(null);
   const [newTodo, setNewTodo] = useState(null);
+
   useEffect(() => {
     fetchBuckets();
   }, [activeIndex, newBucket, newTodo]);
