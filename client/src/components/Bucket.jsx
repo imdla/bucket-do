@@ -3,9 +3,10 @@ import styles from '../styles/bucket.module.css';
 import bucketApi from '../api/bucketApi';
 import { useRef } from 'react';
 import TodoList from '../components/TodoList';
-function Bucket({ activeIndex, bucket }) {
+import todoApi from '../api/todoApi';
+function Bucket({ activeIndex, bucket, onDelete }) {
   const [showTodoList, setShowTodoList] = useState(false);
-
+  const [imageUrl, setImageUrl] = useState(bucket.imageUrl);
   const [inputData, setInputData] = useState({
     title: '',
     file: '',
@@ -19,6 +20,7 @@ function Bucket({ activeIndex, bucket }) {
         title: bucket.title || '',
         file: bucket.imageUrl || '', // 파일 초기화 (필요에 따라 수정)
       });
+      setImageUrl(bucket.imageUrl); // bucket에서 초기 이미지 URL을 업데이트
     }
   }, [bucket]);
 
@@ -30,6 +32,14 @@ function Bucket({ activeIndex, bucket }) {
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // 선택된 첫 번째 파일 가져오기
     setInputData((prev) => ({ ...prev, file })); // 파일 state 업데이트
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUrl(reader.result); // 읽은 파일을 이미지로 설정
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleAutoSubmit = async () => {
@@ -51,17 +61,27 @@ function Bucket({ activeIndex, bucket }) {
 
   useEffect(() => {
     handleAutoSubmit();
-  }, [inputData]);
+  }, [inputData, bucket.imageUrl]);
 
   const handleToggleTodoList = () => {
     setShowTodoList((prev) => !prev); // ✅ 버튼 클릭 시 상태 변경
+  };
+
+  const handleDeleteBucket = async () => {
+    try {
+      await bucketApi.deleteBucket(bucket.id);
+      console.log('✅ 버킷 삭제 성공');
+      onDelete(); // 삭제 후 부모에서 fetchBuckets 호출
+    } catch (error) {
+      console.error('❌ 버킷 삭제 실패', error);
+    }
   };
 
   return (
     <section className={styles.section}>
       <article className={styles.bucketItem}>
         <div className={styles.bucketImageBox}>
-          <img className={styles.bucketImage} src={bucket.imageUrl} alt="미리보기" />
+          <img className={styles.bucketImage} src={imageUrl || bucket.imageUrl} alt="미리보기" />
         </div>
 
         <form className={styles.bucketForm}>
@@ -85,7 +105,9 @@ function Bucket({ activeIndex, bucket }) {
           <button className={styles.toggleButton} onClick={handleToggleTodoList}>
             V
           </button>
-          <button className={styles.deleteButton}>X</button>
+          <button className={styles.deleteButton} onClick={handleDeleteBucket}>
+            X
+          </button>
         </div>
         {/* ✅ showTodoList 상태가 true일 때만 TodoList 표시 */}
       </article>

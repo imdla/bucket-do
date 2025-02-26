@@ -12,24 +12,26 @@ export default function Home() {
   const [bucketList, setBucketList] = useState([]);
   const [newBucket, setNewBucket] = useState(null);
   const [newTodo, setNewTodo] = useState(null);
-
   useEffect(() => {
-    const fetchBuckets = async () => {
-      try {
-        const response = await bucketApi.getBuckets();
-        setBucketList(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     fetchBuckets();
   }, [activeIndex, newBucket, newTodo]);
+
+  const fetchBuckets = async () => {
+    try {
+      const response = await bucketApi.getBuckets();
+      setBucketList(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleCreateBucket = async () => {
     try {
       const bucketResponse = await bucketApi.createBucket();
-      const todoResponse = await todoApi.createTodo();
+
+      const bucketId = bucketResponse.data.id;
+
+      const todoResponse = await todoApi.createTodo(bucketId);
       setNewBucket(bucketResponse);
       setNewTodo(todoResponse);
     } catch (error) {
@@ -39,7 +41,7 @@ export default function Home() {
 
   const bucketValue =
     bucketList.length > 0 ? (
-      <BucketList activeIndex={activeIndex} bucketList={bucketList} />
+      <BucketList activeIndex={activeIndex} bucketList={bucketList} onDelete={fetchBuckets} />
     ) : (
       <div>버킷리스트를 추가해주세요</div>
     );
