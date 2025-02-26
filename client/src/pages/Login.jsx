@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import styles from '../styles/Login.module.css';
 import authApi from '../api/authApi';
 import { login } from '../store/slices/authSlice';
+import styles from '../styles/Login.module.css';
+import errorMessages from '../cofig/errorMessages';
+
 import Modal from '../components/Modal';
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [error, setError] = useState('');
-  const [isloading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -19,11 +20,12 @@ export default function Login() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({
-    content: '아이디나 비밀번호가 일치하지 않습니다.',
+    content: '',
     cancleText: '확인',
     onConfirm: false,
   });
 
+  // form 입력값 변경
   const handleFormInput = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -32,28 +34,45 @@ export default function Login() {
     }));
   };
 
+  // 회원가입
   const handleSignup = () => {
     navigate('/signup');
   };
 
+  // 로그인
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
     try {
+      setIsLoading(true);
+
       const response = await authApi.login(formData);
       const username = formData.username;
       const { token } = response.data;
       dispatch(login({ token, username }));
       navigate('/');
     } catch (error) {
-      setIsModalOpen(true);
+      // todo : 잘못된 비밀번호 입력 시 500 에러 대응 필요
       console.log(error);
-      setError(error);
+      console.log(error.code);
+
+      const errorMessage =
+        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+
+      setModalData({
+        ...modalData,
+        content: errorMessage,
+      });
+      setIsModalOpen(true);
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    <div>로딩중</div>;
+  }
+
   return (
     <div className={styles.container}>
       <div>

@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import authApi from '../api/authApi';
 import styles from '../styles/Signup.module.css';
+import errorMessages from '../cofig/errorMessages';
 
 import Modal from '../components/Modal';
-import errorMessages from '../cofig/errorMessages';
 
 function Signup() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [checkedUsername, setCheckedUsername] = useState(false);
 
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -26,7 +27,7 @@ function Signup() {
     onConfirm: false,
   });
 
-  // from 입력 값 변경
+  // from 입력값 변경
   const handleChange = (e) => {
     if (e.target.name == 'username') {
       setCheckedUsername(false);
@@ -60,6 +61,8 @@ function Signup() {
     }
 
     try {
+      setIsLoading(true);
+
       await authApi.signup(formData);
       setModalData({
         ...modalData,
@@ -69,7 +72,7 @@ function Signup() {
       navigate('/login');
     } catch (error) {
       const errorMessage =
-        errorMessages[error.status]?.[error.type] ||
+        errorMessages[error.status]?.[error.code] ||
         errorMessages[error.status]?.DEFAULT ||
         '회원가입이 실패되었습니다.';
       setModalData({
@@ -77,6 +80,8 @@ function Signup() {
         content: errorMessage,
       });
       setIsModalOpen(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -86,6 +91,8 @@ function Signup() {
     const userName = formData.username;
 
     try {
+      setIsLoading(true);
+
       const response = await authApi.checkUsername(userName);
       const isPossible = response.available;
 
@@ -108,15 +115,21 @@ function Signup() {
       }
     } catch (error) {
       const errorMessage =
-        errorMessages[error.status]?.[error.type] || errorMessages[error.status]?.DEFAULT;
+        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
 
       setModalData({
         ...modalData,
         content: errorMessage,
       });
       setIsModalOpen(true);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    <div>로딩중</div>;
+  }
 
   let passwordMessage = '';
   if (passwordCheck) {
