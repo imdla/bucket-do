@@ -7,6 +7,7 @@ import com.example.api.domain.bucket.entity.Bucket;
 import com.example.api.domain.bucket.repository.BucketRepository;
 import com.example.api.domain.todo.entity.Todo;
 import com.example.api.domain.todo.repository.TodoRepository;
+import com.example.api.domain.todo.service.TodoService;
 import com.example.api.domain.user.entity.User;
 import com.example.api.global.exception.ResourceNotFoundException;
 import java.util.List;
@@ -23,6 +24,7 @@ public class BucketService {
     private final BucketRepository bucketRepository;
     private final S3Service s3Service;
     private final TodoRepository todoRepository;
+    private final TodoService todoService;
 
     public List<BucketResponseDto> getBuckets(User user) {
         return bucketRepository.findAllByUserId(user.getId()).stream()
@@ -35,6 +37,7 @@ public class BucketService {
     public BucketResponseDto createBucket(User user) {
         Bucket emptyBucket = bucketRepository.save(new Bucket(null, null, user));
 
+        todoService.createTodo(emptyBucket.getId());
         return BucketResponseDto.from(emptyBucket);
     }
 
