@@ -9,10 +9,12 @@ import bucketApi from '../api/bucketApi';
 import todoApi from '../api/todoApi';
 
 export default function Home() {
-  const [activeIndex, setActiveIndex] = useState(null);
   const [bucketList, setBucketList] = useState([]);
   const [newBucket, setNewBucket] = useState(null);
   const [newTodo, setNewTodo] = useState(null);
+  // 0: 모두, 1: 진행중, 2: 완료
+  const [activeIndex, setActiveIndex] = useState(0);
+
   useEffect(() => {
     fetchBuckets();
   }, [activeIndex, newBucket, newTodo]);
@@ -51,6 +53,7 @@ export default function Home() {
     setActiveIndex(index);
   }
 
+  // 필터 버튼 리스트를 props로 전달
   const filterList = ['모두', '진행중', '완료'];
   const filterButtons = filterList.map((label, index) => (
     <li key={index}>
@@ -69,10 +72,7 @@ export default function Home() {
 
       <section>
         <div className={styles.container}>
-          <>
-            <ul className={styles.filter}>{filterButtons}</ul>
-          </>
-
+          <ul className={styles.filter}>{filterButtons}</ul>
           <div className={styles.bucketList}>{bucketValue}</div>
         </div>
       </section>
