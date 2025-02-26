@@ -8,6 +8,7 @@ import styles from '../styles/Login.module.css';
 import errorMessages from '../config/errorMessages';
 
 import Modal from '../components/Modal';
+
 import 'react-loading-skeleton/dist/skeleton.css';
 import Skeleton from 'react-loading-skeleton';
 

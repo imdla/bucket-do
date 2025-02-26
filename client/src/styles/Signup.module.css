@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 /* form */
@@ -90,4 +91,9 @@
 .container form .passwordConfirmed:disabled {
   background-color: #fff;
   box-shadow: none;
+}
+
+/* Skeleton */
+.skeletonMargin {
+  margin-top: 1rem;
 }
