@@ -39,7 +39,7 @@
   display: flex;
   gap: 1rem;
 }
-.bucketItem .buttonBox .toogleButton {
+.bucketItem .buttonBox .toggleButton {
   width: 2.5rem;
   height: 2.5rem;
   border: none;
@@ -49,7 +49,7 @@
   transition: var(--transition-3);
 }
 
-.bucketItem .toogleButton:hover {
+.bucketItem .toggleButton:hover {
   box-shadow: var(--box-shadow-hover);
 }
 
