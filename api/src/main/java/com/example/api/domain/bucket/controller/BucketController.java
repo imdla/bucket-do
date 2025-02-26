@@ -43,7 +43,7 @@ public class BucketController {
     @PostMapping("/buckets")
     public ResponseEntity<ApiResponse<BucketResponseDto>> createBucket(
         @AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(ApiResponse.ok(
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok(
             "버킷이 생성되었습니다.",
             "CREATED",
             bucketService.createBucket(user)
@@ -84,7 +84,7 @@ public class BucketController {
         @AuthenticationPrincipal User user) {
         bucketService.deleteBucket(id, user);
 
-        return ResponseEntity.ok(ApiResponse.ok(
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ApiResponse.ok(
             "버킷이 삭제되었습니다.",
             "NO CONTENT",
             null
