@@ -8,6 +8,7 @@ import com.example.api.domain.user.entity.User;
 import com.example.api.global.response.ApiResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,6 +67,15 @@ public class BucketController {
             "OK",
             bucketService.updateBucket(id, requestDto, user)
         ));
+    }
+
+    // 버킷 이미지 삭제
+    @DeleteMapping("/buckets/{id}/image")
+    public ResponseEntity<ApiResponse<Void>> deleteBucketImage(@PathVariable Long id) {
+        bucketService.deleteBucketImage(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+            .body(ApiResponse.ok("버킷 이미지가 삭제되었습니다.", "NO_CONTENT", null));
     }
 
     // 버킷 삭제
