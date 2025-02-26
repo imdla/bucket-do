@@ -5,6 +5,8 @@ import com.example.api.domain.bucket.dto.responseDto.BucketResponseDto;
 import com.example.api.domain.bucket.dto.responseDto.BucketUpdateResponseDto;
 import com.example.api.domain.bucket.entity.Bucket;
 import com.example.api.domain.bucket.repository.BucketRepository;
+import com.example.api.domain.todo.entity.Todo;
+import com.example.api.domain.todo.repository.TodoRepository;
 import com.example.api.domain.user.entity.User;
 import com.example.api.global.exception.ResourceNotFoundException;
 import java.util.List;
@@ -20,6 +22,7 @@ public class BucketService {
 
     private final BucketRepository bucketRepository;
     private final S3Service s3Service;
+    private final TodoRepository todoRepository;
 
     public List<BucketResponseDto> getBuckets(User user) {
         return bucketRepository.findAllByUserId(user.getId()).stream()
@@ -74,6 +77,14 @@ public class BucketService {
     public void deleteBucket(Long id, User user) {
         Bucket bucket = bucketRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("일치하는 버킷을 찾을 수 없습니다."));
+
+        // 1. 투두 데이터 조회
+        List<Todo> todos = todoRepository.findByBucketId(id);
+
+        // 2. 투두 데이터 삭제
+        if (!todos.isEmpty()) {
+            todoRepository.deleteAll(todos);
+        }
 
         bucketRepository.delete(bucket);
     }
