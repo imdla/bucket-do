@@ -1,4 +1,4 @@
-export default errorMessages = {
+const errorMessages = {
   400: {
     DEFAULT: '잘못된 요청입니다.',
     INVALID_INPUT: '입력값이 올바르지 않습니다.', // 완료 - 회원 가입 (사용자 잘못 입력)
@@ -25,3 +25,5 @@ export default errorMessages = {
     SERVER_CRASH: '서버에서 문제가 발생했습니다. 관리자에게 문의하세요.',
   },
 };
+
+export default errorMessages;

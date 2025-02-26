@@ -5,6 +5,7 @@ import authApi from '../api/authApi';
 import styles from '../styles/Signup.module.css';
 
 import Modal from '../components/Modal';
+import errorMessages from '../cofig/errorMessages';
 
 function Signup() {
   const navigate = useNavigate();
@@ -25,7 +26,12 @@ function Signup() {
     onConfirm: false,
   });
 
+  // from 입력 값 변경
   const handleChange = (e) => {
+    if (e.target.name == 'username') {
+      setCheckedUsername(false);
+    }
+
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -62,13 +68,15 @@ function Signup() {
       setIsModalOpen(true);
       navigate('/login');
     } catch (error) {
+      const errorMessage =
+        errorMessages[error.status]?.[error.type] ||
+        errorMessages[error.status]?.DEFAULT ||
+        '회원가입이 실패되었습니다.';
       setModalData({
         ...modalData,
-        content: '회원가입이 실패되었습니다.',
+        content: errorMessage,
       });
       setIsModalOpen(true);
-
-      console.error('회원가입 실패:', error);
     }
   };
 
@@ -99,7 +107,14 @@ function Signup() {
         setIsModalOpen(true);
       }
     } catch (error) {
-      console.error(error);
+      const errorMessage =
+        errorMessages[error.status]?.[error.type] || errorMessages[error.status]?.DEFAULT;
+
+      setModalData({
+        ...modalData,
+        content: errorMessage,
+      });
+      setIsModalOpen(true);
     }
   };
 
