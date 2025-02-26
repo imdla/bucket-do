@@ -42,8 +42,16 @@ public class BucketService {
         Bucket bucket = bucketRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("일치하는 버킷을 찾을 수 없습니다."));
 
-        // 기존 이미지 삭제
+        // 이미지 파일을 첨부하지 않는 경우
+        if (requestDto.getFile() == null) {
+            bucket.update(requestDto.getTitle(), bucket.getImageUrl(), bucket.getS3Key(), null);
+
+            return BucketUpdateResponseDto.from(bucket);
+        }
+
+        // 이미지 파일을 첨부한 경우 (기존 이미지 삭제 후 업로드)
         if (bucket.getS3Key() != null) {
+            // 기존 이미지 삭제
             s3Service.deleteFile(bucket.getS3Key());
         }
 
@@ -55,7 +63,8 @@ public class BucketService {
         String s3Key = uploadResult.get("s3Key");
 
         // 수정된 제목, 이미지 파일을 보내서 버킷 업데이트
-        bucket.update(requestDto, imageUrl, s3Key);
+        bucket.update(requestDto.getTitle(), imageUrl, s3Key,
+            requestDto.getFile().getOriginalFilename());
 
         return BucketUpdateResponseDto.from(bucket);
     }

@@ -1,6 +1,5 @@
 package com.example.api.domain.bucket.entity;
 
-import com.example.api.domain.bucket.dto.requestDto.BucketRequestDto;
 import com.example.api.domain.user.entity.User;
 import com.example.api.global.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
@@ -75,11 +74,11 @@ public class Bucket extends BaseTimeEntity {
         this.user = user;
     }
 
-    public Bucket update(BucketRequestDto requestDto, String imageUrl, String s3Key) {
-        this.title = requestDto.getTitle();
+    public Bucket update(String title, String imageUrl, String s3Key, String originalFileName) {
+        this.title = title;
         this.imageUrl = imageUrl;
         this.s3Key = s3Key;
-        this.originalFileName = requestDto.getFile().getOriginalFilename();
+        this.originalFileName = originalFileName;
         return this;
     }
 }
