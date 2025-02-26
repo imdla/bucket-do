@@ -83,3 +83,8 @@
   box-shadow: var(--box-shadow-hover);
   transform: translateY(-1px);
 }
+
+/* Skeleton */
+.skeletonMargin {
+  margin-top: 1rem;
+}
