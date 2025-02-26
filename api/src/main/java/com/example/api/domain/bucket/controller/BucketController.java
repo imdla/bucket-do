@@ -52,7 +52,8 @@ public class BucketController {
     // 버킷 수정
     @PatchMapping("/buckets/{id}")
     public ResponseEntity<ApiResponse<BucketUpdateResponseDto>> updateBucket(@PathVariable Long id,
-        @RequestPart("title") String title, @RequestPart("file") MultipartFile file,
+        @RequestPart(value = "title", required = false) String title,
+        @RequestPart(value = "file", required = false) MultipartFile file,
         @AuthenticationPrincipal User user) {
 
         BucketRequestDto requestDto = BucketRequestDto.builder()
