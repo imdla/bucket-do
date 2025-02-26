@@ -146,7 +146,10 @@ function Signup() {
     <div className={styles.container}>
       {isLoading ? (
         <>
-          <Skeleton width="50vw" height={55} />
+          <div style={{ width: '50vw', minWidth: '300px', display: 'flex', gap: '2vw' }}>
+            <Skeleton width="60px" height={55} />
+          </div>
+          <Skeleton className={styles.skeletonMargin} width="50vw" height={55} />
           <Skeleton className={styles.skeletonMargin} width="50vw" height={55} />
           <Skeleton className={styles.skeletonMargin} width="50vw" height={55} />
           <Skeleton className={styles.skeletonMargin} width="50vw" height={55} />
