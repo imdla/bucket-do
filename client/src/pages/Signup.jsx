@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import authApi from '../api/authApi';
 import styles from '../styles/Signup.module.css';
@@ -156,6 +156,20 @@ function Signup() {
       ) : (
         <>
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalData} />
+
+          <nav>
+            <h1 className={styles.logo}>
+              <Link to={'/'}>
+                <img src="../public/images/BD-logo.png" alt="logo" />
+              </Link>
+            </h1>
+
+            <div className={styles.breadcrumb}>
+              <Link to={'/'}>홈</Link>
+              <p>&#10095;</p>
+              <Link to={'/signup'}>회원가입</Link>
+            </div>
+          </nav>
 
           <form onSubmit={handleSubmit}>
             <div className={styles.usernameBox}>
