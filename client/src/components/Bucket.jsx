@@ -4,7 +4,6 @@ import bucketApi from '../api/bucketApi';
 import TodoList from '../components/TodoList';
 import todoApi from '../api/todoApi';
 
-
 function Bucket({ activeIndex, bucket, onDelete }) {
   const [showTodoList, setShowTodoList] = useState(false);
   const [imageUrl, setImageUrl] = useState(bucket.imageUrl);
@@ -71,16 +70,6 @@ function Bucket({ activeIndex, bucket, onDelete }) {
       await bucketApi.deleteBucket(bucket.id);
       console.log('✅ 버킷 삭제 성공');
       onDelete();
-    } catch (error) {
-      console.error('❌ 버킷 삭제 실패', error);
-    }
-  };
-
-  const handleDeleteBucket = async () => {
-    try {
-      await bucketApi.deleteBucket(bucket.id);
-      console.log('✅ 버킷 삭제 성공');
-      onDelete(); // 삭제 후 부모에서 fetchBuckets 호출
     } catch (error) {
       console.error('❌ 버킷 삭제 실패', error);
     }
