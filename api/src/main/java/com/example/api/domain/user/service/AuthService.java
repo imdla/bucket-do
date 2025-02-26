@@ -32,9 +32,6 @@ public class AuthService {
         if (userRepository.existsByUsername(requestDto.getUsername())) {
             throw new IllegalArgumentException("이미 사용중인 아이디입니다.");
         }
-        if (userRepository.existsByEmail(requestDto.getEmail())) {
-            throw new IllegalArgumentException("이미 사용중인 이메일입니다.");
-        }
 
         String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
 
