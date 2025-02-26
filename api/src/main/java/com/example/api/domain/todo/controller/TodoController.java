@@ -37,11 +37,12 @@ public class TodoController {
                 )
             );
     }
-
-    @GetMapping("/{id}/todos")
-    public ResponseEntity<ApiResponse<List<TodoResponseDto>>> getTodos(@PathVariable Long id) {
-        List<TodoResponseDto> todos = todoService.findTodosByBucketId(id);
-        return ResponseEntity.ok(ApiResponse.ok("투두리스트가 조회되었습니다.", "OK", todos));
+    
+    @GetMapping("/{bucketId}/todos")
+    public ResponseEntity<ApiResponse<List<TodoResponseDto>>> getTodosByBucket(
+        @PathVariable Long bucketId) {
+        List<TodoResponseDto> todos = todoService.findTodosByBucketId(bucketId);
+        return ResponseEntity.ok(ApiResponse.ok("투두가 조회되었습니다.", "OK", todos));
     }
 
     @PatchMapping("/{bucketId}/todos/{todoId}")

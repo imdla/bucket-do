@@ -10,14 +10,16 @@ import lombok.Getter;
 public class TodoResponseDto {
 
     private final Long id;
+    private final Long bucketId;
     private final String content;
     private final boolean isCompleted;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
-
+    
     public static TodoResponseDto from(Todo entity) {
         return TodoResponseDto.builder()
             .id(entity.getId())
+            .bucketId(entity.getBucket().getId())
             .content(entity.getContent())
             .isCompleted(entity.isCompleted())
             .createdAt(entity.getCreatedAt())
