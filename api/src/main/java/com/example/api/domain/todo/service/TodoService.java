@@ -2,6 +2,7 @@ package com.example.api.domain.todo.service;
 
 import com.example.api.domain.bucket.entity.Bucket;
 import com.example.api.domain.bucket.repository.BucketRepository;
+import com.example.api.domain.todo.dto.request.TodoRequestDto;
 import com.example.api.domain.todo.dto.response.TodoResponseDto;
 import com.example.api.domain.todo.entity.Todo;
 import com.example.api.domain.todo.repository.TodoRepository;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TodoService {
 
     private final BucketRepository bucketRepository;
@@ -23,7 +25,7 @@ public class TodoService {
     @Transactional
     public TodoResponseDto createTodo(Long id) {
         Bucket bucket = bucketRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException());
+            .orElseThrow(() -> new ResourceNotFoundException("투두를 생성할 수 없습니다"));
 
         Todo emptyTodo = todoRepository.save(new Todo(null, bucket));
         return TodoResponseDto.from(emptyTodo);
@@ -34,5 +36,17 @@ public class TodoService {
         List<Todo> todos = todoRepository.findByBucketId(id);
 
         return todos.stream().map(TodoResponseDto::from).toList();
+    }
+
+    @Transactional
+    public TodoResponseDto updateTodo(Long bucketId, Long todoId, TodoRequestDto requestDto) {
+        Todo todo = todoRepository.findById(todoId)
+            .orElseThrow(() -> new ResourceNotFoundException("일치하는 투두를 찾을 수 없습니다."));
+
+        todo.update(requestDto.getContent(), requestDto.isCompleted());
+
+        todoRepository.save(todo);
+
+        return TodoResponseDto.from(todo);
     }
 }

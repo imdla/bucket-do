@@ -2,6 +2,7 @@ package com.example.api.domain.todo.entity;
 
 import com.example.api.domain.bucket.entity.Bucket;
 import com.example.api.global.entity.BaseTimeEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,11 +30,18 @@ public class Todo extends BaseTimeEntity {
 
     private String content;
 
+    @Column(nullable = false)
     private boolean isCompleted;
 
     @Builder
     public Todo(String content, Bucket bucket) {
         this.bucket = bucket;
         this.content = content;
+    }
+
+    public Todo update(String content, boolean isCompleted) {
+        this.content = content;
+        this.isCompleted = isCompleted;
+        return this;
     }
 }
