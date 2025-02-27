@@ -163,7 +163,7 @@ function Signup() {
           <nav>
             <h1 className={styles.logo}>
               <Link to={'/'}>
-                <img src="../public/images/BD-logo.png" alt="logo" />
+                <img src="/assets/BD-logo.png" alt="logo" />
               </Link>
             </h1>
 

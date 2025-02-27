@@ -91,7 +91,7 @@ export default function Login() {
           <>
             <div className={styles.intro}>
               <Link to={'/'}>
-                <img className={styles.logo} src="../public/images/BD-logo.png" alt="logo" />
+                <img className={styles.logo} src="/assets/BD-logo.png" alt="logo" />
               </Link>
 
               <div className={styles.introText}>
