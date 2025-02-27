@@ -53,6 +53,8 @@ public class Bucket extends BaseTimeEntity {
     @Column(nullable = false)
     private int todoCompleted;
 
+    private Long fixedTodoId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -113,5 +115,10 @@ public class Bucket extends BaseTimeEntity {
         if (this.todoCompleted > 0) {
             this.todoCompleted--;
         }
+    }
+
+    // 고정 투두 id값 저장
+    public void updateFinalTodoId(Long todoId) {
+        this.fixedTodoId = todoId;
     }
 }

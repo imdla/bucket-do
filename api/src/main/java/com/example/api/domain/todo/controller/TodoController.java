@@ -1,10 +1,10 @@
 package com.example.api.domain.todo.controller;
 
 import com.example.api.domain.todo.dto.request.TodoRequestDto;
+import com.example.api.domain.todo.dto.response.TodoListResponseDto;
 import com.example.api.domain.todo.dto.response.TodoResponseDto;
 import com.example.api.domain.todo.service.TodoService;
 import com.example.api.global.response.ApiResponse;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +38,12 @@ public class TodoController {
             );
     }
 
+    // 특정 버킷에 대한 투두 전체 조회
     @GetMapping("/{bucketId}/todos")
-    public ResponseEntity<ApiResponse<List<TodoResponseDto>>> getTodosByBucket(
+    public ResponseEntity<ApiResponse<TodoListResponseDto>> getTodosByBucket(
         @PathVariable Long bucketId) {
-        List<TodoResponseDto> todos = todoService.findTodosByBucketId(bucketId);
-        return ResponseEntity.ok(ApiResponse.ok("투두가 조회되었습니다.", "OK", todos));
+        TodoListResponseDto responseDto = todoService.findTodosByBucketId(bucketId);
+        return ResponseEntity.ok(ApiResponse.ok("투두가 조회되었습니다.", "OK", responseDto));
     }
 
     @PatchMapping("/{bucketId}/todos/{todoId}")

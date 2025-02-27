@@ -38,6 +38,10 @@ public class BucketService {
         Bucket emptyBucket = bucketRepository.save(new Bucket(null, null, user));
 
         todoService.createTodo(emptyBucket.getId());
+
+        List<Todo> todos = todoRepository.findFirstByBucketId(emptyBucket.getId());
+        emptyBucket.updateFinalTodoId(todos.get(0).getId());
+
         return BucketResponseDto.from(emptyBucket);
     }
 

@@ -13,6 +13,7 @@ public class BucketResponseDto {
     private final String title;
     private final String imageUrl;
     private final boolean isCompleted;
+    private final Long fixedTodoId;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
     private final int todoAll;
@@ -24,6 +25,7 @@ public class BucketResponseDto {
             .title(entity.getTitle())
             .imageUrl(entity.getImageUrl())
             .isCompleted(entity.isCompleted())
+            .fixedTodoId(entity.getFixedTodoId())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
             .todoAll(entity.getTodoAll())

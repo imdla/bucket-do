@@ -27,9 +27,6 @@ public class ApiResponse<T> {
         this.errors = errors;
     }
 
-    ;
-
-
     public static <T> ApiResponse<T> ok(T data) {
         return new ApiResponse<>(data);
     }

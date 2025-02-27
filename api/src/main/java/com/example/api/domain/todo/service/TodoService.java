@@ -3,6 +3,7 @@ package com.example.api.domain.todo.service;
 import com.example.api.domain.bucket.entity.Bucket;
 import com.example.api.domain.bucket.repository.BucketRepository;
 import com.example.api.domain.todo.dto.request.TodoRequestDto;
+import com.example.api.domain.todo.dto.response.TodoListResponseDto;
 import com.example.api.domain.todo.dto.response.TodoResponseDto;
 import com.example.api.domain.todo.entity.Todo;
 import com.example.api.domain.todo.repository.TodoRepository;
@@ -35,10 +36,16 @@ public class TodoService {
         return TodoResponseDto.from(newTodo);
     }
 
-    public List<TodoResponseDto> findTodosByBucketId(Long id) {
-        List<Todo> todos = todoRepository.findByBucketId(id);
+    public TodoListResponseDto findTodosByBucketId(Long id) {
+        Bucket bucket = bucketRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("버킷을 찾을 수 없습니다."));
 
-        return todos.stream().map(TodoResponseDto::from).toList();
+        List<Todo> todos = todoRepository.findByBucketId(id);
+        List<TodoResponseDto> todoResponseDtos = todos.stream()
+            .map(TodoResponseDto::from)
+            .toList();
+
+        return TodoListResponseDto.from(bucket.getFixedTodoId(), todoResponseDtos);
     }
 
     @Transactional
