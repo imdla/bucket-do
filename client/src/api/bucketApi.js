@@ -27,6 +27,12 @@ const bucketApi = {
     const response = await api.delete(`${ENDPOINT}/${bucketId}`);
     return response;
   },
+
+  // 버킷 이미지 삭제
+  deleteBucketImage: async (bucketId) => {
+    const response = await api.delete(`${ENDPOINT}/${bucketId}/image`);
+    return response;
+  },
 };
 
 export default bucketApi;

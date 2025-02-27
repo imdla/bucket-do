@@ -74,24 +74,40 @@ function Bucket({ activeIndex, bucket, onDelete }) {
       console.error('❌ 버킷 삭제 실패', error);
     }
   };
-
+  const handleDeleteImage = async () => {
+    setImageUrl(null);
+    try {
+      await bucketApi.deleteBucketImage(bucket.id);
+      console.log('✅ 버킷 이미지 삭제 성공');
+      onDelete();
+    } catch (error) {
+      console.error('❌ 버킷 이미지 삭제 실패', error);
+    }
+  };
   return (
     <section className={styles.section}>
       <article className={styles.bucket}>
         <div className={styles.imageBox}>
           <img src={imageUrl || bucket.imageUrl} alt="미리보기" />
-          <form>
-            <input
-              className={styles.fileInput}
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              name="image_path"
-              onChange={handleFileChange}
-            />
-          </form>
+          <input
+            className={styles.fileInput}
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            name="image_path"
+            onChange={handleFileChange}
+            style={{ display: 'none' }} // input 숨기기
+          />
         </div>
 
+        <div className={styles.buttonBox}>
+          <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
+            추가
+          </button>
+          <button className={styles.deleteButton} onClick={handleDeleteImage}>
+            삭제
+          </button>
+        </div>
         <form>
           <input
             type="text"
