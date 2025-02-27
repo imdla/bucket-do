@@ -58,7 +58,6 @@ public class TodoService {
         boolean wasCompleted = todo.isCompleted();
 
         todo.update(requestDto.getContent(), requestDto.isCompleted());
-        todoRepository.save(todo);
 
         Bucket bucket = todo.getBucket();
 
@@ -69,7 +68,13 @@ public class TodoService {
             } else {
                 bucket.decrementTodoCompleted();
             }
-            bucketRepository.save(bucket);
+        }
+
+        // 완료된 투두 개수와 전체 투두 개수가 일치하면 버킷을 완료 상태로 전환
+        if (bucket.getTodoAll() == bucket.getTodoCompleted()) {
+            bucket.bucketCompleted(true);
+        } else {
+            bucket.bucketCompleted(false);
         }
 
         return TodoResponseDto.from(todo);

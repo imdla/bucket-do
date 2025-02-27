@@ -29,6 +29,7 @@ public class Bucket extends BaseTimeEntity {
     @Column(length = 20)
     private String title;
     private LocalDateTime deadline;
+
     @Column(nullable = false)
     private boolean isCompleted;
 
@@ -120,5 +121,10 @@ public class Bucket extends BaseTimeEntity {
     // 고정 투두 id값 저장
     public void updateFinalTodoId(Long todoId) {
         this.fixedTodoId = todoId;
+    }
+
+    // 투두 완료 여부에 따라 버킷 완료 상태 전환
+    public void bucketCompleted(boolean completed) {
+        this.isCompleted = completed;
     }
 }
