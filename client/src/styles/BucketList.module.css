@@ -1,12 +1,14 @@
 .container {
-  width: 50vw;
-  margin: 0 auto;
-  padding: var(--padding-large);
+  margin: 2rem auto 0 auto;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-radius: var(--border-radius-20);
   gap: 1.5rem;
+}
+
+.container li {
+  width: 50vw;
+  box-sizing: border-box;
 }

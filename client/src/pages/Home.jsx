@@ -70,7 +70,7 @@ export default function Home() {
     <div>
       <Header />
 
-      <section>
+      <section className={styles.section}>
         <div className={styles.container}>
           <ul className={styles.filter}>{filterButtons}</ul>
           <div className={styles.bucketList}>{bucketValue}</div>

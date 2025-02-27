@@ -4,7 +4,7 @@
 }
 
 .container {
-  width: 50%;
+  width: 50vw;
   margin: 0 auto;
   display: flex;
   align-items: flex-start;
@@ -46,7 +46,6 @@
 
 /* bucketList */
 .container .bucketList {
-  width: 100%;
   min-height: calc(60vh - 45px);
   display: flex;
   align-items: center;

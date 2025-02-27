@@ -88,7 +88,7 @@ function Bucket({ activeIndex, bucket, onDelete }) {
     <section className={styles.section}>
       <article className={styles.bucket}>
         <div className={styles.imageBox}>
-          <img src={imageUrl || bucket.imageUrl} alt="미리보기" />
+          <img src={imageUrl || '../public/images/default-image.png'} alt="미리보기" />
           <input
             className={styles.fileInput}
             type="file"
@@ -96,18 +96,17 @@ function Bucket({ activeIndex, bucket, onDelete }) {
             ref={fileInputRef}
             name="image_path"
             onChange={handleFileChange}
-            style={{ display: 'none' }} // input 숨기기
           />
+          <div className={styles.imageButtonBox}>
+            <button className={styles.addImageButton} onClick={() => fileInputRef.current?.click()}>
+              추가
+            </button>
+            <button className={styles.deleteImageButton} onClick={handleDeleteImage}>
+              삭제
+            </button>
+          </div>
         </div>
 
-        <div className={styles.buttonBox}>
-          <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
-            추가
-          </button>
-          <button className={styles.deleteButton} onClick={handleDeleteImage}>
-            삭제
-          </button>
-        </div>
         <form>
           <input
             type="text"
@@ -116,6 +115,10 @@ function Bucket({ activeIndex, bucket, onDelete }) {
             placeholder="버킷 리스트 내용을 입력해주세요."
             onChange={handleFormChange}
           />
+          <div className={styles.progressBarBox}>
+            <p>진행률</p>
+            <div className={styles.progressBar}>test</div>
+          </div>
         </form>
 
         <div className={styles.buttonBox}>
