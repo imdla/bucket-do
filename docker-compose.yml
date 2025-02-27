@@ -40,17 +40,22 @@ services:
       context: ./client
       dockerfile: Dockerfile
       args: 
-        - VITE_API_URL:${VITE_API_URL}
+        - VITE_API_URL=${VITE_API_URL}
       cache_from:
         - type=local,src=/tmp/docker-cache/client
       cache_to:
         - type=local,dest=/tmp/docker-cache/client,mode=max
-    image: imdla/client:latest
+    image: imdla/client-image:latest
+    env_file:
+      - .env
     ports:
       - "80:80"
       - "443:443"
     networks:
       - api-network
+    volumes:
+      - /etc/letsencrypt/live/3.38.150.0.sslip.io/fullchain.pem:/etc/letsencrypt/live/3.38.150.0.sslip.io/fullchain.pem
+      - /etc/letsencrypt/live/3.38.150.0.sslip.io/privkey.pem:/etc/letsencrypt/live/3.38.150.0.sslip.io/privkey.pem
     depends_on:
       - db
       - api
