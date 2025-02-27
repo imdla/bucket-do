@@ -51,7 +51,7 @@ function Bucket({ activeIndex, bucket, onDelete }) {
 
     try {
       await bucketApi.updateBucket(bucket.id, formData);
-      console.log('✅ 자동 업데이트 성공!');
+      console.log('✅ 자동 업데이트 성공!!');
     } catch (error) {
       console.error('❌ 업데이트 실패 : ', error);
     }
