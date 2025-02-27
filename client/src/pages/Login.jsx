@@ -96,7 +96,7 @@ export default function Login() {
 
               <div className={styles.introText}>
                 <p>버킷두(BucketDo)는 작심삼일러를 위한</p>
-                <p>작은 실천으로 큰 목표를 이루는 기록 서비스 입니다</p>
+                <p>작은 실천으로 큰 목표를 이루는 기록 서비스 입니다.</p>
               </div>
             </div>
           </>
