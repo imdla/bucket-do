@@ -3,9 +3,6 @@ name: deploy service
 on:
   push:
     branches:
-      - main
-      - feature/*
-      - chore/*
       - test/*
 
 jobs:
