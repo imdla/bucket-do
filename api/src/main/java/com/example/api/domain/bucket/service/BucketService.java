@@ -48,6 +48,12 @@ public class BucketService {
         Bucket bucket = bucketRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("일치하는 버킷을 찾을 수 없습니다."));
 
+        // 특정 버킷의 오름차순 정렬된 투두리스트 목록을 받아옴
+        List<Todo> todos = todoRepository.findFirstByBucketId(id);
+
+        // 버킷 수정 시 작성한 제목을 고정 투두의 내용으로 입력
+        todos.get(0).update(requestDto.getTitle() + " 완료", false);
+
         // 이미지 파일을 첨부하지 않는 경우
         if (requestDto.getFile() == null) {
             bucket.update(requestDto.getTitle(), bucket.getImageUrl(), bucket.getS3Key(), null);

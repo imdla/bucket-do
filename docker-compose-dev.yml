@@ -2,7 +2,7 @@ services:
   db-dev:
     container_name: db-dev-container
     image: mysql:8.0
-    volumes:
+    volumes:  
       - db-volume:/var/lib/mysql
     ports:
       - "3310:3306"

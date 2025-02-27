@@ -1,0 +1,63 @@
+services:
+  db:
+    container_name: db-container
+    image: mysql:8.0
+    volumes:
+      - db-volume:/var/lib/mysql
+    networks:
+      - db-network
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+  api:
+    container_name: api-container
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      cache_from:
+        - type=local,src=/tmp/docker-cache/api
+      cache_to:
+        - type=local,dest=/tmp/docker-cache/api,mode=max
+    image: imdla/api-image:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - db-network
+      - api-network
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+  client:
+    container_name: client-container
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args: 
+        - VITE_API_URL:${VITE_API_URL}
+      cache_from:
+        - type=local,src=/tmp/docker-cache/client
+      cache_to:
+        - type=local,dest=/tmp/docker-cache/client,mode=max
+    image: imdla/client:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - api-network
+    depends_on:
+      - db
+      - api
+
+volumes:
+  db-volume:
+
+networks:
+  db-network:
+  api-network:
