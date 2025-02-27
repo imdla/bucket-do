@@ -82,13 +82,13 @@
 }
 
 .bucket .imageBox {
-  width: 100%;
+  width: 100px;
   position: relative;
 }
 
 .bucket .imageBox::after {
   content: '';
-  width: 100%;
+  width: 100px;
   height: 100%;
   background: rgba(0, 0, 0, 0.2);
   position: absolute;

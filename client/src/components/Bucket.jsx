@@ -88,7 +88,7 @@ function Bucket({ activeIndex, bucket, onDelete }) {
     <section className={styles.section}>
       <article className={styles.bucket}>
         <div className={styles.imageBox}>
-          <img src={imageUrl || '../public/images/default-image.png'} alt="미리보기" />
+          <img src={imageUrl || '../public/assets/default-image.png'} alt="미리보기" />
           <input
             className={styles.fileInput}
             type="file"
