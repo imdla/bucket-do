@@ -74,22 +74,19 @@ export default function TodoList({
       })
     : null;
 
+  const containerStyle = isToggled
+    ? imageUrl
+      ? {
+          backgroundImage: `url(${imageUrl})`,
+          objectFit: 'cover',
+          backgroundOrigin: 'border-box',
+          backgroundSize: 'cover',
+        }
+      : { background: '#b6ccd8' }
+    : { opacity: '0', visibility: 'hidden', maxHeight: '0', padding: '0', zIndex: '-999' };
+
   return (
-    <div
-      style={
-        isToggled
-          ? imageUrl
-            ? {
-                backgroundImage: `url(${imageUrl})`,
-                objectFit: 'cover',
-                backgroundOrigin: 'border-box',
-                backgroundSize: 'cover',
-              }
-            : { background: '#b6ccd8' }
-          : { opacity: '0', visibility: 'hidden', maxHeight: '0', padding: '0', zIndex: '-999' }
-      }
-      className={styles.container}
-    >
+    <div style={containerStyle} className={styles.container}>
       <ul>{todos}</ul>
 
       <button className={styles.createButton} onClick={handleCreate}>

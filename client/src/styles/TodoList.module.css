@@ -27,5 +27,6 @@
 }
 
 .container .createButton:hover {
-  box-shadow: var(--box-shadow-hover);
+  color: var(--bg-100);
+  background-color: var(--text-200);
 }
