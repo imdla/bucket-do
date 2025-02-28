@@ -1,5 +1,5 @@
-.todoListContainer {
-  width: 100%;
+.container {
+  width: 50vw;
   margin: 0 auto;
   padding: var(--padding-small);
   display: flex;
@@ -10,22 +10,22 @@
   border-radius: var(--border-radius-20);
   box-shadow: var(--box-shadow-basic);
   box-sizing: border-box;
-}
-
-.todoListContainer .todoList li {
-  margin-bottom: var(--margin-small);
-}
-
-.todoListContainer .createButton {
-  width: 2.5rem;
-  height: 2.5rem;
-  border: none;
-  background-color: var(--bg-200);
-  border-radius: 50%;
-  font-size: var(--font-size-18);
   transition: var(--transition-3);
 }
 
-.todoListContainer .createButton:hover {
+.container ul li {
+  margin-bottom: var(--margin-small);
+}
+
+.container .createButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  font-size: var(--font-size-18);
+  background-color: var(--bg-200);
+  transition: var(--transition-3);
+}
+
+.container .createButton:hover {
   box-shadow: var(--box-shadow-hover);
 }

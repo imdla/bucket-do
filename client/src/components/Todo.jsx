@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../styles/Todo.module.css';
 import todoApi from '../api/todoApi';
+import styles from '../styles/Todo.module.css';
 
-export default function Todo({ bucketId, todo, fetchTodo, isFixed }) {
+export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, modalClose }) {
   const { id, content, completed } = todo;
   console.log(todo);
 

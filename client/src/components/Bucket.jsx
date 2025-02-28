@@ -170,7 +170,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
       <section className={styles.section}>
         <article className={styles.bucket}>
           <>
-            <div style={isToggled ? {} : { width: '0px' }} className={styles.imageBox}>
+            <div style={isToggled ? {} : { opacity: '0', width: '0' }} className={styles.imageBox}>
               <img src={imageUrl || '/assets/default-image.png'} alt="미리보기" />
 
               <input
@@ -202,7 +202,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
           </>
 
           <>
-            <form onSubmit={handleSubmit}>
+            <form style={isToggled ? {} : { width: '68%' }} onSubmit={handleSubmit}>
               <input
                 type="text"
                 name="title"
@@ -238,14 +238,13 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
           </>
         </article>
 
-        {isToggled && (
-          <TodoList
-            bucketId={id}
-            fixedTodoId={fixedTodoId}
-            modalOpen={modalOpen}
-            modalClose={modalClose}
-          />
-        )}
+        <TodoList
+          isToggled={isToggled}
+          bucketId={id}
+          fixedTodoId={fixedTodoId}
+          modalOpen={modalOpen}
+          modalClose={modalClose}
+        />
       </section>
     </>
   );
