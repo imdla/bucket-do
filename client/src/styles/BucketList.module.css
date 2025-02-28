@@ -12,3 +12,7 @@
   width: 50vw;
   box-sizing: border-box;
 }
+
+.emptyBucketList {
+  color: var(--bg-300);
+}

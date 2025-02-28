@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import BucketList from '../components/BucketList';
 
 import Modal from '../components/Modal';
+import errorMessages from '../config/errorMessages';
 
 import bucketApi from '../api/bucketApi';
 import todoApi from '../api/todoApi';
@@ -18,14 +19,12 @@ export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
   // todo : 로딩 스켈레톤
   const [isLoading, setIsLoading] = useState(false);
-  // todo : 에러 확인 및 모달
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({
     content: '',
     cancelText: '확인',
     onConfirm: false,
   });
-
 
   // 버킷 리스트 get
   useEffect(() => {
@@ -39,7 +38,14 @@ export default function Home() {
       const response = await bucketApi.getBuckets();
       setBucketList(response.data);
     } catch (error) {
-      console.log(error);
+      const errorMessage =
+        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+
+      setModalData({
+        ...modalData,
+        content: errorMessage,
+      });
+      setIsModalOpen(true);
     } finally {
       setIsLoading(false)
     }
@@ -57,19 +63,20 @@ export default function Home() {
       setNewBucket(bucketResponse);
       setNewTodo(todoResponse);
     } catch (error) {
-      console.log(error);
+      const errorMessage =
+        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+
+      setModalData({
+        ...modalData,
+        content: errorMessage,
+      });
+      setIsModalOpen(true);
     } finally {
       setIsLoading(false)
     }
   };
 
-  const bucketValue =
-    bucketList.length > 0 ? (
-      <BucketList activeIndex={activeIndex} bucketList={bucketList} onDelete={fetchBuckets} />
-    ) : (
-      <div className={styles.emptyBucketList}>버킷리스트를 추가해주세요</div>
-    );
-
+  // 필터 버튼 활성화 기능
   function handleActiveFilter(index) {
     setActiveIndex(index);
   }
@@ -87,22 +94,34 @@ export default function Home() {
     </li>
   ));
 
+  // 버킷리스트
+  const bucketValue =
+    bucketList.length > 0 ? (
+      <BucketList activeIndex={activeIndex} bucketList={bucketList} onDelete={fetchBuckets} />
+    ) : (
+      <div className={styles.emptyBucketList}>버킷리스트를 추가해주세요</div>
+    );
+
   return (
     <div>
-      <Header />
+      <Modal className={styles.modal} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalData} />
+      
+      <main  style={isModalOpen ? {height: "100vh", overflow: "hidden"} : {}}>
+        <Header />
 
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <ul className={styles.filter}>{filterButtons}</ul>
-          <div className={styles.bucketList}>{bucketValue}</div>
-        </div>
-      </section>
+        <section className={styles.section}>
+          <div className={styles.container}>
+            <ul className={styles.filter}>{filterButtons}</ul>
+            <div className={styles.bucketList}>{bucketValue}</div>
+          </div>
+        </section>
 
-      <button className={styles.createButton} onClick={handleCreateBucket}>
-        생성
-      </button>
+        <button className={styles.createButton} onClick={handleCreateBucket}>
+          생성
+        </button>
 
-      <Footer />
+        <Footer />
+      </main>
     </div>
   );
 }

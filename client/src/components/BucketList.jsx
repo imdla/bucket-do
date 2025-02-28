@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Bucket from '../components/Bucket';
 import styles from '../styles/BucketList.module.css';
 function BucketList({ activeIndex, bucketList, newBucket, onDelete }) {
+  const filterList = ['모두', '진행중', '완료'];
   const list = bucketList
     .filter((bucket) => {
       const { completed } = bucket;
@@ -21,7 +22,7 @@ function BucketList({ activeIndex, bucketList, newBucket, onDelete }) {
 
   return (
     <ul className={styles.container}>
-      {list.length > 0 ? list : <li>버킷리스트를 추가해주세요</li>}
+      {list.length > 0 ? list : <p className={styles.emptyBucketList}>{filterList[activeIndex]}인 버킷리스트가 없습니다</p>}
     </ul>
   );
 }

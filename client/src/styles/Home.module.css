@@ -1,3 +1,9 @@
+.modal {
+  width: 100vw;
+  max-height: 100vh;
+}
+
+/* main */
 .section {
   width: var(--width-basic);
   min-height: var(--height-min);
@@ -53,7 +59,7 @@
   justify-content: center;
 }
 
-.container .bucketList .emptyBucketList {
+.emptyBucketList {
   color: var(--bg-300);
 }
 
