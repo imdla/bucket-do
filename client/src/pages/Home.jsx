@@ -97,7 +97,7 @@ export default function Home() {
   // 버킷리스트
   const bucketValue =
     bucketList.length > 0 ? (
-      <BucketList activeIndex={activeIndex} bucketList={bucketList} onDelete={fetchBuckets} />
+      <BucketList activeIndex={activeIndex} bucketList={bucketList} newBucket={newBucket} fetchBuckets={fetchBuckets} />
     ) : (
       <div className={styles.emptyBucketList}>버킷리스트를 추가해주세요</div>
     );

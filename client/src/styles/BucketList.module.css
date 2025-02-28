@@ -1,11 +1,12 @@
 .container {
   margin: 2rem auto 0 auto;
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 1.5rem;
+  box-sizing: border-box;
+  /* overflow: hidden; */
 }
 
 .container li {

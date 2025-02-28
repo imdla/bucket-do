@@ -4,7 +4,7 @@ import bucketApi from '../api/bucketApi';
 import TodoList from '../components/TodoList';
 import todoApi from '../api/todoApi';
 
-function Bucket({ activeIndex, bucket, onDelete }) {
+function Bucket({ bucket, isBucketCreated, fetchBuckets }) {
   const [showTodoList, setShowTodoList] = useState(false);
   const [imageUrl, setImageUrl] = useState(bucket.imageUrl);
   const [inputData, setInputData] = useState({
@@ -69,7 +69,7 @@ function Bucket({ activeIndex, bucket, onDelete }) {
     try {
       await bucketApi.deleteBucket(bucket.id);
       console.log('✅ 버킷 삭제 성공');
-      onDelete();
+      fetchBuckets();
     } catch (error) {
       console.error('❌ 버킷 삭제 실패', error);
     }
@@ -79,7 +79,7 @@ function Bucket({ activeIndex, bucket, onDelete }) {
     try {
       await bucketApi.deleteBucketImage(bucket.id);
       console.log('✅ 버킷 이미지 삭제 성공');
-      onDelete();
+      fetchBuckets();
     } catch (error) {
       console.error('❌ 버킷 이미지 삭제 실패', error);
     }
