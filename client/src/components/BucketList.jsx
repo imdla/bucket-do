@@ -19,6 +19,7 @@ function BucketList({ activeIndex, bucketList, newBucket, fetchBuckets }) {
     })
     .reverse().map((bucket) => {
       const { id } = bucket;
+      console.log(newBucket?.id)
       const isBucketCreated = newBucket?.id === id ? true : false;
 
       return (

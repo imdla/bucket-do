@@ -60,6 +60,7 @@ export default function Home() {
       const bucketId = bucketResponse.data.id;
       const todoResponse = await todoApi.createTodo(bucketId);
 
+      console.log(bucketId)
       setNewBucket(bucketResponse);
       setNewTodo(todoResponse);
     } catch (error) {
