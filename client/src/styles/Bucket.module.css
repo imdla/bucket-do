@@ -24,16 +24,15 @@
 }
 
 .section .bucket form input {
-  font-size: var(--font-size-24);
-  height: 2.5rem;
+  font-size: var(--font-size-18);
+  padding: 0.6rem 1.2rem;
   border: none;
   background-color: var(--bg-100);
-  border-radius: var(--border-radius-15);
 }
 
 .bucket form input[type='text'] {
   background-color: transparent;
-  border-radius: var(--border-radius-15);
+  border-radius: var(--border-radius-20);
 }
 
 .bucket form input[type='text']:focus,
@@ -122,6 +121,7 @@
   background-color: var(--primary-100);
   box-shadow: var(--box-shadow-hover);
 }
+
 .bucket .imageBox form input {
   background-color: transparent;
 }
@@ -136,13 +136,27 @@
   display: flex;
   align-items: center;
 }
+
 .progressBarBox p {
-  width: 15%;
+  font-size: var(--font-size-14);
+  margin-right: 0.5rem;
 }
-.progressBar {
-  width: 85%;
-  background: #e0e0e0;
+
+.progressBarBox .progressBar {
+  width: 75%;
+  padding: 2px;
   border-radius: 4px;
-  overflow: hidden;
-  background: linear-gradient(to right, #7bb5ff, white);
+  background: var(--bg-100);
+  background: linear-gradient(to right, var(--accent-100), var(--bg-100));
+  /* opacity: 0.7; */
+}
+
+.progressBarBox .progressBar p {
+  color: transparent;
+  margin-left: 1rem;
+  transition: var(--transition-3);
+}
+
+.progressBarBox .progressBar:hover p {
+  color: var(--primary-300)
 }

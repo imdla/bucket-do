@@ -88,6 +88,15 @@ export default function Home() {
     }
   };
 
+  const modalOpen = (modalData) => {
+    setModalData(modalData);
+    setIsModalOpen(true);
+  }
+
+  const modalClose = () => {
+    setIsModalOpen(false);
+  }
+
   // 필터 버튼 활성화 기능
   function handleActiveFilter(index) {
     setActiveIndex(index);
@@ -109,7 +118,7 @@ export default function Home() {
   // 버킷리스트
   const bucketValue =
     bucketList.length > 0 ? (
-      <BucketList activeIndex={activeIndex} bucketList={bucketList} fetchBuckets={fetchBuckets} />
+      <BucketList activeIndex={activeIndex} bucketList={bucketList} fetchBuckets={fetchBuckets} modalOpen={modalOpen} modalClose={modalClose} />
     ) : (
       <div className={styles.emptyBucketList}>버킷리스트를 추가해주세요</div>
     );

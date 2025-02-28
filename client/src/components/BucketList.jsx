@@ -3,7 +3,7 @@ import React from 'react';
 import Bucket from '../components/Bucket';
 import styles from '../styles/BucketList.module.css';
 
-function BucketList({ activeIndex, bucketList, fetchBuckets }) {
+function BucketList({ activeIndex, bucketList, fetchBuckets, modalOpen, modalClose }) {
   const filterList = ['모두', '진행중', '완료'];
 
   // 버킷 생성
@@ -22,7 +22,7 @@ function BucketList({ activeIndex, bucketList, fetchBuckets }) {
 
       return (
         <li key={id}>
-          <Bucket bucket={bucket} fetchBuckets={fetchBuckets}></Bucket>
+          <Bucket bucket={bucket} fetchBuckets={fetchBuckets} modalOpen={modalOpen} modalClose={modalClose}></Bucket>
         </li>
       );
     });
