@@ -9,16 +9,7 @@
 
 .container li {
   width: 50vw;
-  background-color: var(--bg-200);
-  border-radius: var(--border-radius-20);
-  box-shadow: var(--box-shadow-basic);
-  overflow: hidden;
-  transition: all 0.3s ease-in-out;
-}
-
-.container li:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--box-shadow-hover);
+  transition: var(--transition-3);
 }
 
 .emptyBucketList {

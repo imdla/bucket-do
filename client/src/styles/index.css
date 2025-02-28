@@ -73,11 +73,13 @@ img {
 }
 
 button {
+  border: none;
   color: var(--text-100);
   font-family: Pretendard, 'Pretendard Variable', 'Noto Sans KR', sans-serif;
 }
 
 form input {
+  border: none;
   font-family: Pretendard, 'Pretendard Variable', 'Noto Sans KR', sans-serif;
 }
 

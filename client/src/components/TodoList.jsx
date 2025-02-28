@@ -3,7 +3,7 @@ import todoApi from '../api/todoApi';
 import Todo from './Todo';
 import styles from '../styles/TodoList.module.css';
 
-export default function TodoList({ bucketId }) {
+export default function TodoList({ bucketId, modalOpen, modalClose }) {
   const [todos, setTodos] = useState([]);
 
   const fetchTodos = async () => {
