@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import authApi from '../api/authApi';
 import { login } from '../store/slices/authSlice';
 import styles from '../styles/Login.module.css';
@@ -16,6 +15,7 @@ export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -28,6 +28,16 @@ export default function Login() {
     onConfirm: false,
   });
 
+  useEffect(() => {
+    let timeout;
+    if (isLoading) {
+      timeout = setTimeout(() => setShowSkeleton(true), 1000); // ⬅️ 1초 후에 스켈레톤 표시
+    } else {
+      setShowSkeleton(false);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [isLoading]);
   // form 입력값 변경
   const handleFormInput = (e) => {
     const { name, value } = e.target;
@@ -38,14 +48,14 @@ export default function Login() {
   };
 
   // 회원가입
-  const handleSignup = () => {
+  const handleSignup = (e) => {
+    e.preventDefault();
     navigate('/signup');
   };
 
   // 로그인
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       setIsLoading(true);
 
@@ -70,7 +80,7 @@ export default function Login() {
 
   return (
     <div className={styles.container}>
-      {isLoading ? (
+      {showSkeleton ? ( // ⬅️ showSkeleton
         <>
           <Skeleton width="50vw" height={242} />
           <Skeleton className={styles.skeletonMargin} width="50vw" height={55} />

@@ -46,6 +46,7 @@ public class TodoController {
         return ResponseEntity.ok(ApiResponse.ok("투두가 조회되었습니다.", "OK", responseDto));
     }
 
+    // 투두 수정
     @PatchMapping("/{bucketId}/todos/{todoId}")
     public ResponseEntity<ApiResponse<TodoResponseDto>> updateTodo(
         @PathVariable Long bucketId,
