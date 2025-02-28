@@ -56,17 +56,17 @@ public class TodoService {
             .orElseThrow(() -> new ResourceNotFoundException("투두를 찾을 수 없습니다."));
 
         // 기존 완료 상태 저장 (변경 전 값 확인용)
-        boolean wasCompleted = todo.isCompleted();
+        boolean wasCompleted = todo.isCheckCompleted();
 
-        // content는 수정하지 않고, isCompleted만 업데이트
+        // content는 수정하지 않고, checkCompleted만 업데이트
         todo.updateContentIfNeeded(requestDto.getContent());  // content 수정이 필요할 때만 처리
-        todo.updateCompletStatus(requestDto.isCompleted());  // isCompleted만 업데이트
+        todo.updateCompletStatus(requestDto.isCheckCompleted());  // checkCompleted만 업데이트
 
         Bucket bucket = todo.getBucket();
 
         // 완료 상태가 변경되었을 경우에만 업데이트
-        if (wasCompleted != requestDto.isCompleted()) {
-            if (requestDto.isCompleted()) {
+        if (wasCompleted != requestDto.isCheckCompleted()) {
+            if (requestDto.isCheckCompleted()) {
                 bucket.incrementTodoCompleted();
             } else {
                 bucket.decrementTodoCompleted();
@@ -93,7 +93,7 @@ public class TodoService {
         bucket.decrementTodoAll();
 
         // 만약 삭제하려는 투두가 완료된 상태였다면 todoCompleted도 감소
-        if (todo.isCompleted()) {
+        if (todo.isCheckCompleted()) {
             bucket.decrementTodoCompleted();
         }
 

@@ -31,7 +31,7 @@ public class Todo extends BaseTimeEntity {
     private String content;
 
     @Column(nullable = false)
-    private boolean isCompleted;
+    private boolean checkCompleted;
 
     @Builder
     public Todo(String content, Bucket bucket) {
@@ -39,9 +39,9 @@ public class Todo extends BaseTimeEntity {
         this.content = content;
     }
 
-    public Todo update(String content, boolean isCompleted) {
+    public Todo update(String content, boolean checkCompleted) {
         this.content = content;
-        this.isCompleted = isCompleted;
+        this.checkCompleted = checkCompleted;
         return this;
     }
 
@@ -53,7 +53,7 @@ public class Todo extends BaseTimeEntity {
     }
 
     // 완료 상태만 업데이트
-    public void updateCompletStatus(boolean isCompleted) {
-        this.isCompleted = isCompleted;
+    public void updateCompletStatus(boolean checkCompleted) {
+        this.checkCompleted = checkCompleted;
     }
 }

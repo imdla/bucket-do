@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 public class TodoRequestDto {
 
     private String content;
-    @JsonProperty("isCompleted")
-    private boolean isCompleted;
+    @JsonProperty("checkCompleted")
+    private boolean checkCompleted;
 
 //    public Todo toEntity(Bucket bucket) {
 //        return Todo.builder()
 //            .content(this.content)
-//            .isCompleted(this.isCompleted)
+//            .checkCompleted(this.checkCompleted)
 //            .bucket(bucket)
 //            .build();
 //    }

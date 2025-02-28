@@ -12,16 +12,16 @@ public class TodoResponseDto {
     private final Long id;
     private final Long bucketId;
     private final String content;
-    private final boolean isCompleted;
+    private final boolean checkCompleted;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
-    
+
     public static TodoResponseDto from(Todo entity) {
         return TodoResponseDto.builder()
             .id(entity.getId())
             .bucketId(entity.getBucket().getId())
             .content(entity.getContent())
-            .isCompleted(entity.isCompleted())
+            .checkCompleted(entity.isCheckCompleted())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
             .build();

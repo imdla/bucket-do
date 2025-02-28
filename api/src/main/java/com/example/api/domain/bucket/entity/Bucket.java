@@ -31,7 +31,7 @@ public class Bucket extends BaseTimeEntity {
     private LocalDateTime deadline;
 
     @Column(nullable = false)
-    private boolean isCompleted;
+    private boolean checkCompleted;
 
     // S3 객체의 접근 URL
     // AWS S3 버킷 객체의 URL
@@ -125,6 +125,6 @@ public class Bucket extends BaseTimeEntity {
 
     // 투두 완료 여부에 따라 버킷 완료 상태 전환
     public void bucketCompleted(boolean completed) {
-        this.isCompleted = completed;
+        this.checkCompleted = completed;
     }
 }
