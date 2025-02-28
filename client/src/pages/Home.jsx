@@ -27,6 +27,7 @@ export default function Home() {
   });
 
 
+  // 버킷 리스트 get
   useEffect(() => {
     fetchBuckets();
   }, [activeIndex, newBucket, newTodo]);
@@ -44,6 +45,7 @@ export default function Home() {
     }
   };
 
+  // 버킷 생성
   const handleCreateBucket = async () => {
     try {
       setIsLoading(true)
@@ -65,14 +67,14 @@ export default function Home() {
     bucketList.length > 0 ? (
       <BucketList activeIndex={activeIndex} bucketList={bucketList} onDelete={fetchBuckets} />
     ) : (
-      <div>버킷리스트를 추가해주세요</div>
+      <div className={styles.emptyBucketList}>버킷리스트를 추가해주세요</div>
     );
 
   function handleActiveFilter(index) {
     setActiveIndex(index);
   }
 
-  // 필터 버튼 리스트를 props로 전달
+  // 필터 버튼 리스트
   const filterList = ['모두', '진행중', '완료'];
   const filterButtons = filterList.map((label, index) => (
     <li key={index}>

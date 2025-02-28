@@ -53,6 +53,10 @@
   justify-content: center;
 }
 
+.container .bucketList .emptyBucketList {
+  color: var(--bg-300);
+}
+
 /* createButton */
 :root {
   position: relative;
