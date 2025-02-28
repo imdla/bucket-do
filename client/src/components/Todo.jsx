@@ -3,53 +3,45 @@ import styles from '../styles/Todo.module.css';
 import todoApi from '../api/todoApi';
 
 export default function Todo({ bucketId, todo, fetchTodo, isFirst }) {
-  const { id, content, is_completed } = todo;
+  const { id, content, isCompleted } = todo;
 
-  const [inputContent, setInputContent] = useState(content);
-  const [isCompleted, setCompleted] = useState(is_completed);
-
-  useEffect(() => {
-    async function updateContent() {
-      try {
-        const formData = new FormData();
-        formData.append('is_completed', isCompleted);
-        const response = await todoApi.updateTodo(bucketId, id, formData);
-      } catch (error) {
-        1;
-        console.log(error);
-      }
-    }
-
-    updateContent();
-  }, [isCompleted]);
+  const [formData, setFormData] = useState({
+    content: content || '',
+    isCompleted: isCompleted || false,
+  });
 
   useEffect(() => {
-    async function updateContent() {
-      try {
-        const formData = new FormData();
-        formData.append('content', inputContent);
-        const response = await todoApi.updateTodo(bucketId, id, formData);
-      } catch (error) {
-        console.log(error);
-      }
+    // 초기값이 변경된 경우에만 업데이트
+    setFormData({
+      content: content || '',
+      isCompleted: isCompleted || false,
+    });
+  }, [content, isCompleted]);
+
+  async function updateTodo() {
+    try {
+      const response = await todoApi.updateTodo(bucketId, id, formData);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    updateContent();
-  }, [inputContent]);
+  // 콘텐츠 입력시 formData에 입력
+  const handleChangeContent = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
+  // 체크박스 클릭시 formData에 입력
   function handleChangeCheckbox(e) {
-    if (e.target.checked) {
-      setCompleted(true);
-    } else {
-      setCompleted(false);
-    }
+    setFormData({ ...formData, isCompleted: e.target.checked });
+    updateTodo();
   }
 
-  function handleChangeInput(e) {
-    setInputContent(e.target.value);
-  }
+  // 버킷 삭제
+  const handleDelete = async (e) => {
+    e.preventDefault();
 
-  const handleDelete = async () => {
     try {
       await todoApi.deleteTodo(bucketId, id);
       fetchTodo();
@@ -57,10 +49,14 @@ export default function Todo({ bucketId, todo, fetchTodo, isFirst }) {
       console.log(error);
     }
   };
-
   return (
     <div className={styles.todo}>
-      <input type="checkbox" onChange={handleChangeCheckbox} />
+      <input
+        name="isCompleted"
+        type="checkbox"
+        onChange={handleChangeCheckbox}
+        checked={formData.isCompleted}
+      />
 
       <input
         id="content"
@@ -68,8 +64,9 @@ export default function Todo({ bucketId, todo, fetchTodo, isFirst }) {
         type="text"
         placeholder="투두 리스트 내용을 입력해주세요"
         required
-        value={inputContent}
-        onChange={handleChangeInput}
+        value={formData.content || ''}
+        onChange={handleChangeContent}
+        onBlur={updateTodo}
         disabled={isFirst}
       />
 
