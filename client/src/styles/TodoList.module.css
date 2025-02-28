@@ -1,14 +1,15 @@
 .todoListContainer {
-  width: 50vw;
+  width: 100%;
   margin: 0 auto;
-  background-color: var(--bg-200);
-  padding: var(--padding-large);
-  box-sizing: border-box;
+  padding: var(--padding-small);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  background-color: var(--primary-200);
   border-radius: var(--border-radius-20);
+  box-shadow: var(--box-shadow-basic);
+  box-sizing: border-box;
 }
 
 .todoListContainer .todoList li {
@@ -16,12 +17,12 @@
 }
 
 .todoListContainer .createButton {
-  min-width: 240px;
+  width: 2.5rem;
+  height: 2.5rem;
   border: none;
-  background-color: var(--primary-100);
-  padding: var(--round-small-button);
-  border-radius: var(--border-radius-20);
-  font-size: var(--font-size-16);
+  background-color: var(--bg-200);
+  border-radius: 50%;
+  font-size: var(--font-size-18);
   transition: var(--transition-3);
 }
 

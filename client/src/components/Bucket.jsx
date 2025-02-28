@@ -9,7 +9,7 @@ import styles from '../styles/Bucket.module.css';
 import errorMessages from '../config/errorMessages';
 
 function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
-  const { id, todoAll, todoCompleted } = bucket;
+  const { id, fixedTodoId, todoAll, todoCompleted } = bucket;
   const progress = (todoCompleted / todoAll) * 100;
 
   const CreateBucketId = useSelector((state) => state.bucket.bucketId);
@@ -238,7 +238,14 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
           </>
         </article>
 
-        {isToggled && <TodoList bucketId={id} modalOpen={modalOpen} modalClose={modalClose} />}
+        {isToggled && (
+          <TodoList
+            bucketId={id}
+            fixedTodoId={fixedTodoId}
+            modalOpen={modalOpen}
+            modalClose={modalClose}
+          />
+        )}
       </section>
     </>
   );

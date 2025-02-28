@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import styles from '../styles/Todo.module.css';
 import todoApi from '../api/todoApi';
 
-export default function Todo({ bucketId, todo, fetchTodo, isFirst }) {
-  const { id, content, is_completed } = todo;
+export default function Todo({ bucketId, todo, fetchTodo, isFixed }) {
+  const { id, content, completed } = todo;
+  console.log(todo);
 
   const [inputContent, setInputContent] = useState(content);
-  const [isCompleted, setCompleted] = useState(is_completed);
+  const [isCompleted, setCompleted] = useState(completed);
 
   useEffect(() => {
     async function updateContent() {
       try {
         const formData = new FormData();
-        formData.append('is_completed', isCompleted);
+        formData.append('completed', isCompleted);
         const response = await todoApi.updateTodo(bucketId, id, formData);
       } catch (error) {
         1;
@@ -70,11 +71,11 @@ export default function Todo({ bucketId, todo, fetchTodo, isFirst }) {
         required
         value={inputContent}
         onChange={handleChangeInput}
-        disabled={isFirst}
+        disabled={isFixed}
       />
 
       <button
-        className={isFirst ? styles.firstTodoButton : styles.deleteButton}
+        className={isFixed ? styles.firstTodoButton : styles.deleteButton}
         onClick={handleDelete}
       >
         x
