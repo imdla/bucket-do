@@ -6,11 +6,11 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: var(--primary-200);
   border-radius: var(--border-radius-20);
   box-shadow: var(--box-shadow-basic);
   box-sizing: border-box;
-  transition: var(--transition-3);
+  overflow: hidden;
+  transition: all 0.3s linear;
 }
 
 .container ul li {

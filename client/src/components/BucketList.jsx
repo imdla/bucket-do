@@ -10,29 +10,36 @@ function BucketList({ activeIndex, bucketList, fetchBuckets, modalOpen, modalClo
   const list = bucketList
     .filter((bucket) => {
       const { completed } = bucket;
-      
+
       if (activeIndex === 0) {
         return true;
       } else {
         return completed + 1 === activeIndex;
       }
     })
-    .reverse().map((bucket) => {
+    .reverse()
+    .map((bucket) => {
       const { id } = bucket;
 
       return (
         <li key={id}>
-          <Bucket bucket={bucket} fetchBuckets={fetchBuckets} modalOpen={modalOpen} modalClose={modalClose}></Bucket>
+          <Bucket
+            bucket={bucket}
+            fetchBuckets={fetchBuckets}
+            modalOpen={modalOpen}
+            modalClose={modalClose}
+          ></Bucket>
         </li>
       );
     });
 
   return (
     <ul className={styles.container}>
-      { list.length > 0 ? 
-        list : 
+      {list.length > 0 ? (
+        list
+      ) : (
         <p className={styles.emptyBucketList}>{filterList[activeIndex]}인 버킷리스트가 없습니다</p>
-      }
+      )}
     </ul>
   );
 }

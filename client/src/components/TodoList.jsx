@@ -4,7 +4,14 @@ import todoApi from '../api/todoApi';
 import styles from '../styles/TodoList.module.css';
 import errorMessages from '../config/errorMessages';
 
-export default function TodoList({ isToggled, bucketId, fixedTodoId, modalOpen, modalClose }) {
+export default function TodoList({
+  imageUrl,
+  isToggled,
+  bucketId,
+  fixedTodoId,
+  modalOpen,
+  modalClose,
+}) {
   const [todoList, setTodoList] = useState([]);
 
   useEffect(() => {
@@ -71,7 +78,14 @@ export default function TodoList({ isToggled, bucketId, fixedTodoId, modalOpen, 
     <div
       style={
         isToggled
-          ? {}
+          ? imageUrl
+            ? {
+                backgroundImage: `url(${imageUrl})`,
+                objectFit: 'cover',
+                backgroundOrigin: 'border-box',
+                backgroundSize: 'cover',
+              }
+            : { background: '#b6ccd8' }
           : { opacity: '0', visibility: 'hidden', maxHeight: '0', padding: '0', zIndex: '-999' }
       }
       className={styles.container}
