@@ -48,6 +48,7 @@ public class TodoService {
         return TodoListResponseDto.from(bucket.getFixedTodoId(), todoResponseDtos);
     }
 
+    // 투두 수정
     @Transactional
     public TodoResponseDto updateTodo(Long bucketId, Long todoId, TodoRequestDto requestDto) {
 
@@ -57,7 +58,9 @@ public class TodoService {
         // 기존 완료 상태 저장 (변경 전 값 확인용)
         boolean wasCompleted = todo.isCompleted();
 
-        todo.update(requestDto.getContent(), requestDto.isCompleted());
+        // content는 수정하지 않고, isCompleted만 업데이트
+        todo.updateContentIfNeeded(requestDto.getContent());  // content 수정이 필요할 때만 처리
+        todo.updateCompletStatus(requestDto.isCompleted());  // isCompleted만 업데이트
 
         Bucket bucket = todo.getBucket();
 

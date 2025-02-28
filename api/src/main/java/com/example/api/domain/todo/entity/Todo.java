@@ -44,4 +44,16 @@ public class Todo extends BaseTimeEntity {
         this.isCompleted = isCompleted;
         return this;
     }
+
+    // content가 필요할 때만 수정
+    public void updateContentIfNeeded(String newContent) {
+        if (newContent != null && !newContent.trim().isEmpty()) {
+            this.content = newContent;  // 새로운 내용으로 업데이트
+        }
+    }
+
+    // 완료 상태만 업데이트
+    public void updateCompletStatus(boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
 }
