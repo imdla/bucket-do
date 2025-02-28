@@ -30,9 +30,15 @@ export default function Home() {
     onConfirm: false,
   });
 
+  // 새로고침 시 생성된 버킷 아이디 값 삭제 
+  useEffect(() => {
+    if (performance.navigation.type == 1) {
+      dispatch(removeBucket());
+    }
+  }, [])
+
   // 버킷 리스트 get
   useEffect(() => {
-    dispatch(removeBucket())
     fetchBuckets();
   }, [activeIndex, newBucket, newTodo]);
 

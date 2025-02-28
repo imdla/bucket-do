@@ -5,13 +5,14 @@ import TodoList from '../components/TodoList';
 import todoApi from '../api/todoApi';
 
 function Bucket({ bucket, fetchBuckets }) {
+  const fileInputRef = useRef(null);
+  
   const [showTodoList, setShowTodoList] = useState(false);
   const [imageUrl, setImageUrl] = useState(bucket.imageUrl);
   const [inputData, setInputData] = useState({
     title: '',
     file: '',
   });
-  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (bucket) {

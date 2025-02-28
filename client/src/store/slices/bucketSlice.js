@@ -10,11 +10,11 @@ const bucketSlice = createSlice({
   reducers: {
     createBucket: (state, action) => {
       state.bucketId = action.payload.bucketId;
-      localStorage.setItem('bucketId', action.payload.bucketId);
+      sessionStorage.setItem('bucketId', action.payload.bucketId);
     },
     removeBucket: (state, action) => {
       state.bucketId = null;
-      localStorage.removeItem('bucketId');
+      sessionStorage.removeItem('bucketId');
     },
   },
 });
