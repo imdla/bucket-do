@@ -5,13 +5,20 @@
   justify-content: center;
   flex-direction: column;
   gap: 1.5rem;
-  box-sizing: border-box;
-  /* overflow: hidden; */
 }
 
 .container li {
   width: 50vw;
-  box-sizing: border-box;
+  background-color: var(--bg-200);
+  border-radius: var(--border-radius-20);
+  box-shadow: var(--box-shadow-basic);
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.container li:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--box-shadow-hover);
 }
 
 .emptyBucketList {
