@@ -1,18 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { logout } from '../store/slices/authSlice';
 import styles from '../styles/Header.module.css';
 
+import Modal from './Modal';
+
 function Header() {
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({
+    content: '',
+    confirmText: '확인',
+    cancelText: '취소',
+    onConfirm: () => dispatch(logout()),
+  });
+
+  // 로그아웃 버튼 기능
   function handleClick() {
-    dispatch(logout());
+    setModalData({
+      ...modalData,
+      content: '로그아웃하시겠습니까?',
+    });
+    setIsModalOpen(true);
   }
 
   return (
     <header>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalData} />
+
       <div className={styles.container}>
         <>
           <h1 className={styles.logo}>

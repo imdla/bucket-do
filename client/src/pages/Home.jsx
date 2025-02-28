@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
 import Header from '../components/Header';
-import BucketList from '../components/BucketList';
 import Footer from '../components/Footer';
-import styles from '../styles/Home.module.css';
+import BucketList from '../components/BucketList';
+
+import Modal from '../components/Modal';
 
 import bucketApi from '../api/bucketApi';
 import todoApi from '../api/todoApi';
+import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const [bucketList, setBucketList] = useState([]);
@@ -14,6 +16,16 @@ export default function Home() {
   const [newTodo, setNewTodo] = useState(null);
   // 0: 모두, 1: 진행중, 2: 완료
   const [activeIndex, setActiveIndex] = useState(0);
+  // todo : 로딩 스켈레톤
+  const [isLoading, setIsLoading] = useState(false);
+  // todo : 에러 확인 및 모달
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({
+    content: '',
+    cancelText: '확인',
+    onConfirm: false,
+  });
+
 
   useEffect(() => {
     fetchBuckets();
@@ -21,24 +33,31 @@ export default function Home() {
 
   const fetchBuckets = async () => {
     try {
+      setIsLoading(true)
+
       const response = await bucketApi.getBuckets();
       setBucketList(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false)
     }
   };
 
   const handleCreateBucket = async () => {
     try {
+      setIsLoading(true)
+
       const bucketResponse = await bucketApi.createBucket();
-
       const bucketId = bucketResponse.data.id;
-
       const todoResponse = await todoApi.createTodo(bucketId);
+
       setNewBucket(bucketResponse);
       setNewTodo(todoResponse);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false)
     }
   };
 

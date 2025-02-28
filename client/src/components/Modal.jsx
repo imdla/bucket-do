@@ -11,8 +11,8 @@ const Modal = ({ isOpen, onClose, content, confirmText, cancelText, onConfirm })
           <p>{content}</p>
 
           <div className={styles.buttonBox}>
-            <button onClick={onClose}>{cancelText || '취소'}</button>
             {onConfirm && <button onClick={onConfirm}>{confirmText || '확인'}</button>}
+            <button onClick={onClose}>{cancelText || '취소'}</button>
           </div>
         </div>
       </div>
