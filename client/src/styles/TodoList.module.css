@@ -11,10 +11,6 @@
   border-radius: var(--border-radius-20);
 }
 
-.todoListContainer .todoList {
-  width: 100%;
-}
-
 .todoListContainer .todoList li {
   margin-bottom: var(--margin-small);
 }

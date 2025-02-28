@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '../styles/Todo.module.css';
 import todoApi from '../api/todoApi';
 
-export default function Todo({ bucketId, todo, fetchTodo }) {
+export default function Todo({ bucketId, todo, fetchTodo, isFirst }) {
   const { id, content, is_completed } = todo;
 
   const [inputContent, setInputContent] = useState(content);
@@ -70,9 +70,13 @@ export default function Todo({ bucketId, todo, fetchTodo }) {
         required
         value={inputContent}
         onChange={handleChangeInput}
+        disabled={isFirst}
       />
 
-      <button className={styles.deleteButton} onClick={handleDelete}>
+      <button
+        className={isFirst ? styles.firstTodoButton : styles.deleteButton}
+        onClick={handleDelete}
+      >
         x
       </button>
     </div>

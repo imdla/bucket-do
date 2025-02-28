@@ -1,7 +1,16 @@
 .todo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+}
+
+.firstTodo {
+  display: none;
+}
+.firstTodoButton {
+  visibility: hidden;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 /* checkbox */
@@ -60,6 +69,7 @@
   width: 2.5rem;
   height: 2.5rem;
   padding: 0;
+  cursor: pointer;
   border-radius: var(--border-radius-20);
   background-color: var(--primary-100);
 }

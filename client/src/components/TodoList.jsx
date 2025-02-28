@@ -6,14 +6,16 @@ import styles from '../styles/TodoList.module.css';
 export default function TodoList({ bucketId }) {
   const [todos, setTodos] = useState([]);
 
-  function fetchTodos() {
+  const fetchTodos = async () => {
     try {
-      const response = todoApi.getTodos(bucketId);
-      setTodos(response);
+      const response = await todoApi.getTodos(bucketId);
+      const data = response.data;
+      const todos = data.todos;
+      setTodos(todos);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchTodos();
@@ -27,12 +29,19 @@ export default function TodoList({ bucketId }) {
       console.log(error);
     }
   };
+  // 현재 버킷(bucketId)의 첫 번째 투두 ID 찾기
+  const firstTodoId = todos.length > 0 ? todos[0].id : null;
 
   const todoList = Array.isArray(todos)
     ? todos.map((todo) => {
         return (
           <li key={todo.id}>
-            <Todo bucketId={bucketId} todo={todo} fetchTodo={fetchTodos} />
+            <Todo
+              bucketId={bucketId}
+              todo={todo}
+              fetchTodo={fetchTodos}
+              isFirst={todo.id === firstTodoId}
+            />
           </li>
         );
       })
