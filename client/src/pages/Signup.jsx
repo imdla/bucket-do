@@ -53,6 +53,29 @@ function Signup() {
       return;
     }
 
+    // 이메일 정규식 (일반적인 이메일 형식 검사)
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // 이메일 조건 일치 여부
+    if (!emailRegex.test(formData.email)) {
+      setModalData({
+        ...modalData,
+        content: '이메일 형식에 맞게 입력해주세요.',
+      });
+      setIsModalOpen(true);
+      return;
+    }
+    // 비밀번호 정규식 (8자 이상, 영문, 숫자, 특수문자 포함)
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    // 비밀번호 조건 일치 여부
+    if (!passwordRegex.test(formData.password)) {
+      setModalData({
+        ...modalData,
+        content: '비밀번호 형식에 맞게 입력해주세요.',
+      });
+      setIsModalOpen(true);
+      return;
+    }
+
     // 비밀번호 일치 여부
     if (formData.password !== passwordCheck) {
       setModalData({
@@ -62,7 +85,6 @@ function Signup() {
       setIsModalOpen(true);
       return;
     }
-
     try {
       setIsLoading(true);
 
@@ -98,8 +120,14 @@ function Signup() {
 
       const response = await authApi.checkUsername(userName);
       const isPossible = response.available;
-
-      if (isPossible) {
+      console.log(isPossible);
+      if (userName === '') {
+        setModalData({
+          ...modalData,
+          content: '아이디를 입력해 주세요.',
+        });
+        setIsModalOpen(true);
+      } else if (isPossible) {
         setCheckedUsername(true);
 
         setModalData({
@@ -107,7 +135,7 @@ function Signup() {
           content: '사용 가능한 아이디입니다.',
         });
         setIsModalOpen(true);
-      } else {
+      } else if (!isPossible) {
         setCheckedUsername(false);
 
         setModalData({
@@ -193,7 +221,7 @@ function Signup() {
               type="email"
               name="email"
               value={formData.email}
-              placeholder="이메일"
+              placeholder="이메일 : test@naver.com"
               required
               onChange={handleChange}
             />
