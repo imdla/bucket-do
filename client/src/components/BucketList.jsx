@@ -3,7 +3,7 @@ import React from 'react';
 import Bucket from '../components/Bucket';
 import styles from '../styles/BucketList.module.css';
 
-function BucketList({ activeIndex, bucketList, newBucket, fetchBuckets }) {
+function BucketList({ activeIndex, bucketList, fetchBuckets }) {
   const filterList = ['모두', '진행중', '완료'];
 
   // 버킷 생성
@@ -19,12 +19,10 @@ function BucketList({ activeIndex, bucketList, newBucket, fetchBuckets }) {
     })
     .reverse().map((bucket) => {
       const { id } = bucket;
-      console.log(newBucket?.id)
-      const isBucketCreated = newBucket?.id === id ? true : false;
 
       return (
         <li key={id}>
-          <Bucket bucket={bucket} isBucketCreated={isBucketCreated} fetchBuckets={fetchBuckets}></Bucket>
+          <Bucket bucket={bucket} fetchBuckets={fetchBuckets}></Bucket>
         </li>
       );
     });

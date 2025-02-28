@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  tokenId: null,
+  bucketId: null,
 };
 
 const bucketSlice = createSlice({
@@ -9,12 +9,12 @@ const bucketSlice = createSlice({
   initialState,
   reducers: {
     createBucket: (state, action) => {
-      state.tokenId = action.payload.tokenId;
-      localStorage.setItem('tokenId', action.payload.token);
+      state.bucketId = action.payload.bucketId;
+      localStorage.setItem('bucketId', action.payload.bucketId);
     },
     removeBucket: (state, action) => {
-      state.tokenId = null;
-      localStorage.removeItem('tokenId');
+      state.bucketId = null;
+      localStorage.removeItem('bucketId');
     },
   },
 });

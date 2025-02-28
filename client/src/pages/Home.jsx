@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -11,7 +12,10 @@ import bucketApi from '../api/bucketApi';
 import todoApi from '../api/todoApi';
 import styles from '../styles/Home.module.css';
 
+import { createBucket, removeBucket } from '../store/slices/bucketSlice';
+
 export default function Home() {
+  const dispatch = useDispatch();
   const [bucketList, setBucketList] = useState([]);
   const [newBucket, setNewBucket] = useState(null);
   const [newTodo, setNewTodo] = useState(null);
@@ -28,6 +32,7 @@ export default function Home() {
 
   // 버킷 리스트 get
   useEffect(() => {
+    dispatch(removeBucket())
     fetchBuckets();
   }, [activeIndex, newBucket, newTodo]);
 
@@ -60,7 +65,7 @@ export default function Home() {
       const bucketId = bucketResponse.data.id;
       const todoResponse = await todoApi.createTodo(bucketId);
 
-      console.log(bucketId)
+      dispatch(createBucket({ bucketId }));
       setNewBucket(bucketResponse);
       setNewTodo(todoResponse);
     } catch (error) {
@@ -98,7 +103,7 @@ export default function Home() {
   // 버킷리스트
   const bucketValue =
     bucketList.length > 0 ? (
-      <BucketList activeIndex={activeIndex} bucketList={bucketList} newBucket={newBucket} fetchBuckets={fetchBuckets} />
+      <BucketList activeIndex={activeIndex} bucketList={bucketList} fetchBuckets={fetchBuckets} />
     ) : (
       <div className={styles.emptyBucketList}>버킷리스트를 추가해주세요</div>
     );

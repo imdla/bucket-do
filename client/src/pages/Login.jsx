@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import authApi from '../api/authApi';
 import { login } from '../store/slices/authSlice';
 import styles from '../styles/Login.module.css';
-import errorMessages from '../config/errorMessages';
 
 import Modal from '../components/Modal';
+import errorMessages from '../config/errorMessages';
 
 import 'react-loading-skeleton/dist/skeleton.css';
 import Skeleton from 'react-loading-skeleton';

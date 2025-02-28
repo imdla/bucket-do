@@ -4,8 +4,8 @@ import bucketApi from '../api/bucketApi';
 import TodoList from '../components/TodoList';
 import todoApi from '../api/todoApi';
 
-function Bucket({ bucket, isBucketCreated, fetchBuckets }) {
-  const [showTodoList, setShowTodoList] = useState(isBucketCreated ? true : false);
+function Bucket({ bucket, fetchBuckets }) {
+  const [showTodoList, setShowTodoList] = useState(false);
   const [imageUrl, setImageUrl] = useState(bucket.imageUrl);
   const [inputData, setInputData] = useState({
     title: '',
