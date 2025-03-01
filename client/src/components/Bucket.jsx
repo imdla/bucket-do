@@ -228,11 +228,11 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
                 <p>진행률</p>
                 <div
                   style={{
-                    background: `linear-gradient(to right, #71c4ef,  #fffefb  ${progress}%)`,
+                    background: `linear-gradient(to right, #71c4ef, #fffefb  ${progress.toFixed()}%)`,
                   }}
                   className={styles.progressBar}
                 >
-                  <p>{progress}%</p>
+                  <p>{progress.toFixed()}%</p>
                 </div>
               </div>
             </form>
