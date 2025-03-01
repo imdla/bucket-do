@@ -62,6 +62,8 @@ public class TodoController {
     public ResponseEntity<ApiResponse<Void>> deleteTodo(@PathVariable Long bucketId,
         @PathVariable Long todoId) {
         todoService.deleteTodo(todoId);
-        return ResponseEntity.ok(ApiResponse.ok("투두가 삭제되었습니다.", "DELETED", null));
+        
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+            .body(ApiResponse.ok("투두가 삭제되었습니다.", "DELETED", null));
     }
 }
