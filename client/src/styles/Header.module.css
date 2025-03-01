@@ -4,7 +4,7 @@ header {
 }
 
 .container {
-  width: 50%;
+  width: var(--width-container-basic);
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -29,4 +29,22 @@ header {
   background-color: var(--primary-200);
   box-shadow: 0 0 3px var(--primary-300);
   transform: translateY(-1px);
+}
+
+@media (max-width: 1024px) {
+  .container {
+    width: var(--width-container-moderate);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: var(--width-container-medium);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: var(--width-container-large);
+  }
 }

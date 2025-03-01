@@ -85,3 +85,21 @@
   box-shadow: var(--box-shadow-hover);
   transform: translateY(-1px);
 }
+
+@media (max-width: 1024px) {
+  .container {
+    width: var(--width-container-moderate);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: var(--width-container-medium);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: var(--width-container-large);
+  }
+}
