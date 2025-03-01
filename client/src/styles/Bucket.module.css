@@ -174,10 +174,17 @@
 .bucket .buttonBox button {
   width: 2.5rem;
   height: 2.5rem;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: var(--font-size-18);
   background-color: var(--primary-100);
   border-radius: var(--border-radius-20);
+  transition: var(--transition-3);
+}
+
+.bucket .buttonBox button img {
+  width: 26px;
   transition: var(--transition-3);
 }
 
@@ -185,6 +192,14 @@
   background-color: var(--primary-200);
 }
 
+.bucket .buttonBox .deleteButton img {
+  width: 22px;
+}
+
 .bucket .buttonBox button:hover {
   box-shadow: var(--box-shadow-hover);
+}
+
+.bucket .buttonBox button:hover img {
+  transform: scale(1.2);
 }
