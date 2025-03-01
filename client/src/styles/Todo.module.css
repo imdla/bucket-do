@@ -73,7 +73,7 @@
   justify-content: center;
   font-size: var(--font-size-14);
   border-radius: var(--border-radius-20);
-  background-color: var(--primary-100);
+  background-color: var(--bg-100);
   transition: var(--transition-3);
 }
 
