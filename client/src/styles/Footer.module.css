@@ -15,3 +15,21 @@ footer {
   font-size: var(--font-size-14);
   color: var(--primary-300);
 }
+
+@media (max-width: 1024px) {
+  .container {
+    width: var(--width-container-moderate);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: var(--width-container-medium);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: var(--width-container-large);
+  }
+}
