@@ -3,7 +3,16 @@ import todoApi from '../api/todoApi';
 import styles from '../styles/components/Todo.module.css';
 import errorMessages from '../config/errorMessages';
 
-export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, isDarkBackground }) {
+export default function Todo({
+  bucketId,
+  todo,
+  fetchTodo,
+  isFixed,
+  modalOpen,
+  modalClose,
+  isDarkBackground,
+  isFixedTodoSelectable,
+}) {
   const { id, content, checkCompleted } = todo;
   const [isFocused, setIsFocused] = useState(false);
   const [formData, setFormData] = useState({
@@ -21,6 +30,7 @@ export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, is
 
     try {
       await todoApi.updateTodo(bucketId, id, formData);
+      fetchTodo();
     } catch (error) {
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
@@ -42,12 +52,26 @@ export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, is
 
   // 체크박스 수정
   const handleChangeCheckbox = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.checked });
+    if (e.target.checked && isFixed) {
+      if (isFixedTodoSelectable) {
+        setFormData({ ...formData, [e.target.name]: e.target.checked });
+      } else {
+        const modalData = {
+          content: '모든 투두 리스트가 완료되어야 체크 가능합니다.',
+          cancelText: '확인',
+          onConfirm: false,
+        };
+
+        modalOpen(modalData);
+      }
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.checked });
+    }
   };
 
   // 투두 삭제
-  const handleDeleteTodo = async (e) => {
-    e.preventDefault();
+  const DeleteTodo = async () => {
+    modalClose();
 
     try {
       await todoApi.deleteTodo(bucketId, id);
@@ -64,6 +88,19 @@ export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, is
 
       modalOpen(modalData);
     }
+  };
+
+  // 투두 삭제 버튼
+  const handleDeleteTodo = async (e) => {
+    const modalData = {
+      content: '투두를 삭제하시겠습니까 ?',
+      cancelText: '취소',
+      confirmText: '확인',
+      onConfirm: () => DeleteTodo(),
+    };
+
+    modalOpen(modalData);
+    return;
   };
 
   const handleSubmit = (e) => {

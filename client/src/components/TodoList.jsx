@@ -11,6 +11,7 @@ export default function TodoList({
   fixedTodoId,
   modalOpen,
   modalClose,
+  isFixedTodoSelectable,
 }) {
   const [todoList, setTodoList] = useState([]);
   const [isDarkBackground, setIsDarkBackground] = useState(false);
@@ -102,7 +103,9 @@ export default function TodoList({
               fetchTodo={fetchTodos}
               isFixed={isFixed}
               modalOpen={modalOpen}
+              modalClose={modalClose}
               isDarkBackground={isDarkBackground}
+              isFixedTodoSelectable={isFixedTodoSelectable}
             />
           </li>
         );
