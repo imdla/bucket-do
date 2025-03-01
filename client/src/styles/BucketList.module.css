@@ -1,14 +1,15 @@
 .container {
-  margin: 2rem auto 0 auto;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-top: var(--margin-large);
   gap: 1.5rem;
 }
 
 .container li {
-  width: var(--width-container-basic);
+  width: 100%;
   transition: var(--transition-3);
 }
 
