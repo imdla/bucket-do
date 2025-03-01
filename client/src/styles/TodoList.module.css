@@ -41,3 +41,30 @@
 .container .createButton:hover img {
   transform: scale(1.2);
 }
+
+@media (max-width: 1024px) {
+  .container {
+    width: var(--width-container-moderate);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: var(--width-container-medium);
+  }
+}
+
+@media (max-width: 580px) {
+  .container {
+    width: var(--width-container-large);
+  }
+
+  .container .createButton {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .container .createButton img {
+    width: 20px;
+  }
+}

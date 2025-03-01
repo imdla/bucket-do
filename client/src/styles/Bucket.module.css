@@ -251,4 +251,12 @@
     width: 2rem;
     height: 2rem;
   }
+
+  .bucket .buttonBox button img {
+    width: 24px;
+  }
+
+  .bucket .buttonBox .deleteButton img {
+    width: 20px;
+  }
 }
