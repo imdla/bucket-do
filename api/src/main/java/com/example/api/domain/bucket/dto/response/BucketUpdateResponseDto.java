@@ -1,4 +1,4 @@
-package com.example.api.domain.bucket.dto.responseDto;
+package com.example.api.domain.bucket.dto.response;
 
 import com.example.api.domain.bucket.entity.Bucket;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.example.api.domain.bucket.dto.requestDto;
+package com.example.api.domain.bucket.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

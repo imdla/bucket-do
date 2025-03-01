@@ -1,9 +1,9 @@
 package com.example.api.domain.user.service;
 
-import com.example.api.domain.user.dto.requestDto.LoginRequestDto;
-import com.example.api.domain.user.dto.requestDto.SignupRequestDto;
-import com.example.api.domain.user.dto.responseDto.LoginResponseDto;
-import com.example.api.domain.user.dto.responseDto.SignupResponseDto;
+import com.example.api.domain.user.dto.request.LoginRequestDto;
+import com.example.api.domain.user.dto.request.SignupRequestDto;
+import com.example.api.domain.user.dto.response.LoginResponseDto;
+import com.example.api.domain.user.dto.response.SignupResponseDto;
 import com.example.api.domain.user.entity.User;
 import com.example.api.domain.user.repository.UserRepository;
 import com.example.api.global.exception.ResourceNotFoundException;

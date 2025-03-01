@@ -1,4 +1,4 @@
-package com.example.api.domain.user.dto.requestDto;
+package com.example.api.domain.user.dto.request;
 
 import com.example.api.domain.user.entity.User;
 import jakarta.validation.constraints.Email;

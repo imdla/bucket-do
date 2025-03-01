@@ -1,4 +1,4 @@
-package com.example.api.domain.user.dto.responseDto;
+package com.example.api.domain.user.dto.response;
 
 import com.example.api.domain.user.entity.User;
 import java.time.LocalDateTime;

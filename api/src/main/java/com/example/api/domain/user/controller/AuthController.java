@@ -1,10 +1,10 @@
 package com.example.api.domain.user.controller;
 
-import com.example.api.domain.bucket.dto.responseDto.UsernameCheckResponse;
-import com.example.api.domain.user.dto.requestDto.LoginRequestDto;
-import com.example.api.domain.user.dto.requestDto.SignupRequestDto;
-import com.example.api.domain.user.dto.responseDto.LoginResponseDto;
-import com.example.api.domain.user.dto.responseDto.SignupResponseDto;
+import com.example.api.domain.bucket.dto.response.UsernameCheckResponseDto;
+import com.example.api.domain.user.dto.request.LoginRequestDto;
+import com.example.api.domain.user.dto.request.SignupRequestDto;
+import com.example.api.domain.user.dto.response.LoginResponseDto;
+import com.example.api.domain.user.dto.response.SignupResponseDto;
 import com.example.api.domain.user.service.AuthService;
 import com.example.api.global.response.ApiResponse;
 import jakarta.validation.Valid;
@@ -55,10 +55,10 @@ public class AuthController {
 
     // 아이디 중복 체크 ( 중복이면 true)
     @GetMapping("/auth/users")
-    public ResponseEntity<UsernameCheckResponse> checkUsername(@RequestParam String username) {
+    public ResponseEntity<UsernameCheckResponseDto> checkUsername(@RequestParam String username) {
         boolean isAvailable = !authService.checkUsername(username);
         String message = isAvailable ? "사용 가능한 아이디입니다." : "이미 사용 중인 아이디입니다.";
 
-        return ResponseEntity.ok(new UsernameCheckResponse(message, isAvailable));
+        return ResponseEntity.ok(new UsernameCheckResponseDto(message, isAvailable));
     }
 }

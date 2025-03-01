@@ -1,8 +1,8 @@
 package com.example.api.domain.bucket.controller;
 
-import com.example.api.domain.bucket.dto.requestDto.BucketRequestDto;
-import com.example.api.domain.bucket.dto.responseDto.BucketResponseDto;
-import com.example.api.domain.bucket.dto.responseDto.BucketUpdateResponseDto;
+import com.example.api.domain.bucket.dto.request.BucketRequestDto;
+import com.example.api.domain.bucket.dto.response.BucketResponseDto;
+import com.example.api.domain.bucket.dto.response.BucketUpdateResponseDto;
 import com.example.api.domain.bucket.service.BucketService;
 import com.example.api.domain.user.entity.User;
 import com.example.api.global.response.ApiResponse;

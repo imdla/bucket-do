@@ -1,4 +1,4 @@
-package com.example.api.domain.user.dto.requestDto;
+package com.example.api.domain.user.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
