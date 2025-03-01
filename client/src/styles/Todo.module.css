@@ -57,6 +57,7 @@
 }
 
 .todo input[type='text']:focus {
+  color: var(--text-200);
   background-color: var(--bg-100);
   outline: 1px solid var(--bg-300);
 }

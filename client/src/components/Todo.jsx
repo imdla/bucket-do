@@ -3,8 +3,9 @@ import todoApi from '../api/todoApi';
 import styles from '../styles/Todo.module.css';
 import errorMessages from '../config/errorMessages';
 
-export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, modalClose }) {
+export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, isDarkBackground }) {
   const { id, content, checkCompleted } = todo;
+  const [isFocused, setIsFocused] = useState(false);
   const [formData, setFormData] = useState({
     content: content.slice(0, 4) == 'null' ? '완료' : content,
     checkCompleted: checkCompleted,
@@ -16,6 +17,8 @@ export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, mo
 
   // 콘텐츠, 체크박스 업데이트
   const updateTodo = async () => {
+    setIsFocused(false);
+
     try {
       await todoApi.updateTodo(bucketId, id, formData);
     } catch (error) {
@@ -87,6 +90,10 @@ export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, mo
           onChange={handleChangeContent}
           onBlur={updateTodo}
           disabled={isFixed}
+          style={
+            isDarkBackground ? { color: isFocused ? '#313d44' : '#fffefb' } : { color: '#313d44' }
+          }
+          onFocus={() => setIsFocused(true)}
         />
       </form>
 
