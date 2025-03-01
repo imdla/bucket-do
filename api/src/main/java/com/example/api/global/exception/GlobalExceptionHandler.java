@@ -15,8 +15,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(FileUploadException.class)
-    public ResponseEntity<ApiResponse<Void>> handleFileUpload(FileUploadException ex) {
+    @ExceptionHandler(FileManageException.class)
+    public ResponseEntity<ApiResponse<Void>> handleFileUpload(FileManageException ex) {
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ApiResponse.error(ex.getMessage(), "INTERNAL_SERVER_ERROR"));
