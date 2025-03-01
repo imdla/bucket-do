@@ -43,17 +43,15 @@ export default function TodoList({
       await todoApi.createTodo(bucketId);
       fetchTodos();
     } catch (error) {
-      console.log('투두 생성 에러 발생😈');
-      console.log(error);
-      // const errorMessage =
-      //   errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
-      // const modalData = {
-      //   content: errorMessage,
-      //   cancelText: '확인',
-      //   onConfirm: false,
-      // };
+      const errorMessage =
+        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+      const modalData = {
+        content: errorMessage,
+        cancelText: '확인',
+        onConfirm: false,
+      };
 
-      // modalOpen(modalData);
+      modalOpen(modalData);
     }
   };
 

@@ -30,16 +30,17 @@ export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, mo
 
         const response = await todoApi.updateTodo(bucketId, id, formData);
       } catch (error) {
-        const errorMessage =
-          errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+        console.log(error);
+        // const errorMessage =
+        //   errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
 
-        const modalData = {
-          content: errorMessage,
-          cancelText: '확인',
-          onConfirm: false,
-        };
+        // const modalData = {
+        //   content: errorMessage,
+        //   cancelText: '확인',
+        //   onConfirm: false,
+        // };
 
-        modalOpen(modalData);
+        // modalOpen(modalData);
       }
     }
 
@@ -50,16 +51,17 @@ export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, mo
     try {
       const response = await todoApi.updateTodo(bucketId, id, formData);
     } catch (error) {
-      const errorMessage =
-        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+      console.log(error);
+      // const errorMessage =
+      //   errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
 
-      const modalData = {
-        content: errorMessage,
-        cancelText: '확인',
-        onConfirm: false,
-      };
+      // const modalData = {
+      //   content: errorMessage,
+      //   cancelText: '확인',
+      //   onConfirm: false,
+      // };
 
-      modalOpen(modalData);
+      // modalOpen(modalData);
     }
   }
 
