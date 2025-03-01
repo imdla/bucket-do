@@ -1,6 +1,6 @@
 header {
   width: var(--width-basic);
-  padding-top: 10vh;
+  padding: 8vh 0 4vh 0;
 }
 
 .container {
