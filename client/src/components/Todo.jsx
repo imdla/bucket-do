@@ -6,7 +6,7 @@ import errorMessages from '../config/errorMessages';
 export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, modalClose }) {
   const { id, content, checkCompleted } = todo;
   const [formData, setFormData] = useState({
-    content: content || '',
+    content: content.slice(0, 4) == 'null' ? '완료' : content,
     checkCompleted: checkCompleted,
   });
 
