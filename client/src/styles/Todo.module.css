@@ -4,10 +4,6 @@
   justify-content: center;
 }
 
-.firstTodo {
-  display: none;
-}
-
 .fixedTodoButton {
   visibility: hidden;
   width: 2.5rem;
@@ -54,8 +50,9 @@
   height: 2.5rem;
   padding: 0 1rem;
   border: none;
-  background-color: var(--bg-100);
+  background-color: transparent;
   border-radius: var(--border-radius-15);
+  margin: 0 1rem;
   box-sizing: border-box;
 }
 
@@ -71,6 +68,12 @@
   height: 2.5rem;
   padding: 0;
   cursor: pointer;
+  font-size: var(--font-size-14);
   border-radius: var(--border-radius-20);
   background-color: var(--primary-100);
+  transition: var(--transition-3);
+}
+
+.todo .deleteButton:hover {
+  box-shadow: var(--box-shadow-hover);
 }

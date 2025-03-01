@@ -5,65 +5,32 @@ import errorMessages from '../config/errorMessages';
 
 export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, modalClose }) {
   const { id, content, checkCompleted } = todo;
-
-  const [inputContent, setInputContent] = useState(content);
-  const [isCompleted, setIsCompleted] = useState(checkCompleted);
-
   const [formData, setFormData] = useState({
     content: content || '',
-    checkCompleted: isCompleted || false,
+    checkCompleted: checkCompleted,
   });
 
-  // useEffect(() => {
-  //   // 초기값이 변경된 경우에만 업데이트
-  //   setFormData({
-  //     content: content || '',
-  //     checkCompleted: isCompleted || false,
-  //   });
-  // }, [content, isCompleted]);
-
   useEffect(() => {
-    async function updateContent() {
-      try {
-        const formData = new FormData();
-        formData.append('checkCompleted', isCompleted);
+    updateTodo();
+  }, [formData]);
 
-        const response = await todoApi.updateTodo(bucketId, id, formData);
-      } catch (error) {
-        console.log(error);
-        // const errorMessage =
-        //   errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
-
-        // const modalData = {
-        //   content: errorMessage,
-        //   cancelText: '확인',
-        //   onConfirm: false,
-        // };
-
-        // modalOpen(modalData);
-      }
-    }
-
-    updateContent();
-  }, [isCompleted]);
-
-  async function updateTodo() {
+  // 콘텐츠, 체크박스 업데이트
+  const updateTodo = async () => {
     try {
-      const response = await todoApi.updateTodo(bucketId, id, formData);
+      await todoApi.updateTodo(bucketId, id, formData);
     } catch (error) {
-      console.log(error);
-      // const errorMessage =
-      //   errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+      const errorMessage =
+        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
 
-      // const modalData = {
-      //   content: errorMessage,
-      //   cancelText: '확인',
-      //   onConfirm: false,
-      // };
+      const modalData = {
+        content: errorMessage,
+        cancelText: '확인',
+        onConfirm: false,
+      };
 
-      // modalOpen(modalData);
+      modalOpen(modalData);
     }
-  }
+  };
 
   // 콘텐츠 수정
   const handleChangeContent = (e) => {
@@ -71,9 +38,8 @@ export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, mo
   };
 
   // 체크박스 수정
-  const handleChangeCheckbox = async (e) => {
-    setFormData({ ...formData, checkCompleted: e.target.checked });
-    await updateTodo();
+  const handleChangeCheckbox = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
   // 투두 삭제
