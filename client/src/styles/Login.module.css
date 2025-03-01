@@ -15,7 +15,7 @@
 }
 
 .container .intro {
-  width: var(--width-container-login);
+  /* width: var(--width-container-login); */
   margin: 0 auto;
   text-align: center;
   background-color: var(--bg-200);
@@ -90,10 +90,19 @@
 }
 
 @media (max-width: 1024px) {
+  .container {
+    width: var(--width-container-basic);
+  }
 }
 
 @media (max-width: 768px) {
+  .container {
+    width: var(--width-container-medium);
+  }
 }
 
 @media (max-width: 480px) {
+  .container {
+    width: var(--width-container-large);
+  }
 }
