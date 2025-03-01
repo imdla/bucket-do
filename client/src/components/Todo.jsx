@@ -101,7 +101,7 @@ export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, is
         className={isFixed ? styles.fixedTodoButton : styles.deleteButton}
         onClick={handleDeleteTodo}
       >
-        x
+        <img src="/assets/icon-close.png" alt="닫기 아이콘" />
       </button>
     </div>
   );

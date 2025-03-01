@@ -68,12 +68,24 @@
   height: 2.5rem;
   padding: 0;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: var(--font-size-14);
   border-radius: var(--border-radius-20);
   background-color: var(--primary-100);
   transition: var(--transition-3);
 }
 
+.todo .deleteButton img {
+  width: 22px;
+  transition: var(--transition-3);
+}
+
 .todo .deleteButton:hover {
   box-shadow: var(--box-shadow-hover);
+}
+
+.todo .deleteButton:hover img {
+  transform: scale(1.2);
 }
