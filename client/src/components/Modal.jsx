@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/Modal.module.css';
+import styles from '../styles/components/Modal.module.css';
 
 const Modal = ({ isOpen, onClose, content, confirmText, cancelText, onConfirm }) => {
   if (!isOpen) return null;

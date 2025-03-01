@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import todoApi from '../api/todoApi';
-import styles from '../styles/Todo.module.css';
+import styles from '../styles/components/Todo.module.css';
 import errorMessages from '../config/errorMessages';
 
 export default function Todo({ bucketId, todo, fetchTodo, isFixed, modalOpen, isDarkBackground }) {

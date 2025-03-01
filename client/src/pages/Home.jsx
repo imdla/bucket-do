@@ -10,7 +10,7 @@ import errorMessages from '../config/errorMessages';
 
 import bucketApi from '../api/bucketApi';
 import todoApi from '../api/todoApi';
-import styles from '../styles/Home.module.css';
+import styles from '../styles/pages/Home.module.css';
 
 import { createBucket, removeBucket } from '../store/slices/bucketSlice';
 
@@ -30,12 +30,12 @@ export default function Home() {
     onConfirm: false,
   });
 
-  // 새로고침 시 생성된 버킷 아이디 값 삭제 
+  // 새로고침 시 생성된 버킷 아이디 값 삭제
   useEffect(() => {
     if (performance.navigation.type == 1) {
       dispatch(removeBucket());
     }
-  }, [])
+  }, []);
 
   // 버킷 리스트 get
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function Home() {
 
   const fetchBuckets = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
       const response = await bucketApi.getBuckets();
       setBucketList(response.data);
@@ -58,14 +58,14 @@ export default function Home() {
       });
       setIsModalOpen(true);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
   // 버킷 생성
   const handleCreateBucket = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
       const bucketResponse = await bucketApi.createBucket();
       const bucketId = bucketResponse.data.id;
@@ -84,18 +84,18 @@ export default function Home() {
       });
       setIsModalOpen(true);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
   const modalOpen = (modalData) => {
     setModalData(modalData);
     setIsModalOpen(true);
-  }
+  };
 
   const modalClose = () => {
     setIsModalOpen(false);
-  }
+  };
 
   // 필터 버튼 활성화 기능
   function handleActiveFilter(index) {
@@ -118,16 +118,27 @@ export default function Home() {
   // 버킷리스트
   const bucketValue =
     bucketList.length > 0 ? (
-      <BucketList activeIndex={activeIndex} bucketList={bucketList} fetchBuckets={fetchBuckets} modalOpen={modalOpen} modalClose={modalClose} />
+      <BucketList
+        activeIndex={activeIndex}
+        bucketList={bucketList}
+        fetchBuckets={fetchBuckets}
+        modalOpen={modalOpen}
+        modalClose={modalClose}
+      />
     ) : (
       <div className={styles.emptyBucketList}>버킷리스트를 추가해주세요</div>
     );
 
   return (
     <div>
-      <Modal className={styles.modal} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} {...modalData} />
-      
-      <main  style={isModalOpen ? {height: "100vh", overflow: "hidden"} : {}}>
+      <Modal
+        className={styles.modal}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        {...modalData}
+      />
+
+      <main style={isModalOpen ? { height: '100vh', overflow: 'hidden' } : {}}>
         <Header />
 
         <section className={styles.section}>

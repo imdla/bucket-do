@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Todo from './Todo';
 import todoApi from '../api/todoApi';
-import styles from '../styles/TodoList.module.css';
+import styles from '../styles/components/TodoList.module.css';
 import errorMessages from '../config/errorMessages';
 
 export default function TodoList({

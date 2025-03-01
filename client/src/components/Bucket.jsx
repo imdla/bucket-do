@@ -5,7 +5,7 @@ import TodoList from '../components/TodoList';
 
 import bucketApi from '../api/bucketApi';
 
-import styles from '../styles/Bucket.module.css';
+import styles from '../styles/components/Bucket.module.css';
 import errorMessages from '../config/errorMessages';
 
 function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {

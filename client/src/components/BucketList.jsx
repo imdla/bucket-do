@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Bucket from '../components/Bucket';
-import styles from '../styles/BucketList.module.css';
+import styles from '../styles/components/BucketList.module.css';
 
 function BucketList({ activeIndex, bucketList, fetchBuckets, modalOpen, modalClose }) {
   const filterList = ['모두', '진행중', '완료'];

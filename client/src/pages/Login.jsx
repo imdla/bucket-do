@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import authApi from '../api/authApi';
 import { login } from '../store/slices/authSlice';
-import styles from '../styles/Login.module.css';
+import styles from '../styles/pages/Login.module.css';
 
 import Modal from '../components/Modal';
 import errorMessages from '../config/errorMessages';

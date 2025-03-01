@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { logout } from '../store/slices/authSlice';
-import styles from '../styles/Header.module.css';
+import styles from '../styles/components/Header.module.css';
 
 import Modal from './Modal';
 
