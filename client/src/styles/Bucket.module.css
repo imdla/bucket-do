@@ -5,7 +5,6 @@
 }
 
 .section .bucket {
-  border: none;
   text-align: center;
   display: flex;
   align-items: center;
@@ -29,12 +28,11 @@
   text-align: left;
   display: flex;
   flex-direction: column;
-  margin: 0 1rem;
+  margin: 0 var(--margin-small);
   gap: 0.5rem;
 }
 
 .section .bucket form input {
-  border: none;
   padding: 0.6rem 1.2rem;
   font-size: var(--font-size-18);
   background-color: var(--bg-100);
@@ -177,7 +175,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-size-18);
   background-color: var(--primary-100);
   border-radius: var(--border-radius-20);
   transition: var(--transition-3);
@@ -202,4 +199,56 @@
 
 .bucket .buttonBox button:hover img {
   transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .bucket .imageBox {
+    width: 90px;
+    height: 90px;
+  }
+
+  .section .bucket form {
+    margin: 0 0.5rem;
+  }
+
+  .section .bucket form input {
+    padding: 0.5rem 1rem;
+    font-size: var(--font-size-16);
+  }
+
+  .progressBarBox {
+    padding-left: 0.5rem;
+  }
+
+  .progressBarBox .progressBar {
+    width: 65%;
+  }
+}
+
+@media (max-width: 480px) {
+  .bucket .imageBox {
+    width: 80px;
+    height: 80px;
+  }
+
+  .progressBarBox {
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .progressBarBox .progressBar {
+    width: 100%;
+  }
+
+  .bucket .buttonBox {
+    flex-direction: column-reverse;
+  }
+
+  .bucket .buttonBox button {
+    width: 2rem;
+    height: 2rem;
+  }
 }
