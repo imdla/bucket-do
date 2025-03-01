@@ -130,7 +130,7 @@ export default function TodoList({
     <div style={containerStyle} className={styles.container}>
       <ul>{todos}</ul>
       <button className={styles.createButton} onClick={handleCreate}>
-        +
+        <img src="/assets/icon-plus.png" alt="더하기 아이콘" />
       </button>
     </div>
   );

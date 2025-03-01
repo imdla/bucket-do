@@ -21,12 +21,23 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: var(--font-size-18);
   background-color: var(--bg-200);
   transition: var(--transition-3);
 }
 
+.container .createButton img {
+  width: 22px;
+  transition: var(--transition-3);
+}
+
 .container .createButton:hover {
-  color: var(--bg-100);
   background-color: var(--text-200);
+}
+
+.container .createButton:hover img {
+  transform: scale(1.2);
 }
