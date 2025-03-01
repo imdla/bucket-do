@@ -1,10 +1,10 @@
 footer {
-  width: 100vw;
+  width: var(--width-basic);
   min-height: 10vh;
 }
 
 .container {
-  width: 50vw;
+  width: var(--width-container-basic);
   margin: 0 auto;
   display: flex;
   align-items: center;

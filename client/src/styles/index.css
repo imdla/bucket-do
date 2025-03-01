@@ -51,6 +51,7 @@
 
   /* width */
   --width-basic: 100vw;
+  --width-container-basic: 50vw;
 
   /* height */
   --height-min: 60vh;

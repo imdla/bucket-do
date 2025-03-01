@@ -1,5 +1,5 @@
 .container {
-  width: 50vw;
+  width: var(--width-container-basic);
   margin: 0 auto;
   padding: var(--padding-small);
   display: flex;

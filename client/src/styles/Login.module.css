@@ -1,6 +1,6 @@
 .container {
   padding-top: 20vh;
-  width: 50vw;
+  width: var(--width-container-basic);
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -15,7 +15,7 @@
 }
 
 .container .intro {
-  width: 50vw;
+  width: var(--width-container-basic);
   margin: 0 auto;
   text-align: center;
   background-color: var(--bg-200);
@@ -86,5 +86,5 @@
 
 /* Skeleton */
 .skeletonMargin {
-  margin-top: 1rem;
+  margin-top: var(--margin-small);
 }

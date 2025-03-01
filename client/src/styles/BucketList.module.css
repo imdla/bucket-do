@@ -8,7 +8,7 @@
 }
 
 .container li {
-  width: 50vw;
+  width: var(--width-container-basic);
   transition: var(--transition-3);
 }
 

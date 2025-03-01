@@ -1,5 +1,5 @@
 header {
-  width: 100vw;
+  width: var(--width-basic);
   padding-top: 10vh;
 }
 
