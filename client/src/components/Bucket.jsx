@@ -242,13 +242,13 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
             <div className={styles.buttonBox}>
               <button className={styles.toggleButton} onClick={handleToggle}>
                 {isToggled ? (
+                  <img src="/assets/icon-up.png" alt="위쪽 화살표 아이콘" />
+                ) : (
                   <img
                     style={{ transform: 'rotate(180deg)' }}
                     src="/assets/icon-up.png"
                     alt="아래쪽 화살표 아이콘"
                   />
-                ) : (
-                  <img src="/assets/icon-up.png" alt="위쪽 화살표 아이콘" />
                 )}
               </button>
               <button className={styles.deleteButton} onClick={handleDeleteBucket}>
