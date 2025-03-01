@@ -43,18 +43,21 @@ export default function TodoList({
       await todoApi.createTodo(bucketId);
       fetchTodos();
     } catch (error) {
-      const errorMessage =
-        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
-      const modalData = {
-        content: errorMessage,
-        cancelText: '확인',
-        onConfirm: false,
-      };
+      console.log('투두 생성 에러 발생😈');
+      console.log(error);
+      // const errorMessage =
+      //   errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+      // const modalData = {
+      //   content: errorMessage,
+      //   cancelText: '확인',
+      //   onConfirm: false,
+      // };
 
-      modalOpen(modalData);
+      // modalOpen(modalData);
     }
   };
 
+  // 투두 리스트
   const todos = Array.isArray(todoList)
     ? todoList.map((todo) => {
         const isFixed = todo.id === fixedTodoId;
@@ -74,6 +77,7 @@ export default function TodoList({
       })
     : null;
 
+  // 토글 및 이미지 여부에 띠른 스타일 설정
   const containerStyle = isToggled
     ? imageUrl
       ? {

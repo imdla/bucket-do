@@ -9,12 +9,12 @@ function BucketList({ activeIndex, bucketList, fetchBuckets, modalOpen, modalClo
   // 버킷 생성
   const list = bucketList
     .filter((bucket) => {
-      const { completed } = bucket;
+      const { checkCompleted } = bucket;
 
       if (activeIndex === 0) {
         return true;
       } else {
-        return completed + 1 === activeIndex;
+        return checkCompleted + 1 === activeIndex;
       }
     })
     .reverse()
