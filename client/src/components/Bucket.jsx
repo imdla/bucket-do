@@ -171,7 +171,16 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
       <section className={styles.section}>
         <article className={styles.bucket}>
           <>
-            <div style={isToggled ? {} : { opacity: '0', width: '0' }} className={styles.imageBox}>
+            <div
+              style={
+                isToggled
+                  ? imageUrl
+                    ? { backgroundColor: 'transparent' }
+                    : {}
+                  : { opacity: '0', width: '0' }
+              }
+              className={styles.imageBox}
+            >
               {imageUrl && <img src={imageUrl} alt="미리보기" />}
 
               <form onSubmit={handleSubmit}>

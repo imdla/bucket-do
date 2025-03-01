@@ -1,13 +1,14 @@
 .todo {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .firstTodo {
   display: none;
 }
-.firstTodoButton {
+
+.fixedTodoButton {
   visibility: hidden;
   width: 2.5rem;
   height: 2.5rem;
