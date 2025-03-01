@@ -17,9 +17,9 @@ header {
 
 .container .logoutButton {
   border: none;
-  font-size: var(--font-size-18);
+  font-size: var(--font-size-16);
   background-color: var(--bg-200);
-  padding: var(--round-medium-button);
+  padding: var(--round-small-button);
   border-radius: var(--border-radius-30);
   box-shadow: var(--box-shadow-basic);
   transition: var(--transition-3);
