@@ -86,6 +86,11 @@
   transform: translateY(-1px);
 }
 
+/* Skeleton */
+.skeletonMarginLarge {
+  margin-top: var(--margin-large);
+}
+
 @media (max-width: 1024px) {
   .container {
     width: var(--width-container-moderate);

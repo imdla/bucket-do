@@ -11,6 +11,7 @@ import errorMessages from '../config/errorMessages';
 import bucketApi from '../api/bucketApi';
 import todoApi from '../api/todoApi';
 import styles from '../styles/pages/Home.module.css';
+import Skeleton from 'react-loading-skeleton';
 
 import { createBucket, removeBucket } from '../store/slices/bucketSlice';
 
@@ -19,10 +20,13 @@ export default function Home() {
   const [bucketList, setBucketList] = useState([]);
   const [newBucket, setNewBucket] = useState(null);
   const [newTodo, setNewTodo] = useState(null);
+
   // 0: 모두, 1: 진행중, 2: 완료
   const [activeIndex, setActiveIndex] = useState(0);
-  // todo : 로딩 스켈레톤
+
   const [isLoading, setIsLoading] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({
     content: '',
@@ -42,6 +46,19 @@ export default function Home() {
     fetchBuckets();
   }, [activeIndex, newBucket, newTodo]);
 
+  // 로딩 1초 이상일 때 스켈레톤 실행
+  useEffect(() => {
+    let timeout;
+    if (isLoading) {
+      timeout = setTimeout(() => setShowSkeleton(true), 1000);
+    } else {
+      setShowSkeleton(false);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [isLoading]);
+
+  // 버킷 리스트 get
   const fetchBuckets = async () => {
     try {
       setIsLoading(true);
@@ -88,11 +105,13 @@ export default function Home() {
     }
   };
 
+  // 모달창 open
   const modalOpen = (modalData) => {
     setModalData(modalData);
     setIsModalOpen(true);
   };
 
+  // 모달창 close
   const modalClose = () => {
     setIsModalOpen(false);
   };
@@ -143,8 +162,26 @@ export default function Home() {
 
         <section className={styles.section}>
           <div className={styles.container}>
-            <ul className={styles.filter}>{filterButtons}</ul>
-            <div className={styles.bucketList}>{bucketValue}</div>
+            {showSkeleton ? (
+              <>
+                <div
+                  className={styles.skeletonMargin}
+                  style={{ width: '50vw', display: 'flex', gap: '2vw' }}
+                >
+                  <Skeleton width="8vw" height={47} />
+                  <Skeleton width="8vw" height={47} />
+                  <Skeleton width="8vw" height={47} />
+                </div>
+                <Skeleton className={styles.skeletonMarginLarge} width="50vw" height={130} />
+                <Skeleton className={styles.skeletonMarginLarge} width="50vw" height={130} />
+                <Skeleton className={styles.skeletonMarginLarge} width="50vw" height={130} />
+              </>
+            ) : (
+              <>
+                <ul className={styles.filter}>{filterButtons}</ul>
+                <div className={styles.bucketList}>{bucketValue}</div>
+              </>
+            )}
           </div>
         </section>
 

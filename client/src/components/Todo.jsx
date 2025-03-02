@@ -6,27 +6,50 @@ import errorMessages from '../config/errorMessages';
 export default function Todo({
   bucketId,
   todo,
-  fetchTodo,
   isFixed,
   modalOpen,
   modalClose,
   isFixedTodoSelectable,
 }) {
   const { id, content, checkCompleted } = todo;
+  const [todoList, setTodoList] = useState([]);
   const [formData, setFormData] = useState({
     content: content.slice(0, 4) == 'null' ? '완료' : content,
     checkCompleted: checkCompleted,
   });
 
   useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  useEffect(() => {
     updateTodo();
   }, [formData]);
+
+  // 투두 리스트 get
+  const fetchTodos = async () => {
+    try {
+      const response = await todoApi.getTodos(bucketId);
+      const todos = response.data.todos;
+      setTodoList(todos);
+    } catch (error) {
+      console.log(error);
+      const errorMessage =
+        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+      const modalData = {
+        content: errorMessage,
+        cancelText: '확인',
+        onConfirm: false,
+      };
+
+      modalOpen(modalData);
+    }
+  };
 
   // 콘텐츠, 체크박스 업데이트
   const updateTodo = async () => {
     try {
       await todoApi.updateTodo(bucketId, id, formData);
-      fetchTodo();
     } catch (error) {
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
@@ -39,6 +62,8 @@ export default function Todo({
 
       modalOpen(modalData);
     }
+
+    fetchTodos();
   };
 
   // 콘텐츠 수정
@@ -47,10 +72,18 @@ export default function Todo({
   };
 
   // 체크박스 수정
+  // todo: 투두 구현 로직 수정 필요
   const handleChangeCheckbox = (e) => {
+    console.log(todoList);
+    // const allAmount = todoList.length;
+    // const completedAmount = todoList.filter((todo) => todo.checkCompleted).length;
+    // console.log(allAmount, completedAmount);
+
     if (e.target.checked && isFixed) {
       if (isFixedTodoSelectable) {
         setFormData({ ...formData, [e.target.name]: e.target.checked });
+        // } else if (allAmount - 1 === completedAmount) {
+        //   setFormData({ ...formData, [e.target.name]: e.target.checked });
       } else {
         const modalData = {
           content: '모든 투두 리스트가 완료되어야 체크 가능합니다.',
@@ -71,7 +104,7 @@ export default function Todo({
 
     try {
       await todoApi.deleteTodo(bucketId, id);
-      fetchTodo();
+      fetchTodos();
     } catch (error) {
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;

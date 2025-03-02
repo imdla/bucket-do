@@ -66,7 +66,6 @@ export default function TodoList({
             <Todo
               bucketId={bucketId}
               todo={todo}
-              fetchTodo={fetchTodos}
               isFixed={isFixed}
               modalOpen={modalOpen}
               modalClose={modalClose}
