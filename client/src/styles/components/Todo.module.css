@@ -42,7 +42,7 @@
   min-width: 240px;
   height: 2.5rem;
   padding: 0 1rem;
-  background-color: transparent;
+  background-color: rgb(255, 254, 251, 0.8);
   border-radius: var(--border-radius-15);
   margin: 0 1rem;
   box-sizing: border-box;
