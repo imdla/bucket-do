@@ -12,6 +12,7 @@ const errorMessages = {
   403: {
     DEFAULT: '접근 권한이 없습니다.',
     PERMISSION_DENIED: '이 작업을 수행할 권한이 없습니다.',
+    ERR_BAD_REQUEST: '다른 이미지를 추가해주세요.', // 버킷 (이미지 크기 및 확장자 맞지 않을 경우)
   },
   404: {
     DEFAULT: '요청하신 페이지를 찾을 수 없습니다.',

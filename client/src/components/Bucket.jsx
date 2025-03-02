@@ -34,10 +34,15 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     setIsFixedTodoSelectable(todoAll - 1 === todoCompleted ? true : false);
   }, [bucket]);
 
+  useEffect(() => {
+    handleFileUpdate();
+  }, [inputData]);
+
   // form 제출
   const handleSubmit = (e) => {
     e.preventDefault();
     handleTitleUpdate();
+    handleFileUpdate();
   };
 
   // title 수정
@@ -68,8 +73,8 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     fetchBuckets();
   };
 
-  // image 수정 및 업데이트
-  const handleFileChange = async (e) => {
+  // image 수정
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     setInputData((prev) => ({ ...prev, file }));
 
@@ -78,12 +83,14 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
       setImageUrl(reader.result);
     };
     reader.readAsDataURL(file);
+  };
 
+  // image 업데이트
+  const handleFileUpdate = async () => {
     const formData = new FormData();
     formData.append('file', inputData.file);
 
     try {
-      // todo: 이미지 수정 로직 확인 필요
       await bucketApi.updateBucket(id, formData);
     } catch (error) {
       const errorMessage =
