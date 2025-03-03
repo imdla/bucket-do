@@ -30,6 +30,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
+    private final RefreshTokenService refreshTokenService;
 
     @Transactional
     public SignupResponseDto signup(SignupRequestDto requestDto) {
@@ -43,8 +44,7 @@ public class AuthService {
 
         return SignupResponseDto.from(userRepository.save(user));
     }
-
-
+    
     @Transactional
     public LoginResponseDto login(LoginRequestDto requestDto) {
         if (!userRepository.existsByUsername(requestDto.getUsername())) {
@@ -65,15 +65,19 @@ public class AuthService {
             )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtTokenProvider.createToken(authentication);
+
+        // 액세스 토큰 생성
+        String accessToken = jwtTokenProvider.createAccessToken(authentication);
+        // 리프레시 토큰 생성
+        String refreshToken = jwtTokenProvider.createRefreshToken(authentication);
 
         User user = userRepository.findByUsername(requestDto.getUsername())
             .orElseThrow(() -> new ResourceNotFoundException("일치하는 사용자를 찾을 수 없습니다."));
 
-        return LoginResponseDto.from(user, jwt);
-//        return new TokenResponseDto.from(jwt);
-    }
+        refreshTokenService.saveOrUpdateRefreshToken(user, refreshToken);
 
+        return LoginResponseDto.from(user, accessToken, refreshToken);
+    }
 
     public boolean checkUsername(String username) {
         return userRepository.existsByUsername(username);

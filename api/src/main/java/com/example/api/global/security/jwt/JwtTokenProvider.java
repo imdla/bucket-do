@@ -15,7 +15,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider {
 
-    private final long tokenValidityInMilliseconds = 1000L * 60 * 60 * 10; // 1시간
+    private final long accessTokenValidity = 1000L * 60; // 1분
+    private final long refreshTokenValidity = 1000L * 60 * 3; // 3분
+    //    private final long tokenValidityInMilliseconds = 1000L * 60 * 60 * 10; // 1시간
+
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -24,12 +27,27 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(Authentication authentication) {
+    public String createAccessToken(Authentication authentication) {
         String username = authentication.getName();
         Claims claims = Jwts.claims().setSubject(username);
 
         Date now = new Date();
-        Date validity = new Date(now.getTime() + tokenValidityInMilliseconds);
+        Date validity = new Date(now.getTime() + accessTokenValidity);
+
+        return Jwts.builder()
+            .setClaims(claims)
+            .setIssuedAt(now)
+            .setExpiration(validity)
+            .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256)
+            .compact();
+    }
+
+    public String createRefreshToken(Authentication authentication) {
+        String username = authentication.getName();
+        Claims claims = Jwts.claims().setSubject(username);
+
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + refreshTokenValidity);
 
         return Jwts.builder()
             .setClaims(claims)

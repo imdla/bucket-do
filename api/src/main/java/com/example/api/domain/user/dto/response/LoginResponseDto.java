@@ -13,14 +13,16 @@ import lombok.NoArgsConstructor;
 public class LoginResponseDto {
 
     private Long id;
-    private String token;
+    private String accesstoken;
+    private String refreshtoken;
     private String username;
 
-    public static LoginResponseDto from(User entity, String token) {
+    public static LoginResponseDto from(User entity, String accesstoken, String refreshtoken) {
         return LoginResponseDto.builder()
             .id(entity.getId())
             .username(entity.getUsername())
-            .token(token)
+            .accesstoken(accesstoken)
+            .refreshtoken(refreshtoken)
             .build();
     }
 }
