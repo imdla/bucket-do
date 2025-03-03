@@ -1,6 +1,8 @@
 package com.example.api.global.exception;
 
 import com.example.api.global.response.ApiResponse;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -66,7 +68,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ApiResponse<Void>> handleBadCredentialsException(
         BadCredentialsException ex) {
-
         return ResponseEntity
             .status(HttpStatus.UNAUTHORIZED)
             .body(ApiResponse.error(ex.getMessage(), "UNAUTHORIZED"));
@@ -75,11 +76,34 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ApiResponse<Void>> handleMethodNotAllowed(
         HttpRequestMethodNotSupportedException ex) {
-
         return ResponseEntity
             .status(HttpStatus.METHOD_NOT_ALLOWED)
             .body(ApiResponse.error("HTTP 메서드가 적절하지 않습니다.", "METHOD_NOT_ALLOWED"));
 
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ApiResponse<Void>> handleTokenExpired(
+        ExpiredJwtException ex) {
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(ApiResponse.error(ex.getMessage(), "UNAUTHORIZED"));
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ApiResponse<Void>> handleTokenValidate(
+        JwtException ex) {
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(ApiResponse.error(ex.getMessage(), "UNAUTHORIZED"));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiResponse<Void>> handleIllegalArgument(
+        IllegalArgumentException ex) {
+        return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(ApiResponse.error(ex.getMessage(), "INTERNAL_SERVER_ERROR"));
     }
 
 //    @ExceptionHandler(Exception.class)
