@@ -243,9 +243,15 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
               <div className={styles.progressBarBox}>
                 <p>진행률</p>
                 <div
-                  style={{
-                    background: `linear-gradient(to right, #71c4ef, #fffefb  ${progress.toFixed()}%)`,
-                  }}
+                  style={
+                    progress === 100
+                      ? {
+                          background: '#71c4ef',
+                        }
+                      : {
+                          background: `linear-gradient(to right, #71c4ef, #fffefb  ${progress.toFixed()}%)`,
+                        }
+                  }
                   className={styles.progressBar}
                 >
                   <p>{progress.toFixed()}%</p>
