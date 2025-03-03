@@ -28,6 +28,7 @@ export default function Login() {
     onConfirm: false,
   });
 
+  // 로딩 1초 이상일 때 스켈레톤 표시
   useEffect(() => {
     let timeout;
     if (isLoading) {

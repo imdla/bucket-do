@@ -120,7 +120,6 @@ function Signup() {
 
       const response = await authApi.checkUsername(userName);
       const isPossible = response.available;
-      console.log(isPossible);
       if (userName === '') {
         setModalData({
           ...modalData,
