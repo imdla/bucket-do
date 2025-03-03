@@ -2,6 +2,7 @@ package com.example.api.domain.user.controller;
 
 import com.example.api.domain.bucket.dto.response.UsernameCheckResponseDto;
 import com.example.api.domain.user.dto.request.LoginRequestDto;
+import com.example.api.domain.user.dto.request.RefreshTokenRequestDto;
 import com.example.api.domain.user.dto.request.SignupRequestDto;
 import com.example.api.domain.user.dto.response.LoginResponseDto;
 import com.example.api.domain.user.dto.response.SignupResponseDto;
@@ -46,6 +47,16 @@ public class AuthController {
             "OK",
             authService.login(requestDto)
         ));
+    }
+
+    @PostMapping("/auth/logout")
+    public ResponseEntity<ApiResponse<Void>> logout(
+        @RequestBody RefreshTokenRequestDto requestDto) {
+
+        authService.logout(requestDto);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+            .body(ApiResponse.ok("로그아웃되었습니다.", "NO_CONTENT", null));
     }
 
     // 단순히 JWT 검증을 위한 endpoint

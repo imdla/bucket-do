@@ -1,6 +1,7 @@
 package com.example.api.global.security.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -57,6 +58,7 @@ public class JwtTokenProvider {
             .compact();
     }
 
+    // 토큰이 위조 여부, 유효한지 여부 검증
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -66,6 +68,23 @@ public class JwtTokenProvider {
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
+        }
+    }
+
+    // 토큰 만료 여부를 검증
+    public boolean validateTokenExpired(String token) {
+        try {
+            Date expirationDate = Jwts.parserBuilder()
+                .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration();
+            return expirationDate.before(new Date());
+        } catch (ExpiredJwtException e) {
+            return true; // 만료됨
+        } catch (JwtException e) {
+            return false; // 위조된 경우는 이 메서드에서 처리하지 않음
         }
     }
 
