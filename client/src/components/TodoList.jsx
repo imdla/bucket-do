@@ -11,7 +11,6 @@ export default function TodoList({
   fixedTodoId,
   modalOpen,
   modalClose,
-  isFixedTodoSelectable,
 }) {
   const [todoList, setTodoList] = useState([]);
 
@@ -42,7 +41,7 @@ export default function TodoList({
   const handleCreate = async () => {
     try {
       await todoApi.createTodo(bucketId);
-      fetchTodos();
+      await fetchTodos();
     } catch (error) {
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
@@ -65,11 +64,11 @@ export default function TodoList({
           <li key={todo.id}>
             <Todo
               bucketId={bucketId}
+              fetchTodo={fetchTodos}
               todo={todo}
               isFixed={isFixed}
               modalOpen={modalOpen}
               modalClose={modalClose}
-              isFixedTodoSelectable={isFixedTodoSelectable}
             />
           </li>
         );

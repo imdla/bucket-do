@@ -3,24 +3,12 @@ import todoApi from '../api/todoApi';
 import styles from '../styles/components/Todo.module.css';
 import errorMessages from '../config/errorMessages';
 
-export default function Todo({
-  bucketId,
-  todo,
-  isFixed,
-  modalOpen,
-  modalClose,
-  isFixedTodoSelectable,
-}) {
+export default function Todo({ bucketId, fetchTodo, todo, isFixed, modalOpen, modalClose }) {
   const { id, content, checkCompleted } = todo;
-  const [todoList, setTodoList] = useState([]);
   const [formData, setFormData] = useState({
     content: content.slice(0, 4) == 'null' ? '완료' : content,
     checkCompleted: checkCompleted,
   });
-
-  useEffect(() => {
-    fetchTodos();
-  }, []);
 
   useEffect(() => {
     updateTodo();
@@ -31,9 +19,8 @@ export default function Todo({
     try {
       const response = await todoApi.getTodos(bucketId);
       const todos = response.data.todos;
-      setTodoList(todos);
+      return todos;
     } catch (error) {
-      console.log(error);
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
       const modalData = {
@@ -50,6 +37,7 @@ export default function Todo({
   const updateTodo = async () => {
     try {
       await todoApi.updateTodo(bucketId, id, formData);
+      await fetchTodos();
     } catch (error) {
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
@@ -62,8 +50,6 @@ export default function Todo({
 
       modalOpen(modalData);
     }
-
-    fetchTodos();
   };
 
   // 콘텐츠 수정
@@ -72,29 +58,39 @@ export default function Todo({
   };
 
   // 체크박스 수정
-  // todo: 투두 구현 로직 수정 필요
-  const handleChangeCheckbox = (e) => {
-    console.log(todoList);
-    // const allAmount = todoList.length;
-    // const completedAmount = todoList.filter((todo) => todo.checkCompleted).length;
-    // console.log(allAmount, completedAmount);
+  const handleChangeCheckbox = async (e) => {
+    const isChecked = e.target.checked;
 
-    if (e.target.checked && isFixed) {
-      if (isFixedTodoSelectable) {
-        setFormData({ ...formData, [e.target.name]: e.target.checked });
-        // } else if (allAmount - 1 === completedAmount) {
-        //   setFormData({ ...formData, [e.target.name]: e.target.checked });
-      } else {
-        const modalData = {
-          content: '모든 투두 리스트가 완료되어야 체크 가능합니다.',
-          cancelText: '확인',
-          onConfirm: false,
-        };
+    if (!isFixed) {
+      setFormData((prev) => ({
+        ...prev,
+        [e.target.name]: isChecked,
+      }));
+    }
 
-        modalOpen(modalData);
+    try {
+      await updateTodo();
+      const updatedTodos = await fetchTodos();
+
+      const allAmount = updatedTodos.length;
+      const completedAmount = updatedTodos.filter((todo) => todo.checkCompleted).length;
+
+      if (isChecked && isFixed) {
+        if (allAmount - 1 === completedAmount) {
+          setFormData((prev) => ({
+            ...prev,
+            [e.target.name]: isChecked,
+          }));
+        } else {
+          modalOpen({
+            content: '모든 투두 리스트가 완료되어야 체크 가능합니다.',
+            cancelText: '확인',
+            onConfirm: false,
+          });
+        }
       }
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.checked });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -104,7 +100,7 @@ export default function Todo({
 
     try {
       await todoApi.deleteTodo(bucketId, id);
-      fetchTodos();
+      fetchTodo();
     } catch (error) {
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
@@ -152,7 +148,7 @@ export default function Todo({
           name="content"
           placeholder="투두 리스트 내용을 입력해주세요"
           required
-          value={formData.content || ''}
+          value={isFixed ? (todo.content.slice(0, 4) == 'null' ? '완료' : todo.content) : ''}
           onChange={handleChangeContent}
           onBlur={updateTodo}
           disabled={isFixed}

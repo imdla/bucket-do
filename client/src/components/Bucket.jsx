@@ -11,8 +11,6 @@ import errorMessages from '../config/errorMessages';
 function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
   const { id, fixedTodoId, todoAll, todoCompleted } = bucket;
   const progress = (todoCompleted / todoAll) * 100;
-  const isSelectable = todoAll - 1 === todoCompleted ? true : false;
-  const [isFixedTodoSelectable, setIsFixedTodoSelectable] = useState(isSelectable);
 
   const CreateBucketId = useSelector((state) => state.bucket.bucketId);
   const [isToggled, setIsToggled] = useState(CreateBucketId === id ? true : false);
@@ -31,7 +29,6 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
       file: bucket.imageUrl || '',
     });
     setImageUrl(bucket.imageUrl);
-    setIsFixedTodoSelectable(todoAll - 1 === todoCompleted ? true : false);
   }, [bucket]);
 
   useEffect(() => {
@@ -45,10 +42,20 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     handleFileUpdate();
   };
 
+  // 버킷 리스트 get
+  const fetchBucket = async () => {
+    try {
+      await bucketApi.getBuckets();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // title 수정
   const handleTitleChange = (e) => {
     const { name, value } = e.target;
     setInputData((prev) => ({ ...prev, [name]: value }));
+    handleTitleUpdate();
   };
 
   // title 업데이트
@@ -58,6 +65,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
 
     try {
       await bucketApi.updateBucket(id, formData);
+      await fetchBucket();
     } catch (error) {
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
@@ -69,8 +77,6 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
 
       modalOpen(modalData);
     }
-
-    fetchBuckets();
   };
 
   // image 수정
@@ -275,7 +281,6 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
           fixedTodoId={fixedTodoId}
           modalOpen={modalOpen}
           modalClose={modalClose}
-          isFixedTodoSelectable={isFixedTodoSelectable}
         />
       </section>
     </>

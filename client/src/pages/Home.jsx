@@ -9,7 +9,6 @@ import Modal from '../components/Modal';
 import errorMessages from '../config/errorMessages';
 
 import bucketApi from '../api/bucketApi';
-import todoApi from '../api/todoApi';
 import styles from '../styles/pages/Home.module.css';
 import Skeleton from 'react-loading-skeleton';
 
@@ -19,7 +18,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const [bucketList, setBucketList] = useState([]);
   const [newBucket, setNewBucket] = useState(null);
-  const [newTodo, setNewTodo] = useState(null);
 
   // 0: 모두, 1: 진행중, 2: 완료
   const [activeIndex, setActiveIndex] = useState(0);
@@ -44,7 +42,7 @@ export default function Home() {
   // 버킷 리스트 get
   useEffect(() => {
     fetchBuckets();
-  }, [activeIndex, newBucket, newTodo]);
+  }, [activeIndex, newBucket]);
 
   // 로딩 1초 이상일 때 스켈레톤 실행
   useEffect(() => {
@@ -86,11 +84,9 @@ export default function Home() {
 
       const bucketResponse = await bucketApi.createBucket();
       const bucketId = bucketResponse.data.id;
-      const todoResponse = await todoApi.createTodo(bucketId);
 
       dispatch(createBucket({ bucketId }));
       setNewBucket(bucketResponse);
-      setNewTodo(todoResponse);
     } catch (error) {
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
