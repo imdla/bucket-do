@@ -3,7 +3,16 @@ import todoApi from '../api/todoApi';
 import styles from '../styles/components/Todo.module.css';
 import errorMessages from '../config/errorMessages';
 
-export default function Todo({ bucketId, fetchTodo, todo, isFixed, modalOpen, modalClose }) {
+export default function Todo({
+  bucketId,
+  fetchTodo,
+  todo,
+  isFixed,
+  isCompleted,
+  setIsCompleted,
+  modalOpen,
+  modalClose,
+}) {
   const { id, content, checkCompleted } = todo;
   const [formData, setFormData] = useState({
     content: content.slice(0, 4) == 'null' ? '완료' : content,
@@ -13,6 +22,13 @@ export default function Todo({ bucketId, fetchTodo, todo, isFixed, modalOpen, mo
   useEffect(() => {
     updateTodo();
   }, [formData]);
+
+  // 최종 완료 투두가 완료되었는지 확인
+  useEffect(() => {
+    if (isFixed && checkCompleted) {
+      setIsCompleted(true);
+    }
+  }, []);
 
   // 투두 리스트 get
   const fetchTodos = async () => {
@@ -57,15 +73,27 @@ export default function Todo({ bucketId, fetchTodo, todo, isFixed, modalOpen, mo
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // 체크박스 표시
+  const changeCheckbox = (e) => {
+    modalClose(true);
+    const isChecked = e.target.checked;
+
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: isFixed ? true : isChecked,
+    }));
+
+    if (isFixed) {
+      setIsCompleted(true);
+    }
+  };
+
   // 체크박스 수정
   const handleChangeCheckbox = async (e) => {
     const isChecked = e.target.checked;
 
     if (!isFixed) {
-      setFormData((prev) => ({
-        ...prev,
-        [e.target.name]: isChecked,
-      }));
+      changeCheckbox(e);
     }
 
     try {
@@ -77,10 +105,13 @@ export default function Todo({ bucketId, fetchTodo, todo, isFixed, modalOpen, mo
 
       if (isChecked && isFixed) {
         if (allAmount - 1 === completedAmount) {
-          setFormData((prev) => ({
-            ...prev,
-            [e.target.name]: isChecked,
-          }));
+          modalOpen({
+            content: `최종 완료 투두를 체크하실 경우, 버킷은 완료되어 해당 버킷에 대한 투두 리스트를 추가할 수 없습니다.
+            최종 완료를 체크하시겠습니까?`,
+            cancelText: '취소',
+            confirmText: '확인',
+            onConfirm: () => changeCheckbox(e),
+          });
         } else {
           modalOpen({
             content: '모든 투두 리스트가 완료되어야 체크 가능합니다.',
@@ -140,6 +171,7 @@ export default function Todo({ bucketId, fetchTodo, todo, isFixed, modalOpen, mo
           name="checkCompleted"
           onChange={handleChangeCheckbox}
           checked={formData.checkCompleted}
+          disabled={isCompleted}
         />
 
         <input
@@ -151,13 +183,14 @@ export default function Todo({ bucketId, fetchTodo, todo, isFixed, modalOpen, mo
           value={isFixed ? (todo.content.slice(0, 4) == 'null' ? '완료' : todo.content) : ''}
           onChange={handleChangeContent}
           onBlur={updateTodo}
-          disabled={isFixed}
+          disabled={isFixed || isCompleted}
         />
       </form>
 
       <button
         className={isFixed ? styles.fixedTodoButton : styles.deleteButton}
         onClick={handleDeleteTodo}
+        style={isCompleted ? { display: 'none' } : {}}
       >
         <img src="/assets/icon-close.png" alt="닫기 아이콘" />
       </button>

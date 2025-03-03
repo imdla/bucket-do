@@ -13,6 +13,7 @@ export default function TodoList({
   modalClose,
 }) {
   const [todoList, setTodoList] = useState([]);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
     fetchTodos();
@@ -67,6 +68,8 @@ export default function TodoList({
               fetchTodo={fetchTodos}
               todo={todo}
               isFixed={isFixed}
+              isCompleted={isCompleted}
+              setIsCompleted={setIsCompleted}
               modalOpen={modalOpen}
               modalClose={modalClose}
             />
@@ -95,7 +98,11 @@ export default function TodoList({
   return (
     <div style={containerStyle} className={styles.container}>
       <ul>{todos}</ul>
-      <button className={styles.createButton} onClick={handleCreate}>
+      <button
+        style={isCompleted ? { display: 'none' } : {}}
+        className={styles.createButton}
+        onClick={handleCreate}
+      >
         <img src="/assets/icon-plus.png" alt="더하기 아이콘" />
       </button>
     </div>

@@ -27,6 +27,8 @@
 
 .container p {
   color: var(--bg-100);
+  line-height: 1.5;
+  white-space: pre-wrap;
 }
 
 .container .buttonBox {
