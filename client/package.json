@@ -13,10 +13,12 @@
     "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.7.9",
     "react": "^19.0.0",
+    "react-confetti": "^6.4.0",
     "react-dom": "^19.0.0",
     "react-loading-skeleton": "^3.5.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.2.0"
+    "react-router-dom": "^7.2.0",
+    "react-use": "^17.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

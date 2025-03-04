@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import todoApi from '../api/todoApi';
 import styles from '../styles/components/Todo.module.css';
 import errorMessages from '../config/errorMessages';
+import ConfettiEffect from '../components/ConfettiEffect';
 
 export default function Todo({
   bucketId,
@@ -19,16 +20,34 @@ export default function Todo({
     checkCompleted: checkCompleted,
   });
 
+  // 폭죽효과 스테이트
+  const [explode, setExplode] = useState(false);
+
   useEffect(() => {
     updateTodo();
   }, [formData]);
+
+  // 버킷 리스트 완료시 폭죽 효과
+  useEffect(() => {
+    if (explode) {
+      modalOpen({
+        content: '🎉 축하합니다! 모든 투두가 완료되었습니다. 🎉',
+        cancelText: '확인',
+      });
+
+      setTimeout(() => {
+        setExplode(false);
+        modalClose();
+      }, 3000);
+    }
+  }, [explode]);
 
   // 최종 완료 투두가 완료되었는지 확인
   useEffect(() => {
     if (isFixed && checkCompleted) {
       setIsCompleted(true);
     }
-  }, []);
+  }, [checkCompleted, isFixed]);
 
   // 투두 리스트 get
   const fetchTodos = async () => {
@@ -110,7 +129,10 @@ export default function Todo({
             최종 완료를 체크하시겠습니까?`,
             cancelText: '취소',
             confirmText: '확인',
-            onConfirm: () => changeCheckbox(e),
+            onConfirm: () => {
+              changeCheckbox(e);
+              setExplode(true);
+            },
           });
         } else {
           modalOpen({
@@ -164,36 +186,41 @@ export default function Todo({
   };
 
   return (
-    <div className={styles.todo}>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="checkbox"
-          name="checkCompleted"
-          onChange={handleChangeCheckbox}
-          checked={formData.checkCompleted}
-          disabled={isCompleted}
-        />
+    <>
+      <div className={styles.todo}>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="checkbox"
+            name="checkCompleted"
+            onChange={handleChangeCheckbox}
+            checked={formData.checkCompleted}
+            disabled={isCompleted}
+          />
 
-        <input
-          id="content"
-          type="text"
-          name="content"
-          placeholder="투두 리스트 내용을 입력해주세요"
-          required
-          value={isFixed ? (todo.content.slice(0, 4) == 'null' ? '완료' : todo.content) : ''}
-          onChange={handleChangeContent}
-          onBlur={updateTodo}
-          disabled={isFixed || isCompleted}
-        />
-      </form>
+          <input
+            id="content"
+            type="text"
+            name="content"
+            placeholder="투두 리스트 내용을 입력해주세요"
+            required
+            value={isFixed ? (todo.content.slice(0, 4) == 'null' ? '완료' : todo.content) : ''}
+            onChange={handleChangeContent}
+            onBlur={updateTodo}
+            disabled={isFixed || isCompleted}
+          />
+        </form>
 
-      <button
-        className={isFixed ? styles.fixedTodoButton : styles.deleteButton}
-        onClick={handleDeleteTodo}
-        style={isCompleted ? { display: 'none' } : {}}
-      >
-        <img src="/assets/icon-close.png" alt="닫기 아이콘" />
-      </button>
-    </div>
+        <button
+          className={isFixed ? styles.fixedTodoButton : styles.deleteButton}
+          onClick={handleDeleteTodo}
+          style={isCompleted ? { display: 'none' } : {}}
+        >
+          <img src="/assets/icon-close.png" alt="닫기 아이콘" />
+        </button>
+      </div>
+
+      {/* ConfettiEffect 컴포넌트 렌더링 */}
+      {explode && <ConfettiEffect trigger={explode} />}
+    </>
   );
 }
