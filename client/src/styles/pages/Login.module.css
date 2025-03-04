@@ -8,6 +8,10 @@
   flex-direction: column;
 }
 
+.container > div {
+  width: 100%;
+}
+
 /* intro */
 .container .intro,
 .container form input {
