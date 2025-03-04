@@ -164,6 +164,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
 
   // 이미지 삭제
   const deleteImage = async () => {
+    modalClose(true);
     setImageUrl(null);
 
     try {
