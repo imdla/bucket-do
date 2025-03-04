@@ -16,6 +16,14 @@ const authApi = {
     return response.data;
   },
 
+  // 로그아웃
+  logout: async () => {
+    const response = await api.post(`${ENDPOINT}/logout`, {
+      credentials: 'include',
+    });
+    return response;
+  },
+
   // 인증
   verify: async () => {
     const response = await api.get(`${ENDPOINT}/verify`);
