@@ -5,16 +5,19 @@ import com.example.api.domain.user.dto.request.RefreshTokenRequestDto;
 import com.example.api.domain.user.dto.request.SignupRequestDto;
 import com.example.api.domain.user.dto.response.LoginResponseDto;
 import com.example.api.domain.user.dto.response.SignupResponseDto;
+import com.example.api.domain.user.dto.response.TokenResponseDto;
 import com.example.api.domain.user.entity.RefreshToken;
 import com.example.api.domain.user.entity.User;
 import com.example.api.domain.user.repository.RefreshTokenRepository;
 import com.example.api.domain.user.repository.UserRepository;
+import com.example.api.global.exception.RefreshTokenNotFoundException;
 import com.example.api.global.exception.ResourceNotFoundException;
 import com.example.api.global.security.jwt.JwtTokenProvider;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,9 +30,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AuthService {
 
@@ -69,10 +71,10 @@ public class AuthService {
         }
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        requestDto.getUsername(),
-                        requestDto.getPassword()
-                )
+            new UsernamePasswordAuthenticationToken(
+                requestDto.getUsername(),
+                requestDto.getPassword()
+            )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -82,7 +84,7 @@ public class AuthService {
         String refreshToken = jwtTokenProvider.createRefreshToken(authentication);
 
         User user = userRepository.findByUsername(requestDto.getUsername())
-                .orElseThrow(() -> new ResourceNotFoundException("일치하는 사용자를 찾을 수 없습니다."));
+            .orElseThrow(() -> new ResourceNotFoundException("일치하는 사용자를 찾을 수 없습니다."));
 
         refreshTokenService.saveOrUpdateRefreshToken(user, refreshToken);
 
@@ -91,8 +93,9 @@ public class AuthService {
         return LoginResponseDto.from(user, accessToken, refreshToken);
     }
 
-    private void addCookie(HttpServletResponse response, String username, String value, int maxAge) {
-        Cookie cookie = new Cookie(username, value);
+    private void addCookie(HttpServletResponse response, String token, String value,
+        int maxAge) {
+        Cookie cookie = new Cookie(token, value);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setPath("/");
@@ -114,21 +117,52 @@ public class AuthService {
             throw new ExpiredJwtException(null, null, "refresh token이 만료되었습니다.");
         }
 
-        // 리프레시 토큰이 유효한지(위조되지 않았는지) 검증
+        // 리프레시 토큰이 유효한지, 위조되지 않았는지 검증
         if (!jwtTokenProvider.validateToken(refreshToken)) {
             throw new JwtException("refresh token이 위조되었거나 유효하지 않습니다.");
         }
 
-        // DB에 해당 리프레시 토큰이 존재하는지 검증
-        Optional<RefreshToken> storedRefreshToken = refreshTokenRepository.findByToken(
-                refreshToken);
+        // 리프레시 토큰 유효성 검사 (DB에 저장한 리프레시 토큰과 비교)
+        Optional<RefreshToken> storedRefreshToken = refreshTokenService.getRefreshToken(
+            refreshToken);
 
         if (storedRefreshToken.isEmpty()) {
-            throw new ResourceNotFoundException("일치하는 refresh token을 찾을 수 없습니다.");
+            throw new RefreshTokenNotFoundException("일치하는 refresh token을 찾을 수 없습니다.");
         }
 
         // 리프레시 토큰에 대한 유효성이 검증되었으면 DB에서 해당 리프레시 토큰을 삭제
         refreshTokenRepository.delete(storedRefreshToken.get());
+    }
+
+    @Transactional
+    public TokenResponseDto createNewAccessToken(String refreshToken) {
+        // 요청에 리프레시 토큰이 포함되었는지 검증
+        if (refreshToken == null || refreshToken.isEmpty()) {
+            throw new IllegalArgumentException("refresh token이 null 또는 빈 문자열로 입력되었습니다.");
+        }
+
+        // 리프레시 토큰이 만료되었는지 검증
+        if (jwtTokenProvider.validateTokenExpired(refreshToken)) {
+            throw new ExpiredJwtException(null, null, "refresh token이 만료되었습니다.");
+        }
+
+        // 리프레시 토큰이 유효한지, 위조되지 않았는지 검증
+        if (!jwtTokenProvider.validateToken(refreshToken)) {
+            throw new JwtException("refresh token이 위조되었거나 유효하지 않습니다.");
+        }
+
+        // 리프레시 토큰 유효성 검사 (DB에 저장한 리프레시 토큰과 비교)
+        Optional<RefreshToken> storedRefreshToken = refreshTokenService.getRefreshToken(
+            refreshToken);
+
+        if (storedRefreshToken.isEmpty()) {
+            throw new RefreshTokenNotFoundException("일치하는 refresh token을 찾을 수 없습니다.");
+        }
+
+        // 새로운 액세스 토큰 발급
+        String newAccessToken = refreshTokenService.generateNewAccessToken(refreshToken);
+
+        return new TokenResponseDto(newAccessToken);
     }
 
     public boolean checkUsername(String username) {

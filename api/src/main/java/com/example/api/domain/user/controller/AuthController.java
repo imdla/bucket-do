@@ -6,6 +6,7 @@ import com.example.api.domain.user.dto.request.RefreshTokenRequestDto;
 import com.example.api.domain.user.dto.request.SignupRequestDto;
 import com.example.api.domain.user.dto.response.LoginResponseDto;
 import com.example.api.domain.user.dto.response.SignupResponseDto;
+import com.example.api.domain.user.dto.response.TokenResponseDto;
 import com.example.api.domain.user.service.AuthService;
 import com.example.api.global.response.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,7 +14,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
@@ -24,36 +31,36 @@ public class AuthController {
 
     @PostMapping("/auth/signup")
     public ResponseEntity<ApiResponse<SignupResponseDto>> signup(
-            @Valid @RequestBody SignupRequestDto requestDto) {
+        @Valid @RequestBody SignupRequestDto requestDto) {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(ApiResponse.ok(
-                        "유저가 정상적으로 생성되었습니다.",
-                        "CREATED",
-                        authService.signup(requestDto)
-                ));
+            .status(HttpStatus.CREATED)
+            .body(ApiResponse.ok(
+                "유저가 정상적으로 생성되었습니다.",
+                "CREATED",
+                authService.signup(requestDto)
+            ));
     }
 
     @PostMapping("/auth/login")
     public ResponseEntity<ApiResponse<LoginResponseDto>> login(
-            @Valid @RequestBody LoginRequestDto requestDto,
-            HttpServletResponse response
+        @Valid @RequestBody LoginRequestDto requestDto,
+        HttpServletResponse response
     ) {
         return ResponseEntity.ok(ApiResponse.ok(
-                "로그인 정상 성공",
-                "OK",
-                authService.login(requestDto, response)
+            "로그인 정상 성공",
+            "OK",
+            authService.login(requestDto, response)
         ));
     }
 
     @PostMapping("/auth/logout")
     public ResponseEntity<ApiResponse<Void>> logout(
-            @RequestBody RefreshTokenRequestDto requestDto) {
+        @RequestBody RefreshTokenRequestDto requestDto) {
 
         authService.logout(requestDto);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(ApiResponse.ok("로그아웃되었습니다.", "NO_CONTENT", null));
+            .body(ApiResponse.ok("로그아웃되었습니다.", "NO_CONTENT", null));
     }
 
     // 단순히 JWT 검증을 위한 endpoint
@@ -68,5 +75,14 @@ public class AuthController {
         String message = isAvailable ? "사용 가능한 아이디입니다." : "이미 사용 중인 아이디입니다.";
 
         return ResponseEntity.ok(new UsernameCheckResponseDto(message, isAvailable));
+    }
+
+    // 액세스 토큰 재발급
+    @PostMapping("/auth/reissuance")
+    public ResponseEntity<ApiResponse<TokenResponseDto>> createNewAccessToken(
+        @RequestHeader("Refresh") String refreshToken) {
+        return ResponseEntity.ok(
+            ApiResponse.ok("access token이 재발급되었습니다.", "OK",
+                authService.createNewAccessToken(refreshToken)));
     }
 }
