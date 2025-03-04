@@ -182,7 +182,7 @@ export default function Home() {
         </section>
 
         <button className={styles.createButton} onClick={handleCreateBucket}>
-          생성
+          <img src="/assets/icon-plus.png" alt="더하기 아이콘 이미지" />
         </button>
 
         <Footer />
