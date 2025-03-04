@@ -145,10 +145,20 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenResponseDto createNewAccessToken(String refreshToken,
-        HttpServletResponse response) {
+    public TokenResponseDto createNewAccessToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            throw new IllegalArgumentException("refresh token이 없습니다.");
+        }
+
+        String refreshToken = Arrays.stream(cookies)
+            .filter(cookie -> "refreshToken".equals(cookie.getName()))
+            .map(Cookie::getValue)
+            .findFirst()
+            .orElse(null);
+
         // 요청에 리프레시 토큰이 포함되었는지 검증
-        if (refreshToken == null || refreshToken.isEmpty()) {
+        if (refreshToken == null) {
             throw new IllegalArgumentException("refresh token이 null 또는 빈 문자열로 입력되었습니다.");
         }
 
@@ -172,8 +182,6 @@ public class AuthService {
 
         // 새로운 액세스 토큰 발급
         String newAccessToken = refreshTokenService.generateNewAccessToken(refreshToken);
-
-        addCookie(response, "accessToken", newAccessToken, 60 * 60);
 
         return new TokenResponseDto(newAccessToken);
     }

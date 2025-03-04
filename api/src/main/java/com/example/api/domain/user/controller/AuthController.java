@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,9 +78,9 @@ public class AuthController {
     // 액세스 토큰 재발급
     @PostMapping("/auth/reissuance")
     public ResponseEntity<ApiResponse<TokenResponseDto>> createNewAccessToken(
-        @RequestHeader("Refresh") String refreshToken, HttpServletResponse response) {
+        HttpServletRequest request) {
         return ResponseEntity.ok(
             ApiResponse.ok("access token이 재발급되었습니다.", "OK",
-                authService.createNewAccessToken(refreshToken, response)));
+                authService.createNewAccessToken(request)));
     }
 }
