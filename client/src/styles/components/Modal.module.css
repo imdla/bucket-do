@@ -22,19 +22,21 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  box-sizing: border-box;
   z-index: 999;
 }
 
 .container p {
   color: var(--bg-100);
   line-height: 1.5;
-  white-space: pre-wrap;
+  white-space: pre-line;
+  text-align: center;
 }
 
 .container .buttonBox {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   margin-top: var(--margin-medium);
 }
 
@@ -47,7 +49,32 @@
   z-index: 1000;
 }
 
+.container .buttonBox button:last-child {
+  margin-left: 1rem;
+}
+
 .container .buttonBox button:hover {
   box-shadow: 0 0 5px var(--bg-300);
   background-color: var(--bg-300);
+}
+
+@media (max-width: 1024px) {
+  .container {
+    width: var(--width-container-basic);
+    padding: 3rem 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: var(--width-container-moderate);
+    padding: 3rem 4rem;
+  }
+}
+
+@media (max-width: 580px) {
+  .container {
+    width: var(--width-container-medium);
+    padding: 3rem 4rem;
+  }
 }
