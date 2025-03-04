@@ -1,6 +1,7 @@
 import axios from 'axios';
 import store from '../store/store';
 import { logout, updateTokens } from '../store/slices/authSlice';
+import authApi from './authApi';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -28,11 +29,15 @@ api.interceptors.response.use(
     if (error.response.status === 403) {
       // 토큰 갱신 요청
       try {
-        const data = await axios.post(`${import.meta.env.VITE_API_URL}/auth/reissuance`);
-        store.dispatch(updateTokens({ accessToken: data.accessToken }));
-        axios.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+        const response = await api.post(`${import.meta.env.VITE_API_URL}/auth/reissuance`, {
+          credentials: 'include',
+        });
+        const accessToken = response.data.data.accessToken;
 
-        return axios(error.config);
+        store.dispatch(updateTokens({ accessToken }));
+        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
+        return await api.get(`${import.meta.env.VITE_API_URL}/buckets`);
       } catch (refreshError) {
         store.dispatch(logout());
         return Promise.reject(refreshError);
