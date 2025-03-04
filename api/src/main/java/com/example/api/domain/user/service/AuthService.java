@@ -27,6 +27,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,7 +62,7 @@ public class AuthService {
     @Transactional
     public LoginResponseDto login(LoginRequestDto requestDto, HttpServletResponse response) {
         if (!userRepository.existsByUsername(requestDto.getUsername())) {
-            throw new ResourceNotFoundException("일치하는 아이디를 찾을 수 없습니다.");
+            throw new UsernameNotFoundException("일치하는 아이디를 찾을 수 없습니다.");
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(requestDto.getUsername());
