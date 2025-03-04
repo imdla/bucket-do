@@ -2,13 +2,13 @@ package com.example.api.domain.user.controller;
 
 import com.example.api.domain.bucket.dto.response.UsernameCheckResponseDto;
 import com.example.api.domain.user.dto.request.LoginRequestDto;
-import com.example.api.domain.user.dto.request.RefreshTokenRequestDto;
 import com.example.api.domain.user.dto.request.SignupRequestDto;
 import com.example.api.domain.user.dto.response.LoginResponseDto;
 import com.example.api.domain.user.dto.response.SignupResponseDto;
 import com.example.api.domain.user.dto.response.TokenResponseDto;
 import com.example.api.domain.user.service.AuthService;
 import com.example.api.global.response.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -54,8 +54,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth/logout")
-    public ResponseEntity<ApiResponse<Void>> logout(
-        @RequestBody RefreshTokenRequestDto requestDto) {
+    public ResponseEntity<ApiResponse<Void>> logout(HttpServletRequest requestDto) {
 
         authService.logout(requestDto);
 

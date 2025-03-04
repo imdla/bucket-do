@@ -1,7 +1,6 @@
 package com.example.api.domain.user.service;
 
 import com.example.api.domain.user.dto.request.LoginRequestDto;
-import com.example.api.domain.user.dto.request.RefreshTokenRequestDto;
 import com.example.api.domain.user.dto.request.SignupRequestDto;
 import com.example.api.domain.user.dto.response.LoginResponseDto;
 import com.example.api.domain.user.dto.response.SignupResponseDto;
@@ -16,7 +15,9 @@ import com.example.api.global.security.jwt.JwtTokenProvider;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -104,8 +105,17 @@ public class AuthService {
     }
 
     @Transactional
-    public void logout(RefreshTokenRequestDto requestDto) {
-        String refreshToken = requestDto.getRefreshToken();
+    public void logout(HttpServletRequest requestDto) {
+        Cookie[] cookies = requestDto.getCookies();
+        if (cookies == null) {
+            throw new IllegalArgumentException("refresh token이 없습니다.");
+        }
+
+        String refreshToken = Arrays.stream(cookies)
+            .filter(cookie -> "refreshToken".equals(cookie.getName()))
+            .map(Cookie::getValue)
+            .findFirst()
+            .orElse(null);
 
         // 요청에 리프레시 토큰이 포함되었는지 검증
         if (refreshToken == null || refreshToken.isEmpty()) {
