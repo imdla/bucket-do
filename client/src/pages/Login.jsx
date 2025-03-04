@@ -10,7 +10,7 @@ import errorMessages from '../config/errorMessages';
 
 import 'react-loading-skeleton/dist/skeleton.css';
 import Skeleton from 'react-loading-skeleton';
-
+import KakaoLoginButton from '../components/KakaoLoginButton';
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,11 +28,18 @@ export default function Login() {
     onConfirm: false,
   });
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem('kakao_access_token');
+    if (accessToken) {
+      navigate('/');
+    }
+  }, [navigate]);
+
   // 로딩 1초 이상일 때 스켈레톤 표시
   useEffect(() => {
     let timeout;
     if (isLoading) {
-      timeout = setTimeout(() => setShowSkeleton(true), 1000); // ⬅️ 1초 후에 스켈레톤 표시
+      timeout = setTimeout(() => setShowSkeleton(true), 100); // ⬅️ 1초 후에 스켈레톤 표시
     } else {
       setShowSkeleton(false);
     }
@@ -140,6 +147,10 @@ export default function Login() {
           </>
         </div>
       )}
+
+      <div>
+        <KakaoLoginButton />
+      </div>
     </div>
   );
 }

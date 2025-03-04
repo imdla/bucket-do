@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import Main from '../pages/Main';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
+import KakaoLoginRedirect from '../components/KakaoLoginRedirect ';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <Signup />,
+      },
+      {
+        path: '/redirect', // 카카오 로그인 후 리디렉션되는 URL
+        element: <KakaoLoginRedirect />,
       },
     ],
   },
