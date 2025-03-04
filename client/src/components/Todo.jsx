@@ -203,7 +203,13 @@ export default function Todo({
             name="content"
             placeholder="투두 리스트 내용을 입력해주세요"
             required
-            value={isFixed ? (todo.content.slice(0, 4) == 'null' ? '완료' : todo.content) : ''}
+            value={
+              isFixed
+                ? todo.content.slice(0, 4) == 'null'
+                  ? '완료'
+                  : todo.content
+                : formData.content
+            }
             onChange={handleChangeContent}
             onBlur={updateTodo}
             disabled={isFixed || isCompleted}
