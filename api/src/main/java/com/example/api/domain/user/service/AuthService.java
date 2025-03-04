@@ -13,7 +13,8 @@ import com.example.api.global.exception.ResourceNotFoundException;
 import com.example.api.global.security.jwt.JwtTokenProvider;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
-import java.util.Optional;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +26,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,7 +56,7 @@ public class AuthService {
     }
 
     @Transactional
-    public LoginResponseDto login(LoginRequestDto requestDto) {
+    public LoginResponseDto login(LoginRequestDto requestDto, HttpServletResponse response) {
         if (!userRepository.existsByUsername(requestDto.getUsername())) {
             throw new ResourceNotFoundException("일치하는 아이디를 찾을 수 없습니다.");
         }
@@ -66,10 +69,10 @@ public class AuthService {
         }
 
         Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                requestDto.getUsername(),
-                requestDto.getPassword()
-            )
+                new UsernamePasswordAuthenticationToken(
+                        requestDto.getUsername(),
+                        requestDto.getPassword()
+                )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -79,11 +82,22 @@ public class AuthService {
         String refreshToken = jwtTokenProvider.createRefreshToken(authentication);
 
         User user = userRepository.findByUsername(requestDto.getUsername())
-            .orElseThrow(() -> new ResourceNotFoundException("일치하는 사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("일치하는 사용자를 찾을 수 없습니다."));
 
         refreshTokenService.saveOrUpdateRefreshToken(user, refreshToken);
 
+        addCookie(response, "refreshToken", refreshToken, 7 * 24 * 60 * 60);
+
         return LoginResponseDto.from(user, accessToken, refreshToken);
+    }
+
+    private void addCookie(HttpServletResponse response, String username, String value, int maxAge) {
+        Cookie cookie = new Cookie(username, value);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(maxAge);
+        response.addCookie(cookie);
     }
 
     @Transactional
@@ -107,7 +121,7 @@ public class AuthService {
 
         // DB에 해당 리프레시 토큰이 존재하는지 검증
         Optional<RefreshToken> storedRefreshToken = refreshTokenRepository.findByToken(
-            refreshToken);
+                refreshToken);
 
         if (storedRefreshToken.isEmpty()) {
             throw new ResourceNotFoundException("일치하는 refresh token을 찾을 수 없습니다.");
