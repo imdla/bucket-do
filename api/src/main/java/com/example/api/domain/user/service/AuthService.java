@@ -135,7 +135,8 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenResponseDto createNewAccessToken(String refreshToken) {
+    public TokenResponseDto createNewAccessToken(String refreshToken,
+        HttpServletResponse response) {
         // 요청에 리프레시 토큰이 포함되었는지 검증
         if (refreshToken == null || refreshToken.isEmpty()) {
             throw new IllegalArgumentException("refresh token이 null 또는 빈 문자열로 입력되었습니다.");
@@ -161,6 +162,8 @@ public class AuthService {
 
         // 새로운 액세스 토큰 발급
         String newAccessToken = refreshTokenService.generateNewAccessToken(refreshToken);
+
+        addCookie(response, "accessToken", newAccessToken, 60 * 60);
 
         return new TokenResponseDto(newAccessToken);
     }

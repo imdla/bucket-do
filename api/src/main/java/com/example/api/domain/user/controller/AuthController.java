@@ -80,9 +80,9 @@ public class AuthController {
     // 액세스 토큰 재발급
     @PostMapping("/auth/reissuance")
     public ResponseEntity<ApiResponse<TokenResponseDto>> createNewAccessToken(
-        @RequestHeader("Refresh") String refreshToken) {
+        @RequestHeader("Refresh") String refreshToken, HttpServletResponse response) {
         return ResponseEntity.ok(
             ApiResponse.ok("access token이 재발급되었습니다.", "OK",
-                authService.createNewAccessToken(refreshToken)));
+                authService.createNewAccessToken(refreshToken, response)));
     }
 }
