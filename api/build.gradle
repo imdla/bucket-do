@@ -45,6 +45,9 @@ dependencies {
 
     // AWS S3 의존성
     implementation 'software.amazon.awssdk:s3:2.20.12'
+
+    //Oauth2-client 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 tasks.named('test') {
