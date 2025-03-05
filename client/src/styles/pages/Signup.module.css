@@ -108,7 +108,13 @@
 .container form .signupButton {
   text-align: center;
   padding: var(--round-medium-button);
-  background-color: var(--primary-100);
+  background-color: var(--accent-100);
+  border: 2px solid transparent;
+}
+
+.container form .signupButton:hover {
+  border: 2px solid var(--accent-100);
+  background-color: var(--bg-100);
 }
 
 /* passwordConfirmed */

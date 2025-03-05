@@ -47,7 +47,7 @@
 }
 
 .container .filter button.active {
-  background-color: var(--primary-100);
+  background-color: var(--accent-100);
 }
 
 /* bucketList */
@@ -87,7 +87,7 @@
 
 .createButton img {
   width: 28px;
-  filter: invert(100%) sepia(52%) saturate(20%) hue-rotate(315deg) brightness(103%) contrast(108%);
+  /* filter: invert(100%) sepia(52%) saturate(20%) hue-rotate(315deg) brightness(103%) contrast(108%); */
   transition: var(--transition-3);
 }
 

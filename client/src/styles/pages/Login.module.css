@@ -76,14 +76,17 @@
   width: 45%;
   border: none;
   cursor: pointer;
-  font-size: var(--font-size-16);
-  background-color: var(--primary-100);
-  border-radius: var(--border-radius-30);
   padding: var(--round-medium-button);
+  font-size: var(--font-size-16);
+  background-color: var(--accent-100);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-30);
   box-shadow: var(--box-shadow-basic);
   transition: var(--transition-3);
 }
 .container form button:hover {
+  border: 2px solid var(--accent-100);
+  background-color: var(--bg-100);
   box-shadow: var(--box-shadow-hover);
   transform: translateY(-1px);
 }
