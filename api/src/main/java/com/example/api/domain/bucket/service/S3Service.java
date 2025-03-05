@@ -1,6 +1,5 @@
 package com.example.api.domain.bucket.service;
 
-import com.example.api.global.exception.FileManageException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
@@ -60,7 +59,7 @@ public class S3Service {
             s3Client.putObject(putObjectRequest,
                 RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
         } catch (IOException e) {
-            throw new FileManageException(e.getMessage());
+            throw new RuntimeException("파일 업로드 실패 : " + e.getMessage());
         }
     }
 
@@ -74,7 +73,7 @@ public class S3Service {
 
             s3Client.deleteObject(deleteObjectRequest);
         } catch (Exception e) {
-            throw new FileManageException(e.getMessage());
+            throw new RuntimeException("파일 삭제 실패 : " + e.getMessage());
         }
     }
 }

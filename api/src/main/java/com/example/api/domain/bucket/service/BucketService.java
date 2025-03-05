@@ -9,9 +9,12 @@ import com.example.api.domain.todo.entity.Todo;
 import com.example.api.domain.todo.repository.TodoRepository;
 import com.example.api.domain.todo.service.TodoService;
 import com.example.api.domain.user.entity.User;
+import com.example.api.global.exception.FileManageException;
 import com.example.api.global.exception.ResourceNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,11 @@ public class BucketService {
     private final S3Service s3Service;
     private final TodoRepository todoRepository;
     private final TodoService todoService;
+
+    // 파일 확장자 추출 메서드
+    private static String getFileExtension(String filename) {
+        return filename.substring(filename.lastIndexOf(".") + 1);
+    }
 
     public List<BucketResponseDto> getBuckets(User user) {
         return bucketRepository.findAllByUserId(user.getId()).stream()
@@ -63,6 +71,29 @@ public class BucketService {
             bucket.update(requestDto.getTitle(), bucket.getImageUrl(), bucket.getS3Key(), null);
 
             return BucketUpdateResponseDto.from(bucket);
+        }
+
+        // 허용할 이미지 확장자 목록
+        List<String> ALLOWED_EXTENSIONS = Arrays.asList("jpg", "jpeg", "png",
+            "gif", "webp");
+
+        // 허용할 이미지 MIME 타입 목록
+        List<String> ALLOWED_MIME_TYPES = Arrays.asList("image/jpeg",
+            "image/png", "image/gif", "image/webp");
+
+        // 파일 확장자 검사
+        String originalFilename = Objects.requireNonNull(
+            requestDto.getFile().getOriginalFilename());
+        String extension = getFileExtension(originalFilename);
+        if (!ALLOWED_EXTENSIONS.contains(extension.toLowerCase())) {
+            throw new FileManageException("이미지 파일(jpg, jpeg, png, gif, webp)만 업로드 가능합니다");
+        }
+
+        // MIME 타입 검사
+        String mimeType = requestDto.getFile().getContentType();
+        if (mimeType == null || !ALLOWED_MIME_TYPES.contains(mimeType.toLowerCase())) {
+            throw new FileManageException(
+                "이미지 파일(image/jpeg, image/png, image/gif, image/webp)만 업로드 가능합니다");
         }
 
         // 이미지 파일을 첨부한 경우 (기존 이미지 삭제 후 업로드)

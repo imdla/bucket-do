@@ -22,8 +22,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FileManageException.class)
     public ResponseEntity<ApiResponse<Void>> handleFileUpload(FileManageException ex) {
         return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ApiResponse.error(ex.getMessage(), "INTERNAL_SERVER_ERROR"));
+            .status(HttpStatus.BAD_REQUEST)
+            .body(ApiResponse.error(ex.getMessage(), "BAD_REQUEST"));
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
