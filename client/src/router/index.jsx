@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import MainLayout from '../Layout/MainLayout';
 import Home from '../pages/Home';
 import Main from '../pages/Main';
@@ -35,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: '/notfound',
         element: <NotFound />,
+      },
+      {
+        path: '*',
+        element: <Navigate to="/notfound" replace />,
       },
     ],
   },
