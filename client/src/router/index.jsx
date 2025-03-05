@@ -5,6 +5,7 @@ import Main from '../pages/Main';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import NotFound from '../pages/NotFound';
+import ProtectedRoute from '../components/ProtectedRoute';
 import KakaoLoginRedirect from '../components/KakaoLoginRedirect ';
 
 const router = createBrowserRouter([
@@ -18,7 +19,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/home',
-        element: <Home />,
+        element: (
+          <ProtectedRoute pathname={'/home'}>
+            <Home />,
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/login',
