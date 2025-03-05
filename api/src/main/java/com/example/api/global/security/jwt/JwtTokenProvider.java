@@ -57,6 +57,34 @@ public class JwtTokenProvider {
             .compact();
     }
 
+    public String createOAuth2AccessToken(String username) {
+        Claims claims = Jwts.claims().setSubject(username);
+
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + accessTokenValidity);
+
+        return Jwts.builder()
+            .setClaims(claims)
+            .setIssuedAt(now)
+            .setExpiration(validity)
+            .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256)
+            .compact();
+    }
+
+    public String createOAuth2RefreshToken(String username) {
+        Claims claims = Jwts.claims().setSubject(username);
+
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + refreshTokenValidity);
+
+        return Jwts.builder()
+            .setClaims(claims)
+            .setIssuedAt(now)
+            .setExpiration(validity)
+            .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256)
+            .compact();
+    }
+
     // 토큰이 위조 여부, 유효한지 여부 검증
     public boolean validateToken(String token) {
         try {
