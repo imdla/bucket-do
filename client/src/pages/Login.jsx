@@ -148,6 +148,7 @@ export default function Login() {
         </div>
       )}
 
+      {/* todo: 소셜 로그인 */}
       <div>
         <KakaoLoginButton />
       </div>
