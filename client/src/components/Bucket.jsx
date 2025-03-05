@@ -87,8 +87,24 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     const fileExtension = file.name.split('.').pop().toLowerCase();
 
+    if (file.name.includes(' ')) {
+      const modalData = {
+        content: '파일 이름에 공백(띄어쓰기)이 포함될 수 없습니다.',
+        cancelText: '확인',
+        onConfirm: false,
+      };
+      modalOpen(modalData);
+      e.target.value = '';
+      return;
+    }
+
     if (!file.type.startsWith('image/') || !allowedExtensions.includes(fileExtension)) {
-      alert('이미지 파일(jpg, jpeg, png, gif, webp)만 업로드 가능합니다!');
+      const modalData = {
+        content: '이미지 파일(jpg, jpeg, png, gif, webp)만 업로드 가능합니다.',
+        cancelText: '확인',
+        onConfirm: false,
+      };
+      modalOpen(modalData);
       e.target.value = '';
       return;
     }
