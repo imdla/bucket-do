@@ -82,6 +82,17 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
   // image 수정
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    if (!file) return;
+
+    const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+
+    if (!file.type.startsWith('image/') || !allowedExtensions.includes(fileExtension)) {
+      alert('이미지 파일(jpg, jpeg, png, gif, webp)만 업로드 가능합니다!');
+      e.target.value = '';
+      return;
+    }
+
     setInputData((prev) => ({ ...prev, file }));
 
     const reader = new FileReader();
@@ -205,6 +216,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
                   className={styles.imageInput}
                   type="file"
                   accept="image/*"
+                  loading="lazy"
                   ref={fileInputRef}
                   name="image_path"
                   onChange={handleFileChange}
