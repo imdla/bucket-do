@@ -2,6 +2,10 @@
 
 작심삼일러를 위한 "작은 실천으로 큰 목표 이루는" 기록 서비스 ✅
 
+![메인 이미지](assets/main.png)
+
+<br />
+
 [🔗 BucketDo 바로가기](https://3.38.150.0.sslip.io/)
 
 <br />
@@ -36,14 +40,22 @@
 
 ## ⚒️ 기술 스택
 
-- **Frontend** : React
-- **Backend** : Spring Boot 3.4.3, Java 21, MySQL 8, Gradle, Hibernate
+- **Frontend** : React 19, Redux 9.2, Axios 1.7
+- **Backend** : Spring Boot 3.4.3, Java 21, MySQL 8
 - **Infra** : Docker, AWS EC2, AWS S3, GitHub Action
 - **Tool** : Figma, Notion, Jira, GitHub
 
 <br />
 
 ## 🏗️ 아키텍처
+
+### 서비스 아키텍처
+
+![서비스 아키텍처](assets/service.png)
+
+### CI / CD
+
+![CI / CD](assets/ci_cd.png)
 
 ### ERD 설계도
 
@@ -59,7 +71,10 @@
 
 | Frontend | Frontend | Backend | Backend | Backend |
 | --- | --- | --- | --- | --- |
+| <img src="assets/member_sungjoon92.png" alt="원성준" width="150" /> | <img src="assets/member_imdla.png" alt="임수빈" width="150" /> | <img src="assets/member_ssdeok.png" alt="서승덕" width="150" /> | <img src="assets/member_steve0312.jpeg" alt="이상호" width="150" /> | <img src="assets/member_wag192625.jpg" alt="정명훈" width="150" /> |
 | [원성준](https://github.com/sungjoon92) | [임수빈](https://github.com/imdla) | [서승덕](https://github.com/ssdeok) | [이상호](https://github.com/steve0312) | [정명훈](https://github.com/wag192625) |
+
+
 
 <br />
 
