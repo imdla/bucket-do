@@ -30,12 +30,6 @@ jobs:
           echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> .env
           echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
           echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
-          echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> .env
-          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> .env
-          echo "SSH_HOST=${{ secrets.SSH_HOST }}" >> .env
-          echo "SSH_PORT=${{ secrets.SSH_PORT }}" >> .env
-          echo "SSH_USERNAME=${{ secrets.SSH_USERNAME }}" >> .env
-          echo "SSH_PRIVATE_KEY=${{ secrets.SSH_PRIVATE_KEY }}" >> .env
           echo "ACCESS_KEY=${{ secrets.ACCESS_KEY }}" >> .env
           echo "API_URL=${{ secrets.API_URL }}" >> .env
           echo "BUCKET_NAME=${{ secrets.BUCKET_NAME }}" >> .env
@@ -43,31 +37,31 @@ jobs:
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
           echo "REGION=${{ secrets.REGION }}" >> .env
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
-          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
           echo "ORIGIN=${{ secrets.ORIGIN }}" >> .env
           echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
           echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
 
       - name: echo .env
         run: cat .env
-      # - name: Add Remote Server Fingerprint to Known Hosts
-      #   run: ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts || true
+      - name: Add Remote Server Fingerprint to Known Hosts
+        run: ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts || true
 
-      # - name: Login DockerHub
-      #   run: echo '${{ secrets.DOCKER_PASSWORD}}' | docker login -u '${{ secrets.DOCKER_USERNAME }}' --password-stdin
+      - name: Login DockerHub
+        run: echo '${{ secrets.DOCKER_PASSWORD}}' | docker login -u '${{ secrets.DOCKER_USERNAME }}' --password-stdin
 
-      # - name: Set up Docker BuildKit
-      #   uses: docker/setup-buildx-action@v3
+      - name: Set up Docker BuildKit
+        uses: docker/setup-buildx-action@v3
 
-      # - name: Create Buildkit 빌더
-      #   run: |
-      #     docker buildx create --use --name buildkit-builder
+      - name: Create Buildkit 빌더
+        run: |
+          docker buildx create --use --name buildkit-builder
 
-      # - name: Docker Image Build
-      #   run: docker compose -f docker-compose.yml build
+      - name: Docker Image Build
+        run: docker compose -f docker-compose.yml build
 
-      # - name: Docker Image Push
-      #   run: docker compose -f docker-compose.yml push
+      - name: Docker Image Push
+        run: docker compose -f docker-compose.yml push
 
       - name: Copy .env / docker-compose.yml
         uses: appleboy/scp-action@v0.1.7
