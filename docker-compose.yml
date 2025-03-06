@@ -39,7 +39,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
-      args: 
+      args:
         - VITE_API_URL=${VITE_API_URL}
       cache_from:
         - type=local,src=/tmp/docker-cache/client
@@ -54,8 +54,8 @@ services:
     networks:
       - api-network
     volumes:
-      - /etc/letsencrypt/live/3.38.150.0.sslip.io/fullchain.pem:/etc/letsencrypt/live/3.38.150.0.sslip.io/fullchain.pem
-      - /etc/letsencrypt/live/3.38.150.0.sslip.io/privkey.pem:/etc/letsencrypt/live/3.38.150.0.sslip.io/privkey.pem
+      - /etc/letsencrypt/live/${DOMAIN}/fullchain.pem:/etc/letsencrypt/live/${DOMAIN}/fullchain.pem
+      - /etc/letsencrypt/live/${DOMAIN}/privkey.pem:/etc/letsencrypt/live/${DOMAIN}/privkey.pem
     depends_on:
       - db
       - api

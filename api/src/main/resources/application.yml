@@ -3,16 +3,16 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-        use_sql_comments: 'true'
-        format_sql: 'true'
+        use_sql_comments: "true"
+        format_sql: "true"
     hibernate:
       ddl-auto: update
-    show-sql: 'true'
+    show-sql: "true"
   application:
     name: api
   web:
     resources:
-      add-mappings: 'false'
+      add-mappings: "false"
   datasource:
     password: ${DATABASE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -88,7 +88,8 @@ logging:
             CommonsRequestLoggingFilter: DEBUG
 
 jwt:
-  secret: ${jwt_secret}
+  secret: ${JWT_SECRET}
+
 domain: ${DOMAIN}
 server:
-  port: '8080'
+  port: "8080"

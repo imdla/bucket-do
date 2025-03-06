@@ -3,6 +3,7 @@ name: deploy service
 on:
   push:
     branches:
+      - main
       - test/*
 
 jobs:
@@ -45,45 +46,47 @@ jobs:
           echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
           echo "ORIGIN=${{ secrets.ORIGIN }}" >> .env
 
-      - name: Add Remote Server Fingerprint to Known Hosts
-        run: ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts || true
+      - name: echo .env
+        run: cat .env
+      # - name: Add Remote Server Fingerprint to Known Hosts
+      #   run: ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts || true
 
-      - name: Login DockerHub
-        run: echo '${{ secrets.DOCKER_PASSWORD}}' | docker login -u '${{ secrets.DOCKER_USERNAME }}' --password-stdin
-      
-      - name: Set up Docker BuildKit
-        uses: docker/setup-buildx-action@v3
+      # - name: Login DockerHub
+      #   run: echo '${{ secrets.DOCKER_PASSWORD}}' | docker login -u '${{ secrets.DOCKER_USERNAME }}' --password-stdin
 
-      - name: Create Buildkit 빌더
-        run: |
-          docker buildx create --use --name buildkit-builder
+      # - name: Set up Docker BuildKit
+      #   uses: docker/setup-buildx-action@v3
 
-      - name: Docker Image Build
-        run: docker compose -f docker-compose.yml build
+      # - name: Create Buildkit 빌더
+      #   run: |
+      #     docker buildx create --use --name buildkit-builder
 
-      - name: Docker Image Push
-        run: docker compose -f docker-compose.yml push
+      # - name: Docker Image Build
+      #   run: docker compose -f docker-compose.yml build
 
-      - name: Copy .env / docker-compose.yml
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          source: "docker-compose.yml,.env"
-          target: "~/github-actions-work-directory"
+      # - name: Docker Image Push
+      #   run: docker compose -f docker-compose.yml push
 
-      - name: Pull Image & Up Container
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd ~/github-actions-work-directory
-            docker compose -f docker-compose.yml pull
-            docker compose -f docker-compose.yml down
-            docker compose -f docker-compose.yml up -d
-            docker system prune -f
+      # - name: Copy .env / docker-compose.yml
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: ${{ secrets.SSH_PORT }}
+      #     source: "docker-compose.yml,.env"
+      #     target: "~/github-actions-work-directory"
+
+      # - name: Pull Image & Up Container
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: ${{ secrets.SSH_PORT }}
+      #     script: |
+      #       cd ~/github-actions-work-directory
+      #       docker compose -f docker-compose.yml pull
+      #       docker compose -f docker-compose.yml down
+      #       docker compose -f docker-compose.yml up -d
+      #       docker system prune -f
