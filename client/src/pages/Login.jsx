@@ -10,7 +10,6 @@ import errorMessages from '../config/errorMessages';
 
 import 'react-loading-skeleton/dist/skeleton.css';
 import Skeleton from 'react-loading-skeleton';
-import KakaoLoginButton from '../components/KakaoLoginButton';
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -147,11 +146,6 @@ export default function Login() {
           </>
         </div>
       )}
-
-      {/* todo: 소셜 로그인 (카카오, 구글) ! */}
-      <div>
-        <KakaoLoginButton />
-      </div>
     </div>
   );
 }
