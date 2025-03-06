@@ -9,12 +9,15 @@ import styles from '../styles/components/Bucket.module.css';
 import errorMessages from '../config/errorMessages';
 
 function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
+  const MAX_LENGTH = 20; // 최대 타이틀 글자수
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 최대 사진 용량 5MB
+
   const { id, fixedTodoId, todoAll, todoCompleted } = bucket;
   const progress = (todoCompleted / todoAll) * 100;
 
   const CreateBucketId = useSelector((state) => state.bucket.bucketId);
   const [isToggled, setIsToggled] = useState(CreateBucketId === id ? true : false);
-  const MAX_LENGTH = 20;
+
   const fileInputRef = useRef(null);
   const firstRander = useRef(null);
   const [imageUrl, setImageUrl] = useState(bucket.imageUrl);
@@ -76,7 +79,6 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     const fileExtension = file.name.split('.').pop().toLowerCase();
 
@@ -97,9 +99,18 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
         cancelText: '확인',
         onConfirm: false,
       };
+
       modalOpen(modalData);
       e.target.value = '';
       return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      modalOpen({
+        content: '5MB 이하의 이미지만 업로드 가능합니다.',
+        cancelText: '확인',
+        onConfirm: false,
+      });
     }
 
     setInputData((prev) => ({ ...prev, file }));
