@@ -22,10 +22,6 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     file: '',
   });
 
-  useEffect(() => {
-    handleFileUpdate();
-  }, [inputData]);
-
   // title, imageUrl 초기값 및 업데이트
   useEffect(() => {
     setInputData({
@@ -52,6 +48,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
 
   // title 업데이트
   const handleTitleUpdate = async () => {
+    if (!inputData.title.trim()) return; // 빈 제목 방지
     const formData = new FormData();
     formData.append('title', inputData.title);
 
@@ -110,8 +107,8 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
       setImageUrl(reader.result);
     };
     reader.readAsDataURL(file);
+    handleFileUpdate();
   };
-
   // image 업데이트
   const handleFileUpdate = async () => {
     const formData = new FormData();
