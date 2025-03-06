@@ -45,6 +45,8 @@ jobs:
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
           echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
           echo "ORIGIN=${{ secrets.ORIGIN }}" >> .env
+          echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
+          echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env
 
       - name: echo .env
         run: cat .env
@@ -54,28 +56,28 @@ jobs:
       # - name: Login DockerHub
       #   run: echo '${{ secrets.DOCKER_PASSWORD}}' | docker login -u '${{ secrets.DOCKER_USERNAME }}' --password-stdin
 
-      - name: Set up Docker BuildKit
-        uses: docker/setup-buildx-action@v3
+      # - name: Set up Docker BuildKit
+      #   uses: docker/setup-buildx-action@v3
 
-      - name: Create Buildkit 빌더
-        run: |
-          docker buildx create --use --name buildkit-builder
+      # - name: Create Buildkit 빌더
+      #   run: |
+      #     docker buildx create --use --name buildkit-builder
 
-      - name: Docker Image Build
-        run: docker compose -f docker-compose.yml build
+      # - name: Docker Image Build
+      #   run: docker compose -f docker-compose.yml build
 
       # - name: Docker Image Push
       #   run: docker compose -f docker-compose.yml push
 
-      # - name: Copy .env / docker-compose.yml
-      #   uses: appleboy/scp-action@v0.1.7
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USERNAME }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     port: ${{ secrets.SSH_PORT }}
-      #     source: "docker-compose.yml,.env"
-      #     target: "~/github-actions-work-directory"
+      - name: Copy .env / docker-compose.yml
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "docker-compose.yml,.env"
+          target: "~/github-actions-work-directory"
 
       # - name: Pull Image & Up Container
       #   uses: appleboy/ssh-action@v1.0.3
