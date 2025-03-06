@@ -123,4 +123,14 @@ public class JwtTokenProvider {
             .getBody()
             .getSubject();
     }
+
+    // JWT에서 만료 시간 추출 (토큰 검증 및 해석용)
+    public Date extractExpiration(String token) {
+        return Jwts.parserBuilder()
+            .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes())) // 서명 키 설정
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getExpiration(); // 만료 시간 반환
+    }
 }
