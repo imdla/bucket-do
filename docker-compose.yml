@@ -2,6 +2,7 @@ services:
   redis:
     container_name: redis-container
     image: redis
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     volumes:
       - redis-volume:/data
     networks:
