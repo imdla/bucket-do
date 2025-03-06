@@ -22,6 +22,10 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     file: '',
   });
 
+  useEffect(() => {
+    handleFileUpdate();
+  }, [inputData]);
+
   // title, imageUrl 초기값 및 업데이트
   useEffect(() => {
     setInputData({
@@ -30,17 +34,6 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     });
     setImageUrl(bucket.imageUrl);
   }, [bucket]);
-
-  useEffect(() => {
-    handleFileUpdate();
-  }, [inputData]);
-
-  // form 제출
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleTitleUpdate();
-    handleFileUpdate();
-  };
 
   // 버킷 리스트 get
   const fetchBucket = async () => {
@@ -55,7 +48,6 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
   const handleTitleChange = (e) => {
     const { name, value } = e.target;
     setInputData((prev) => ({ ...prev, [name]: value }));
-    handleTitleUpdate();
   };
 
   // title 업데이트
@@ -64,7 +56,9 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     formData.append('title', inputData.title);
 
     try {
-      await bucketApi.updateBucket(id, formData);
+      const response = await bucketApi.updateBucket(id, formData);
+      console.log(response);
+
       await fetchBucket();
     } catch (error) {
       const errorMessage =
@@ -122,6 +116,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
   const handleFileUpdate = async () => {
     const formData = new FormData();
     formData.append('file', inputData.file);
+    formData.append('title', inputData.title);
 
     try {
       await bucketApi.updateBucket(id, formData);
@@ -227,7 +222,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
             >
               {imageUrl && <img src={imageUrl} alt="미리보기" />}
 
-              <form onSubmit={handleSubmit}>
+              <form>
                 <input
                   className={styles.imageInput}
                   type="file"
@@ -259,7 +254,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
           </>
 
           <>
-            <form style={isToggled ? {} : { width: '68%' }} onSubmit={handleSubmit}>
+            <form style={isToggled ? {} : { width: '68%' }}>
               <input
                 type="text"
                 name="title"

@@ -36,7 +36,7 @@ public class User extends BaseTimeEntity implements UserDetails {
     private String phoneNumber;
 
     //    null = true
-    private String provider;    // 어떤 OAuth인지(google, kakao, naver)
+//    private String provider;    // 어떤 OAuth인지(google, kakao, naver)
 //    private String provideId;   // 해당 OAuth의 key(id)
 
     @Builder
@@ -46,7 +46,7 @@ public class User extends BaseTimeEntity implements UserDetails {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.provider = provider;
+//        this.provider = provider;
     }
 
 

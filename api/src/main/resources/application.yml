@@ -27,18 +27,6 @@ spring:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
 
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            # 발급 받은 Client ID
-            client-id: ${google-client-id}
-            # 발급 받은 Client Secret
-            client-secret: ${google-client-secret}
-            scope: # 기본 값 openid,profile,email => profile, email 로 설정 변경
-              - profile
-              - email
 logging:
   level:
     org:
