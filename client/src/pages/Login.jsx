@@ -149,7 +149,7 @@ export default function Login() {
       )}
 
       {/* todo: 소셜 로그인 (카카오, 구글) */}
-      <div>
+      <div className={styles.socialLogin}>
         <KakaoLoginButton />
       </div>
     </div>
