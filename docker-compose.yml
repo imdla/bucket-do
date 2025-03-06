@@ -1,4 +1,14 @@
 services:
+  redis:
+    container_name: redis-container
+    image: redis
+    volumes:
+      - redis-volume:/data
+    networks:
+      - redis-network
+    env_file:
+      - .env
+    restart: always
   db:
     container_name: db-container
     image: mysql:8.0
@@ -24,11 +34,10 @@ services:
       cache_to:
         - type=local,dest=/tmp/docker-cache/api,mode=max
     image: imdla/api-image:latest
-    ports:
-      - "8080:8080"
     networks:
       - db-network
       - api-network
+      - redis-network
     env_file:
       - .env
     depends_on:
@@ -62,7 +71,9 @@ services:
 
 volumes:
   db-volume:
+  redis-volume:
 
 networks:
   db-network:
   api-network:
+  redis-network:

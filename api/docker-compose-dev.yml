@@ -1,0 +1,24 @@
+services:
+  db-dev:
+    container_name: db-dev-container
+    image: mysql:8.0
+    volumes:
+      - db-dev-volume:/var/lib/mysql
+    ports:
+      - ${DATABASE_PORT}:3306
+    env_file:
+      - .env
+  redis-dev:
+    container_name: redis-dev-container
+    image: redis
+    volumes:
+      - redis-dev-volume:/data
+    ports:
+      - ${REDIS_PORT}:6379
+    env_file:
+      - .env
+    restart: always
+
+volumes:
+  db-dev-volume:
+  redis-dev-volume:
