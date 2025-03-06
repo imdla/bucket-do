@@ -18,8 +18,12 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,6 +36,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -45,6 +50,7 @@ public class AuthService {
     private final UserDetailsService userDetailsService;
     private final RefreshTokenService refreshTokenService;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
     public SignupResponseDto signup(SignupRequestDto requestDto) {
@@ -117,6 +123,20 @@ public class AuthService {
             .map(Cookie::getValue)
             .findFirst()
             .orElse(null);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // 요청 헤더로 전달받은 access token을 추출
+        String accessToken = (String) authentication.getCredentials();
+
+        Date expiration = jwtTokenProvider.extractExpiration(accessToken);
+        long now = System.currentTimeMillis();
+        long ttl = (expiration.getTime() - now) / 1000;
+
+        log.info("ttl : " + ttl);
+
+        // Redis에 액세스 토큰 저장
+        redisTemplate.opsForValue()
+            .set("blacklist: " + accessToken, "logout", ttl, TimeUnit.SECONDS);
 
         // 요청에 리프레시 토큰이 포함되었는지 검증
         if (refreshToken == null || refreshToken.isEmpty()) {
