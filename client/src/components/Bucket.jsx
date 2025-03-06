@@ -14,8 +14,9 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
 
   const CreateBucketId = useSelector((state) => state.bucket.bucketId);
   const [isToggled, setIsToggled] = useState(CreateBucketId === id ? true : false);
-
+  const MAX_LENGTH = 20;
   const fileInputRef = useRef(null);
+  const firstRander = useRef(null);
   const [imageUrl, setImageUrl] = useState(bucket.imageUrl);
   const [inputData, setInputData] = useState({
     title: '',
@@ -43,12 +44,13 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
   // title 수정
   const handleTitleChange = (e) => {
     const { name, value } = e.target;
+    // 한글 입력 시에도 최대 글자 수 제한 적용
+    if (value.length > MAX_LENGTH) return;
     setInputData((prev) => ({ ...prev, [name]: value }));
   };
 
   // title 업데이트
   const handleTitleUpdate = async () => {
-    if (!inputData.title.trim()) return; // 빈 제목 방지
     const formData = new FormData();
     formData.append('title', inputData.title);
 
@@ -107,16 +109,22 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
       setImageUrl(reader.result);
     };
     reader.readAsDataURL(file);
-    handleFileUpdate();
   };
+
+  useEffect(() => {
+    handleFileUpdate();
+  }, [inputData]);
+
   // image 업데이트
   const handleFileUpdate = async () => {
+    if (inputData.title == '') return; // 빈 제목 방지
     const formData = new FormData();
     formData.append('file', inputData.file);
     formData.append('title', inputData.title);
 
     try {
       await bucketApi.updateBucket(id, formData);
+      fetchBucket();
     } catch (error) {
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
@@ -259,6 +267,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
                 placeholder="버킷 리스트 내용을 입력해주세요."
                 onChange={handleTitleChange}
                 onBlur={handleTitleUpdate}
+                maxLength={MAX_LENGTH}
                 disabled={isToggled ? false : true}
               />
               <div className={styles.progressBarBox}>
