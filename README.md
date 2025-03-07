@@ -20,6 +20,15 @@
 
 <br />
 
+## ⚒️ 기술 스택
+
+- **Frontend** : React 19, Redux 9.2, Axios 1.7
+- **Backend** : Spring Boot 3.4.3, Java 21, MySQL 8
+- **Infra** : Docker, AWS EC2, AWS S3, GitHub Action
+- **Tool** : Figma, Notion, Jira, GitHub
+
+<br />
+
 
 ## ✨ 주요 기능
 
@@ -43,15 +52,6 @@
 |------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
 | 투두 리스트의 내용을 수정하고, 체크박스를 표시합니다. <br /> 모든 투두 리스트를 체크할 경우, 버킷 리스트는 완료 처리가 됩니다. |   투두 리스트를 삭제합니다.                                  |
 | <img src = "https://github.com/user-attachments/assets/f1093f82-d20c-4bf6-98dc-792406f23ed2" width="300" > | <img src = "https://github.com/user-attachments/assets/34e2d8aa-f976-4ab9-b541-e8d762b9042f" width="300" > |
-
-<br />
-
-## ⚒️ 기술 스택
-
-- **Frontend** : React 19, Redux 9.2, Axios 1.7
-- **Backend** : Spring Boot 3.4.3, Java 21, MySQL 8
-- **Infra** : Docker, AWS EC2, AWS S3, GitHub Action
-- **Tool** : Figma, Notion, Jira, GitHub
 
 <br />
 
