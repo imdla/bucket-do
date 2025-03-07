@@ -35,6 +35,10 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     setImageUrl(bucket.imageUrl);
   }, [bucket]);
 
+  useEffect(() => {
+    handleFileUpdate();
+  }, [inputData]);
+
   // 버킷 리스트 get
   const fetchBucket = async () => {
     try {
@@ -122,10 +126,6 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     reader.readAsDataURL(file);
   };
 
-  useEffect(() => {
-    handleFileUpdate();
-  }, [inputData]);
-
   // image 업데이트
   const handleFileUpdate = async () => {
     if (inputData.title == '') return; // 빈 제목 방지
@@ -138,7 +138,9 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
       fetchBucket();
     } catch (error) {
       const errorMessage =
-        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+        errorMessages[error.status]?.[error.code] ||
+        errorMessages[error.status]?.DEFAULT ||
+        '이미지를 업로드할 수 없습니다.';
       const modalData = {
         content: errorMessage,
         cancelText: '확인',
