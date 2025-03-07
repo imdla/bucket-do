@@ -145,7 +145,15 @@ export default function Todo({
         }
       }
     } catch (error) {
-      console.log(error);
+      const errorMessage =
+        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+      const modalData = {
+        content: errorMessage,
+        cancelText: '확인',
+        onConfirm: false,
+      };
+
+      modalOpen(modalData);
     }
   };
 

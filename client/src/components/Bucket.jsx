@@ -43,7 +43,15 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
     try {
       await bucketApi.getBuckets();
     } catch (error) {
-      console.log(error);
+      const errorMessage =
+        errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
+      const modalData = {
+        content: errorMessage,
+        cancelText: '확인',
+        onConfirm: false,
+      };
+
+      modalOpen(modalData);
     }
   };
 
@@ -62,7 +70,6 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
 
     try {
       const response = await bucketApi.updateBucket(id, formData);
-      console.log(response);
 
       await fetchBucket();
     } catch (error) {

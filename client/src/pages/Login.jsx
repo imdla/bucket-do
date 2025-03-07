@@ -74,7 +74,6 @@ export default function Login() {
       dispatch(login({ accessToken, refreshToken, username }));
       navigate('/');
     } catch (error) {
-      console.log(error);
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
 
