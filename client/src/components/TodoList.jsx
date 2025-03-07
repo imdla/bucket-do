@@ -5,6 +5,7 @@ import styles from '../styles/components/TodoList.module.css';
 import errorMessages from '../config/errorMessages';
 
 export default function TodoList({
+  fetchBuckets,
   imageUrl,
   isToggled,
   bucketId,
@@ -64,6 +65,7 @@ export default function TodoList({
         return (
           <li key={todo.id}>
             <Todo
+              fetchBuckets={fetchBuckets}
               bucketId={bucketId}
               fetchTodo={fetchTodos}
               todo={todo}

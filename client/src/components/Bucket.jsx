@@ -19,7 +19,6 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
   const [isToggled, setIsToggled] = useState(CreateBucketId === id ? true : false);
 
   const fileInputRef = useRef(null);
-  const firstRander = useRef(null);
   const [imageUrl, setImageUrl] = useState(bucket.imageUrl);
   const [inputData, setInputData] = useState({
     title: '',
@@ -324,6 +323,7 @@ function Bucket({ bucket, fetchBuckets, modalOpen, modalClose }) {
         </article>
 
         <TodoList
+          fetchBuckets={fetchBuckets}
           imageUrl={imageUrl}
           isToggled={isToggled}
           bucketId={id}

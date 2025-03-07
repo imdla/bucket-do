@@ -5,6 +5,7 @@ import errorMessages from '../config/errorMessages';
 import ConfettiEffect from '../components/ConfettiEffect';
 
 export default function Todo({
+  fetchBuckets,
   bucketId,
   fetchTodo,
   todo,
@@ -73,6 +74,7 @@ export default function Todo({
     try {
       await todoApi.updateTodo(bucketId, id, formData);
       await fetchTodos();
+      await fetchBuckets();
     } catch (error) {
       const errorMessage =
         errorMessages[error.status]?.[error.code] || errorMessages[error.status]?.DEFAULT;
