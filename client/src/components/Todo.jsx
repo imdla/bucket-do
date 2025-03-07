@@ -16,7 +16,7 @@ export default function Todo({
 }) {
   const { id, content, checkCompleted } = todo;
   const [formData, setFormData] = useState({
-    content: content.slice(0, 4) == 'null' ? '완료' : content,
+    content: isFixed ? (content ? content : '완료') : content,
     checkCompleted: checkCompleted,
   });
 
@@ -203,13 +203,7 @@ export default function Todo({
             name="content"
             placeholder="투두 리스트 내용을 입력해주세요"
             required
-            value={
-              isFixed
-                ? todo.content.slice(0, 4) == 'null'
-                  ? '완료'
-                  : todo.content
-                : formData.content
-            }
+            value={isFixed ? (content ? content : '완료') : formData.content}
             onChange={handleChangeContent}
             onBlur={updateTodo}
             disabled={isFixed || isCompleted}
